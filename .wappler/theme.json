@@ -1,0 +1,16 @@
+{
+  "bootstrap5": {
+    "basic": {
+      "headings-font-family": "Arial:600",
+      "font-family-base": "Poppins:400",
+      "enable-shadows": true,
+      "enable-gradients": true,
+      "font-family-sans-serif": "Poppins:400",
+      "font-family-monospace": "Poppins:400",
+      "font-size-base": 0.75,
+      "info": "#252B5B",
+      "warning": "#f3d72f"
+    },
+    "advanced": {}
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "memdetsid"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "single",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_member_details",
+              "column": "memNo"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "memNo"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "title"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "firstName"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "lastName"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "dateJoined"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "gdpr"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "ukTax"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "memCard"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "tel"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "mobile"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "email"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "notes"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "address1"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "address2"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "town1"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "town2"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "postcode"
+            }
+          ],
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.memdetsid}}",
+              "test": "1"
+            }
+          ],
+          "table": {
+            "name": "tbl_member_details"
+          },
+          "primary": "memDetsId",
+          "joins": [
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_member_detail_stbl_mem_pers",
+                    "column": "tbl_member_detail_id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_details",
+                      "column": "memDetsId"
+                    }
+                  }
+                ]
+              },
+              "primary": "memPersId"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_member_detail_stbl_mem_address",
+                    "column": "tbl_member_detail_id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_details",
+                      "column": "memDetsId"
+                    }
+                  }
+                ]
+              },
+              "primary": "memAddId"
+            }
+          ],
+          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`mobile`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`notes`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`memDetsId` = ?",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "tbl_member_details.memDetsId",
+                "field": "tbl_member_details.memDetsId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_GET.memdetsid}}",
+                "data": {
+                  "table": "tbl_member_details",
+                  "column": "memDetsId",
+                  "type": "number",
+                  "columnObj": {
+                    "type": "increments",
+                    "primary": true,
+                    "unique": false,
+                    "nullable": false,
+                    "name": "memDetsId"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          }
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "memNo"
+        },
+        {
+          "type": "text",
+          "name": "title"
+        },
+        {
+          "type": "text",
+          "name": "firstName"
+        },
+        {
+          "type": "text",
+          "name": "lastName"
+        },
+        {
+          "type": "date",
+          "name": "dateJoined"
+        },
+        {
+          "type": "boolean",
+          "name": "gdpr"
+        },
+        {
+          "type": "boolean",
+          "name": "ukTax"
+        },
+        {
+          "type": "boolean",
+          "name": "memCard"
+        },
+        {
+          "type": "text",
+          "name": "tel"
+        },
+        {
+          "type": "text",
+          "name": "mobile"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "text",
+          "name": "notes"
+        },
+        {
+          "type": "text",
+          "name": "address1"
+        },
+        {
+          "type": "text",
+          "name": "address2"
+        },
+        {
+          "type": "text",
+          "name": "town1"
+        },
+        {
+          "type": "text",
+          "name": "town2"
+        },
+        {
+          "type": "text",
+          "name": "postcode"
+        }
+      ],
+      "outputType": "object"
+    }
+  }
+}

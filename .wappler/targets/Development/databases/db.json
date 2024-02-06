@@ -1,0 +1,243 @@
+{
+  "direct": true,
+  "type": "sqlite3",
+  "connection": {
+    "filename": "/lib/membershipDbV2.sqlite3"
+  },
+  "schema": {
+    "tables": {
+      "tbl_member_detail_stbl_mem_pers": {
+        "columns": {
+          "memPersId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "tbl_member_detail_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "memDetsId",
+              "inTable": "tbl_member_details",
+              "referenceType": "integer",
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            }
+          },
+          "tel": {
+            "db": {
+              "type": "string",
+              "maxLength": 20,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "mobile": {
+            "db": {
+              "type": "string",
+              "maxLength": 20,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "email": {
+            "db": {
+              "type": "string",
+              "maxLength": 30,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "notes": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {},
+        "tablePrefix": "tbl_member_detail_",
+        "parent": "tbl_member_details"
+      },
+      "tbl_member_detail_stbl_mem_address": {
+        "columns": {
+          "memAddId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "tbl_member_detail_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "memDetsId",
+              "inTable": "tbl_member_details",
+              "referenceType": "integer",
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            }
+          },
+          "address1": {
+            "db": {
+              "type": "string",
+              "maxLength": 60,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "address2": {
+            "db": {
+              "type": "string",
+              "maxLength": 60,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "town1": {
+            "db": {
+              "type": "string",
+              "maxLength": 60,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "town2": {
+            "db": {
+              "type": "string",
+              "maxLength": 60,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "postcode": {
+            "db": {
+              "type": "string",
+              "maxLength": 12,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {},
+        "tablePrefix": "tbl_member_detail_",
+        "parent": "tbl_member_details"
+      },
+      "tbl_member_details": {
+        "columns": {
+          "memDetsId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "memNo": {
+            "db": {
+              "type": "integer",
+              "maxLength": 6,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "title": {
+            "db": {
+              "type": "string",
+              "maxLength": 15,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "firstName": {
+            "db": {
+              "type": "string",
+              "maxLength": 30,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "lastName": {
+            "db": {
+              "type": "string",
+              "maxLength": 30,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "dateJoined": {
+            "db": {
+              "type": "date",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "gdpr": {
+            "db": {
+              "type": "boolean",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "ukTax": {
+            "db": {
+              "type": "boolean",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "memCard": {
+            "db": {
+              "type": "boolean",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "status": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "default": "1"
+            }
+          }
+        },
+        "db": {},
+        "sub": {
+          "tbl_member_detail_stbl_mem_pers": "tbl_member_detail_id",
+          "tbl_member_detail_stbl_mem_address": "tbl_member_detail_id"
+        }
+      }
+    },
+    "views": {}
+  }
+}

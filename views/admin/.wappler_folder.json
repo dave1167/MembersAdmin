@@ -1,0 +1,14 @@
+{
+  "member.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "dahboard.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "members.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  }
+}

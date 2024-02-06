@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "queryMax",
+        "module": "dbconnector",
+        "action": "select",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "tbl_member_details",
+                "column": "memNo",
+                "aggregate": "MAX",
+                "alias": "lastMemNo"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memNo",
+                "aggregate": "COUNT",
+                "alias": "count"
+              }
+            ],
+            "params": [],
+            "table": {
+              "name": "tbl_member_details"
+            },
+            "primary": "memDetsId",
+            "joins": [],
+            "orders": [
+              {
+                "table": "tbl_member_details",
+                "column": "memNo",
+                "direction": "DESC",
+                "condition": "",
+                "recid": 1
+              }
+            ],
+            "query": "select max(`memNo`) as `lastMemNo`, count(`memNo`) as `count` from `tbl_member_details` where `tbl_member_details`.`memNo` > ? order by `memNo` DESC",
+            "groupBy": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_details.memNo",
+                  "field": "tbl_member_details.memNo",
+                  "type": "double",
+                  "operator": "greater",
+                  "value": 0,
+                  "data": {
+                    "table": "tbl_member_details",
+                    "column": "memNo",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "integer",
+                      "maxLength": 6,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "memNo"
+                    }
+                  },
+                  "operation": ">"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "lastMemNo"
+          },
+          {
+            "type": "number",
+            "name": "count"
+          }
+        ],
+        "outputType": "array"
+      },
+      {
+        "name": "varLastMem",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{query[0].lastMemNo}}",
+          "key": "gVarLstMem"
+        },
+        "meta": [],
+        "outputType": "text",
+        "metaData": {
+          "setValueExpression": {
+            "name": "lastMemNo",
+            "type": "number"
+          }
+        },
+        "output": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "page": "index",
+      "routeType": "page",
+      "layout": "main"
+    },
+    {
+      "path": "/admin/dahboard",
+      "page": "admin/dahboard",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/members",
+      "page": "admin/members",
+      "layout": "admin"
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="members" appConnect="local" components="{dmxBootstrap5Modal:{},dmxBrowser:{},dmxStateManagement:{},dmxBootstrap5TableGenerator:{}}" -->
+
+<dmx-query-manager id="query1"></dmx-query-manager>
+
+<div is="dmx-browser" id="browser1"></div>
+<dmx-serverconnect id="scUpdate" url="/api/Admin/update"></dmx-serverconnect>
+<dmx-serverconnect id="scGetMembers" url="/api/Admin/getMembers" dmx-param:sort="query1.data.sort" dmx-param:dir="query1.data.dir"></dmx-serverconnect>
+<dmx-serverconnect id="scGetSingleMem" url="/api/Admin/getSingleMem"></dmx-serverconnect>
+<dmx-serverconnect id="scCreate" url="/api/Admin/create" noload="true"></dmx-serverconnect>
+<dmx-serverconnect id="scMax" url="/api/Admin/lastMemNo"></dmx-serverconnect>
+<div class="modal fade" id="modal1" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-warning fw-bolder">
+                <i class="fas fa-user-plus fa-4x iconSpacer"></i>
+                <h3 class="modal-title">Add New Mem<b>ber</b></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <form is="dmx-serverconnect-form" id="serverconnectform1" method="post" action="/api/Admin/create" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-on:success="browser1.goto('/admin/members',true);modal1.hide();serverconnectform1.reset();notifies1.success('Member Created')">
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <input id="inp_memDets" name="memDetsId" type="hidden" class="form-control" dmx-bind:value="">
+                                            <input type="hidden" class="form-control" id="inp_memNo" name="memNo" aria-describedby="inp_memNo_help" placeholder="Enter Mem no" dmx-bind:value="scMax.data.queryMax[0].lastMemNo+1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_title">Title</label>
+                                            <input type="text" class="form-control" id="inp_title" name="title" aria-describedby="inp_title_help" placeholder="Enter Title">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_firstName">First name</label>
+                                            <input type="text" class="form-control" id="inp_firstName" name="firstName" aria-describedby="inp_firstName_help" placeholder="Enter First name">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_lastName">Last name</label>
+                                            <input type="text" class="form-control" id="inp_lastName" name="lastName" aria-describedby="inp_lastName_help" placeholder="Enter Last name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div class="form-group mb-3">
+                                            <label for="inp_email">Email</label>
+                                            <input class="form-control" id="inp_email" name="email" aria-describedby="inp_dateJoined_help" placeholder="Enter Email" dmx-bind:value="">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_tel">Tel No.</label>
+                                            <input class="form-control" id="inp_tel" name="tel" aria-describedby="inp_dateJoined_help" placeholder="Enter Telephone Number" dmx-bind:value="">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_Mob">Mobile No.</label>
+                                            <input class="form-control" id="inp_Mob" name="mobile" aria-describedby="inp_dateJoined_help" placeholder="Enter Mobile Number" dmx-bind:value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_add1">Address 1</label>
+                                            <input class="form-control" id="inp_add1" name="address1" aria-describedby="inp_dateJoined_help" placeholder="Enter Address 1" dmx-bind:value="">
+                                        </div>
+
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_add2">Address 2</label>
+                                            <input class="form-control" id="inp_add2" name="address2" aria-describedby="inp_dateJoined_help" placeholder="Enter Address 2" dmx-bind:value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town1">Town 1</label>
+
+                                            <input class="form-control" id="inp_town1" name="town1" aria-describedby="inp_dateJoined_help" placeholder="Enter Address 1" dmx-bind:value="">
+                                        </div>
+
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town1">Town 2</label>
+                                            <input class="form-control" id="inp_town2" name="town2" aria-describedby="inp_dateJoined_help" placeholder="Enter Town 2" dmx-bind:value="">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town1">Postcode</label>
+                                            <input class="form-control" id="inp_postcode" name="postcode" aria-describedby="inp_dateJoined_help" placeholder="Enter Postcode" dmx-bind:value="">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_dateJoined">Date Joined</label>
+                                            <input type="date" class="form-control" id="inp_dateJoined" name="dateJoined" aria-describedby="inp_dateJoined_help" placeholder="Enter Date joined">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" value="1" id="inp_gdpr" name="gdpr">
+                                                <label class="form-check-label" for="inp_gdpr">GDPR</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" value="1" id="inp_ukTax" name="ukTax">
+                                                <label class="form-check-label" for="inp_ukTax">Uk tax</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" value="1" id="inp_memCard" name="memCard">
+                                                <label class="form-check-label" for="inp_memCard">Membership Card Issued</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town1">Notes</label><textarea id="notes" class="form-control" name="notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <button type="submit" class="btn btn-primary" dmx-bind:disabled="state.executing">Save <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="serverconnectform1.submit();browser1.goto('/admin/members');modal1.hide();serverconnectform1.reset()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modEdit" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-warning fw-bolder">
+                <i class="fas fa-user-edit fa-4x iconSpacer"></i>
+                <h3 class="modal-title">Edit Member</b></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <form is="dmx-serverconnect-form" id="serverconnectform2" method="post" action="/api/Admin/update" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-populate="scGetSingleMem.data.query">
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_memNo">Mem no</label>
+                                            <input type="number" class="form-control" id="inp_memNo" name="memNo" dmx-bind:value="scGetSingleMem.data.query.memNo" aria-describedby="inp_memNo_help" placeholder="Enter Mem no">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_dateJoined">Date joined</label>
+                                            <input type="date" class="form-control" id="inp_dateJoined" name="dateJoined" dmx-bind:value="scGetSingleMem.data.query.dateJoined" aria-describedby="inp_dateJoined_help" placeholder="Enter Date joined">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_title">Title</label>
+                                            <input type="text" class="form-control" id="inp_title" name="title" dmx-bind:value="scGetSingleMem.data.query.title" aria-describedby="inp_title_help" placeholder="Enter Title">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_firstName">First name</label>
+                                            <input type="text" class="form-control" id="inp_firstName" name="firstName" dmx-bind:value="scGetSingleMem.data.query.firstName" aria-describedby="inp_firstName_help" placeholder="Enter First name">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_lastName">Last name</label>
+                                            <input type="text" class="form-control" id="inp_lastName" name="lastName" dmx-bind:value="scGetSingleMem.data.query.lastName" aria-describedby="inp_lastName_help" placeholder="Enter Last name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_email">Email</label>
+                                            <input type="text" class="form-control" id="inp_email" name="email" dmx-bind:value="scGetSingleMem.data.query.email" aria-describedby="inp_email_help" placeholder="Enter Email">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_mobile">Mobile</label>
+                                            <input type="text" class="form-control" id="inp_mobile" name="mobile" dmx-bind:value="scGetSingleMem.data.query.mobile" aria-describedby="inp_mobile_help" placeholder="Enter Mobile">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_tel">Tel</label>
+                                            <input type="text" class="form-control" id="inp_tel" name="tel" dmx-bind:value="scGetSingleMem.data.query.tel" aria-describedby="inp_tel_help" placeholder="Enter Tel">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_address1">Address1</label>
+                                            <input type="text" class="form-control" id="inp_address1" name="address1" dmx-bind:value="scGetSingleMem.data.query.address1" aria-describedby="inp_address1_help" placeholder="Enter Address1">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_address2">Address2</label>
+                                            <input type="text" class="form-control" id="inp_address2" name="address2" dmx-bind:value="scGetSingleMem.data.query.address2" aria-describedby="inp_address2_help" placeholder="Enter Address2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town1">Town1</label>
+                                            <input type="text" class="form-control" id="inp_town1" name="town1" dmx-bind:value="scGetSingleMem.data.query.town1" aria-describedby="inp_town1_help" placeholder="Enter Town1">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town2">Town2</label>
+                                            <input type="text" class="form-control" id="inp_town2" name="town2" dmx-bind:value="scGetSingleMem.data.query.town2" aria-describedby="inp_town2_help" placeholder="Enter Town2">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_postcode">Postcode</label>
+                                            <input type="text" class="form-control" id="inp_postcode" name="postcode" dmx-bind:value="scGetSingleMem.data.query.postcode" aria-describedby="inp_postcode_help" placeholder="Enter Postcode">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="inp_gdpr" name="gdpr" dmx-bind:value="scGetSingleMem.data.query.gdpr">
+                                                <label class="form-check-label" for="inp_gdpr">Gdpr</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="inp_ukTax" name="ukTax" dmx-bind:value="scGetSingleMem.data.query.ukTax">
+                                                <label class="form-check-label" for="inp_ukTax">Uk tax</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="inp_memCard" name="memCard" dmx-bind:value="scGetSingleMem.data.query.memCard">
+                                                <label class="form-check-label" for="inp_memCard">Mem card</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_notes">Notes</label>
+                                            <textarea id="textNotes" class="form-control" name="notes" dmx-bind:value="scGetSingleMem.data.query.notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <button type="submit" class="btn btn-primary" dmx-bind:value="scGetSingleMem.data.query.Save" dmx-bind:disabled="state.executing">Save <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="serverconnectform1.submit();browser1.goto('/admin/members');modal1.hide();serverconnectform1.reset()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<meta name="ac:route" content="/admin/members">
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button id="btnAddMem" class="btn btn-success mt-2 align-self-center" dmx-on:click="modal1.show();scMax.load({})"><i class="fas fa-plus-circle fa-2x iconSpacer" dmx-style:color="'white'"></i>Add&nbsp; New Member</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-2">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="row">undefinedHeader</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','memDetsId');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='memDetsId' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='memDetsId' && query1.data.dir == 'desc'">Membership No.</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','memNo');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='memNo' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='memNo' && query1.data.dir == 'desc'">Mem no</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','firstName');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='firstName' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='firstName' && query1.data.dir == 'desc'">First name</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','lastName');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='lastName' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='lastName' && query1.data.dir == 'desc'">Last name</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','email');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='email' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='email' && query1.data.dir == 'desc'">Email</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','dateJoined');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='dateJoined' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='dateJoined' && query1.data.dir == 'desc'">Date joined</th>
+                                <th class="sorting" dmx-on:click="query1.set('sort','mobile');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='mobile' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='mobile' && query1.data.dir == 'desc'">Mobile</th>
+                            </tr>
+                        </thead>
+                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scGetMembers.data.query" id="tableRepeat1" dmx-state="query1" dmx-sort="sort" dmx-order="dir">
+                            <tr>
+                                <td>
+                                    <button id="btnEdit" class="btn btn-success" dmx-on:click="scGetSingleMem.load({memdetsid: memDetsId});modEdit.show()"><i class="fas fa-edit fa-lg"></i></button>
+
+                                </td>
+                                <td dmx-text="memDetsId"></td>
+                                <td dmx-text="memNo"></td>
+                                <td dmx-text="firstName"></td>
+                                <td dmx-text="lastName"></td>
+                                <td dmx-text="email"></td>
+                                <td dmx-text="dateJoined"></td>
+                                <td dmx-text="mobile"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

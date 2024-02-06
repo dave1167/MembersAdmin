@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_member_details",
+              "column": "memDetsId"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "memNo"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "firstName"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "lastName"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "status"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "email"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "dateJoined"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "tel"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "email"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "mobile"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_member_details"
+          },
+          "primary": "memDetsId",
+          "joins": [
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_member_detail_stbl_mem_pers",
+                    "column": "tbl_member_detail_id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_details",
+                      "column": "memDetsId"
+                    }
+                  }
+                ]
+              },
+              "primary": "memPersId"
+            }
+          ],
+          "query": "select `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memNo`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`status`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_details`.`dateJoined`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`mobile` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`status` = ?",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "tbl_member_details.status",
+                "field": "tbl_member_details.status",
+                "type": "string",
+                "operator": "equal",
+                "value": "1",
+                "data": {
+                  "table": "tbl_member_details",
+                  "column": "status",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "unique": false,
+                    "nullable": true,
+                    "default": "1",
+                    "name": "status"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          }
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "memDetsId"
+        },
+        {
+          "type": "number",
+          "name": "memNo"
+        },
+        {
+          "type": "text",
+          "name": "firstName"
+        },
+        {
+          "type": "text",
+          "name": "lastName"
+        },
+        {
+          "type": "text",
+          "name": "status"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "date",
+          "name": "dateJoined"
+        },
+        {
+          "type": "text",
+          "name": "tel"
+        },
+        {
+          "type": "text",
+          "name": "mobile"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}
