@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_payment_type",
+              "column": "description"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_payment_type"
+          },
+          "primary": "payTypeid",
+          "joins": [],
+          "query": "select `description` from `tbl_payment_type`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "text",
+          "name": "description"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

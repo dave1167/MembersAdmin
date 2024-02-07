@@ -1,12 +1,18 @@
-<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="members" appConnect="local" components="{dmxBootstrap5Modal:{},dmxBrowser:{},dmxStateManagement:{},dmxBootstrap5TableGenerator:{}}" -->
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="members" appConnect="local" components="{dmxBootstrap5Modal:{},dmxBrowser:{},dmxStateManagement:{},dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxValidator:{}}" -->
+<dmx-toggle id="toggle1"></dmx-toggle>
+<dmx-value id="var1" dmx-bind:value="0"></dmx-value>
+
 
 <dmx-query-manager id="query1"></dmx-query-manager>
 
 <div is="dmx-browser" id="browser1"></div>
+<dmx-serverconnect id="scPayType" url="/api/Admin/Payments/payType"></dmx-serverconnect>
 <dmx-serverconnect id="scUpdate" url="/api/Admin/update"></dmx-serverconnect>
 <dmx-serverconnect id="scGetMembers" url="/api/Admin/getMembers" dmx-param:sort="query1.data.sort" dmx-param:dir="query1.data.dir"></dmx-serverconnect>
 <dmx-serverconnect id="scGetSingleMem" url="/api/Admin/getSingleMem"></dmx-serverconnect>
 <dmx-serverconnect id="scCreate" url="/api/Admin/create" noload="true"></dmx-serverconnect>
+<dmx-serverconnect id="scArchive" url="/api/Admin/archive"></dmx-serverconnect>
+<dmx-serverconnect id="scPayment" url="/api/Admin/Payments/readPay" dmx-param:memdetsid="modEdit.serverconnectform2.inp_memDetsId.value"></dmx-serverconnect>
 <dmx-serverconnect id="scMax" url="/api/Admin/lastMemNo"></dmx-serverconnect>
 <div class="modal fade" id="modal1" is="dmx-bs5-modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -20,7 +26,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
-                            <form is="dmx-serverconnect-form" id="serverconnectform1" method="post" action="/api/Admin/create" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-on:success="browser1.goto('/admin/members',true);modal1.hide();serverconnectform1.reset();notifies1.success('Member Created')">
+                            <form is="dmx-serverconnect-form" id="serverconnectform1" method="post" action="/api/Admin/create" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-on:success="modal1.hide();serverconnectform1.reset();browser1.goto('/admin/members');notifies1.success('Member Created')">
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="form-group mb-3">
@@ -39,7 +45,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group mb-3">
-                                            <label for="inp_firstName">First name</label>
+                                            <label for="firstName1">First name</label>
                                             <input type="text" class="form-control" id="inp_firstName" name="firstName" aria-describedby="inp_firstName_help" placeholder="Enter First name">
                                         </div>
                                     </div>
@@ -170,6 +176,86 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modPayments" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-warning">
+                <h2 class="modal-title"><i class="fas fa-pound-sign iconSpacer fa-lg"></i>Payments for {{modEdit.serverconnectform2.inp_firstName.value+' '+modEdit.serverconnectform2.inp_lastName.value}}</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button id="btn2" class="btn btn-success mb-2" dmx-on:click="toggle1.toggle()" data-bs-toggle="collapse">
+                            <i class="fas fa-receipt fa-lg"></i>&nbsp;Add New Payment</button></div>
+                </div>
+                <div class="row">
+                    <div class="col border-2 border rounded rounded-3 shadow border-primary">
+                        <form id="form1" method="post" is="dmx-serverconnect-form" action="/api/Admin/Payments/createPay" dmx-show="toggle1.checked">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group md-3">
+                                        <label for="input2" class="form-label">Some text</label>
+                                        <select id="selectPayType" class="form-select" dmx-bind:options="scPayType.data.query" optiontext="description" optionvalue="$value">
+                                            <option selected="" value="">Select Payment Type</option>
+                                        </select><input type="text" class="form-control" id="input2" name="input2" aria-describedby="input2_help" placeholder="Enter some text" dmx-bind:value="selectPayType.value">
+                                        <small id="input2_help" class="form-text text-muted">Your input is very valuable.</small>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group md-3"> <label for="inp_amount" class="form-label">Amount</label>
+                                        <input type="text" class="form-control" id="inp_amount" name="amount" aria-describedby="input3_help" placeholder="Enter some text">
+                                    </div>
+                                    <div class="form-group md-3"> <label for="inp_datePAid" class="form-label">Date Paid</label>
+                                        <input type="date" class="form-control" id="inp_datePAid" name="datePaid" aria-describedby="input1_help" placeholder="Select date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <div class="form-group md-3">
+                                        <label for="inp_amount" class="form-label">Notes</label><textarea id="inpNotes" class="form-control" name="notes"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-2">
+                                    <button id="btn1" class="btn btn-success" dmx-on:click="form1.submit()">Save</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date paid</th>
+
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scPayment.data.query" id="tableRepeat2">
+                            <tr>
+                                <td dmx-text="datePaid.formatDate('dd-MM-yyyy')"></td>
+                                <td dmx-text="description"></td>
+                                <td dmx-text="amount"></td>
+                                <td dmx-text="notes"></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="modEdit" is="dmx-bs5-modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -178,100 +264,46 @@
                 <h3 class="modal-title">Edit Member</b></h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body bg-light-subtle">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
-                            <form is="dmx-serverconnect-form" id="serverconnectform2" method="post" action="/api/Admin/update" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-populate="scGetSingleMem.data.query">
+                            <form is="dmx-serverconnect-form" id="serverconnectform2" method="post" action="/api/Admin/update" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-populate="scGetSingleMem.data.query" dmx-on:success="modEdit.hide();serverconnectform2.reset();browser1.goto('/admin/members');notifies1.success('Member Updated')" dmx-on:error="notifies1.danger('An Error Occured')">
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <label for="inp_memNo">Mem no</label>
-                                            <input type="number" class="form-control" id="inp_memNo" name="memNo" dmx-bind:value="scGetSingleMem.data.query.memNo" aria-describedby="inp_memNo_help" placeholder="Enter Mem no">
+                                            <input type="number" class="form-control" id="inp_memNo" name="memNo" dmx-bind:value="scGetSingleMem.data.query.memNo" aria-describedby="inp_memNo_help" placeholder="Enter Mem no" dmxorgdomid="d4365">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <label for="inp_dateJoined">Date joined</label>
-                                            <input type="date" class="form-control" id="inp_dateJoined" name="dateJoined" dmx-bind:value="scGetSingleMem.data.query.dateJoined" aria-describedby="inp_dateJoined_help" placeholder="Enter Date joined">
+                                            <input type="date" class="form-control" id="inp_dateJoined" name="dateJoined" dmx-bind:value="scGetSingleMem.data.query.dateJoined" aria-describedby="inp_dateJoined_help" placeholder="Enter Date joined" dmxorgdomid="d4385" required="" data-rule-date="" dmx-text="">
                                         </div>
+                                    </div>
+                                    <div class="col">
+                                        <button id="btnPay" class="btn btn-info mt-1" dmx-on:click="modPayments.show();modEdit.hide()">
+                                            <i class="fas fa-cash-register iconSpacer fa-lg"></i>Payment</button>
                                     </div>
                                 </div>
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <label for="inp_title">Title</label>
-                                            <input type="text" class="form-control" id="inp_title" name="title" dmx-bind:value="scGetSingleMem.data.query.title" aria-describedby="inp_title_help" placeholder="Enter Title">
+                                            <input type="text" class="form-control" id="inp_title" name="title" dmx-bind:value="scGetSingleMem.data.query.title" aria-describedby="inp_title_help" placeholder="Enter Title" dmxorgdomid="d4370">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <label for="inp_firstName">First name</label>
-                                            <input type="text" class="form-control" id="inp_firstName" name="firstName" dmx-bind:value="scGetSingleMem.data.query.firstName" aria-describedby="inp_firstName_help" placeholder="Enter First name">
+                                            <input type="text" class="form-control" id="inp_firstName" name="firstName" dmx-bind:value="scGetSingleMem.data.query.firstName" aria-describedby="inp_firstName_help" placeholder="Enter First name" dmxorgdomid="d4375">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <label for="inp_lastName">Last name</label>
-                                            <input type="text" class="form-control" id="inp_lastName" name="lastName" dmx-bind:value="scGetSingleMem.data.query.lastName" aria-describedby="inp_lastName_help" placeholder="Enter Last name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row gx-3">
-
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_email">Email</label>
-                                            <input type="text" class="form-control" id="inp_email" name="email" dmx-bind:value="scGetSingleMem.data.query.email" aria-describedby="inp_email_help" placeholder="Enter Email">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_mobile">Mobile</label>
-                                            <input type="text" class="form-control" id="inp_mobile" name="mobile" dmx-bind:value="scGetSingleMem.data.query.mobile" aria-describedby="inp_mobile_help" placeholder="Enter Mobile">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_tel">Tel</label>
-                                            <input type="text" class="form-control" id="inp_tel" name="tel" dmx-bind:value="scGetSingleMem.data.query.tel" aria-describedby="inp_tel_help" placeholder="Enter Tel">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row gx-3">
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_address1">Address1</label>
-                                            <input type="text" class="form-control" id="inp_address1" name="address1" dmx-bind:value="scGetSingleMem.data.query.address1" aria-describedby="inp_address1_help" placeholder="Enter Address1">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_address2">Address2</label>
-                                            <input type="text" class="form-control" id="inp_address2" name="address2" dmx-bind:value="scGetSingleMem.data.query.address2" aria-describedby="inp_address2_help" placeholder="Enter Address2">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row gx-3">
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_town1">Town1</label>
-                                            <input type="text" class="form-control" id="inp_town1" name="town1" dmx-bind:value="scGetSingleMem.data.query.town1" aria-describedby="inp_town1_help" placeholder="Enter Town1">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_town2">Town2</label>
-                                            <input type="text" class="form-control" id="inp_town2" name="town2" dmx-bind:value="scGetSingleMem.data.query.town2" aria-describedby="inp_town2_help" placeholder="Enter Town2">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <label for="inp_postcode">Postcode</label>
-                                            <input type="text" class="form-control" id="inp_postcode" name="postcode" dmx-bind:value="scGetSingleMem.data.query.postcode" aria-describedby="inp_postcode_help" placeholder="Enter Postcode">
+                                            <input type="text" class="form-control" id="inp_lastName" name="lastName" dmx-bind:value="scGetSingleMem.data.query.lastName" aria-describedby="inp_lastName_help" placeholder="Enter Last name" dmxorgdomid="d4380">
                                         </div>
                                     </div>
                                 </div>
@@ -279,15 +311,7 @@
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="inp_gdpr" name="gdpr" dmx-bind:value="scGetSingleMem.data.query.gdpr">
-                                                <label class="form-check-label" for="inp_gdpr">Gdpr</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="inp_ukTax" name="ukTax" dmx-bind:value="scGetSingleMem.data.query.ukTax">
+                                                <input class="form-check-input" type="checkbox" value="" id="inp_ukTax" name="ukTax" dmx-bind:value="scGetSingleMem.data.query.ukTax" dmxorgdomid="d4398">
                                                 <label class="form-check-label" for="inp_ukTax">Uk tax</label>
                                             </div>
                                         </div>
@@ -295,8 +319,16 @@
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="inp_memCard" name="memCard" dmx-bind:value="scGetSingleMem.data.query.memCard">
-                                                <label class="form-check-label" for="inp_memCard">Mem card</label>
+                                                <input class="form-check-input" type="checkbox" value="" id="inp_gdpr" name="gdpr" dmx-bind:value="scGetSingleMem.data.query.gdpr" dmxorgdomid="d4391">
+                                                <label class="form-check-label" for="inp_gdpr">GDPR</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="inp_memCard" name="memCard" dmx-bind:value="scGetSingleMem.data.query.memCard" dmxorgdomid="d4405">
+                                                <label class="form-check-label" for="inp_memCard">Membership Card</label>
                                             </div>
                                         </div>
                                     </div>
@@ -304,15 +336,81 @@
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="form-group mb-3">
-                                            <label for="inp_notes">Notes</label>
-                                            <textarea id="textNotes" class="form-control" name="notes" dmx-bind:value="scGetSingleMem.data.query.notes"></textarea>
+                                            <label for="inp_mobile">Mobile</label>
+                                            <input type="text" class="form-control" id="inp_mobile" name="mobile" dmx-bind:value="scGetSingleMem.data.query.mobile" aria-describedby="inp_mobile_help" placeholder="Enter Mobile" dmxorgdomid="d4416">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_tel">Tel</label>
+                                            <input type="text" class="form-control" id="inp_tel" name="tel" dmx-bind:value="scGetSingleMem.data.query.tel" aria-describedby="inp_tel_help" placeholder="Enter Tel" dmxorgdomid="d4411">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_email">Email</label>
+                                            <input type="text" class="form-control" id="inp_email" name="email" dmx-bind:value="scGetSingleMem.data.query.email" aria-describedby="inp_email_help" placeholder="Enter Email" dmxorgdomid="d4421">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="form-group mb-3">
-                                            <button type="submit" class="btn btn-primary" dmx-bind:value="scGetSingleMem.data.query.Save" dmx-bind:disabled="state.executing">Save <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                                            <label for="inp_notes">Notes</label>
+                                            <textarea id="inp_notes" name="notes" dmx-bind:value="scGetSingleMem.data.query.notes" class="form-control" dmxorgdomid="d4426"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_address1">Address1</label>
+                                            <input type="text" class="form-control" id="inp_address1" name="address1" dmx-bind:value="scGetSingleMem.data.query.address1" aria-describedby="inp_address1_help" placeholder="Enter Address1" dmxorgdomid="d4431">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_address2">Address2</label>
+                                            <input type="text" class="form-control" id="inp_address2" name="address2" dmx-bind:value="scGetSingleMem.data.query.address2" aria-describedby="inp_address2_help" placeholder="Enter Address2" dmxorgdomid="d4436">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town1">Town1</label>
+                                            <input type="text" class="form-control" id="inp_town1" name="town1" dmx-bind:value="scGetSingleMem.data.query.town1" aria-describedby="inp_town1_help" placeholder="Enter Town1" dmxorgdomid="d4441">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_town2">Town2</label>
+                                            <input type="text" class="form-control" id="inp_town2" name="town2" dmx-bind:value="scGetSingleMem.data.query.town2" aria-describedby="inp_town2_help" placeholder="Enter Town2" dmxorgdomid="d4446">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="inp_postcode">Postcode</label>
+                                            <input type="text" class="form-control" id="inp_postcode" name="postcode" dmx-bind:value="scGetSingleMem.data.query.postcode" aria-describedby="inp_postcode_help" placeholder="Enter Postcode" dmxorgdomid="d4451">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <input type="hidden" class="form-control" id="inp_memDetsId" name="memdetsid" dmx-bind:value="scGetSingleMem.data.query.memDetsId" aria-describedby="inp_memDetsId_help" placeholder="Enter Mem dets" dmxorgdomid="d4456">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <button type="submit" class="btn btn-primary w-100" dmx-bind:value="scGetSingleMem.data.query.Save" dmx-bind:disabled="state.executing" dmxorgdomid="d4460">Save <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing" dmxorgdomid="d4461"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <button type="button" class="btn btn-secondary ms-3 w-100" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
@@ -322,8 +420,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" dmx-on:click="serverconnectform1.submit();browser1.goto('/admin/members');modal1.hide();serverconnectform1.reset()">Save changes</button>
+
             </div>
         </div>
     </div>
@@ -342,9 +439,8 @@
                     <table class="table table-striped table-bordered table-hover table-sm">
                         <thead>
                             <tr>
-                                <th scope="row">undefinedHeader</th>
+                                <th scope="row"></th>
                                 <th class="sorting" dmx-on:click="query1.set('sort','memDetsId');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='memDetsId' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='memDetsId' && query1.data.dir == 'desc'">Membership No.</th>
-                                <th class="sorting" dmx-on:click="query1.set('sort','memNo');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='memNo' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='memNo' && query1.data.dir == 'desc'">Mem no</th>
                                 <th class="sorting" dmx-on:click="query1.set('sort','firstName');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='firstName' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='firstName' && query1.data.dir == 'desc'">First name</th>
                                 <th class="sorting" dmx-on:click="query1.set('sort','lastName');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='lastName' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='lastName' && query1.data.dir == 'desc'">Last name</th>
                                 <th class="sorting" dmx-on:click="query1.set('sort','email');query1.set('dir',query1.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="query1.data.sort=='email' && query1.data.dir == 'asc'" dmx-class:sorting_desc="query1.data.sort=='email' && query1.data.dir == 'desc'">Email</th>
@@ -354,16 +450,22 @@
                         </thead>
                         <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scGetMembers.data.query" id="tableRepeat1" dmx-state="query1" dmx-sort="sort" dmx-order="dir">
                             <tr>
-                                <td>
-                                    <button id="btnEdit" class="btn btn-success" dmx-on:click="scGetSingleMem.load({memdetsid: memDetsId});modEdit.show()"><i class="fas fa-edit fa-lg"></i></button>
+                                <td class="align-middle">
+                                    <div class="row row-cols-4">
+                                        <div class="col-1 me-4"><button id="btnEdit" class="btn btn-success align-self-center text-center shadow" dmx-on:click="scGetSingleMem.load({memdetsid: memDetsId});modEdit.show()"><i class="fas fa-edit fa-lg iconSpacer"></i></button></div>
+                                        <div class="col-1 ms-3"><button id="btnArchive" class="btn btn-danger align-self-center shadow" dmx-on:click="run({confirm:{name:'FOLP Membership',outputType:'boolean',message:`\'You are about to archive \'+firstName+\' \'+lastName+\'. Please confirm?\'`,then:{steps:[{run:{outputType:'text',action:`scArchive.load({memdetsid: memDetsId})`}},{run:{outputType:'text',action:`scGetMembers.load({})`}}]}}})"><i class="fas fa-archive fa-lg"></i></button></div>
+                                    </div>
+
+
+
 
                                 </td>
-                                <td dmx-text="memDetsId"></td>
-                                <td dmx-text="memNo"></td>
+                                <td dmx-text="memDetsId" dmx-hide="scGetMembers.data.query"></td>
+                                <td dmx-text="memNo" class="ms-2"></td>
                                 <td dmx-text="firstName"></td>
                                 <td dmx-text="lastName"></td>
                                 <td dmx-text="email"></td>
-                                <td dmx-text="dateJoined"></td>
+                                <td dmx-text="dateJoined.formatDate('dd-MM-yyyy')"></td>
                                 <td dmx-text="mobile"></td>
                             </tr>
                         </tbody>

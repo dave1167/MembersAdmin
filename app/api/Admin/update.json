@@ -6,111 +6,109 @@
     },
     "$_POST": [
       {
-        "type": "text",
-        "fieldName": "memDetsId1",
-        "name": "memDetsId1"
+        "type": "number",
+        "fieldName": "memNo",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "memNo"
       },
       {
         "type": "text",
-        "fieldName": "memNo1",
-        "name": "memNo1"
-      },
-      {
-        "type": "text",
-        "fieldName": "title1",
-        "name": "title1"
+        "fieldName": "title",
+        "name": "title"
       },
       {
         "type": "text",
         "fieldName": "firstName1",
-        "name": "firstName1"
+        "name": "firstName"
       },
       {
         "type": "text",
-        "fieldName": "lastName1",
-        "name": "lastName1"
-      },
-      {
-        "type": "text",
-        "fieldName": "email1",
-        "name": "email1"
-      },
-      {
-        "type": "text",
-        "fieldName": "tel1",
-        "name": "tel1"
-      },
-      {
-        "type": "text",
-        "fieldName": "mobile1",
-        "name": "mobile1"
-      },
-      {
-        "type": "text",
-        "fieldName": "address3",
-        "multiple": true,
-        "name": "address3"
-      },
-      {
-        "type": "text",
-        "fieldName": "town3",
-        "multiple": true,
-        "name": "town3"
-      },
-      {
-        "type": "text",
-        "fieldName": "postcode1",
-        "name": "postcode1"
+        "fieldName": "lastName",
+        "name": "lastName"
       },
       {
         "type": "date",
-        "fieldName": "dateJoined1",
+        "fieldName": "dateJoined",
         "options": {
           "rules": {
             "core:date": {}
           }
         },
-        "name": "dateJoined1"
-      },
-      {
-        "type": "text",
-        "fieldName": "gdpr1",
-        "name": "gdpr1"
-      },
-      {
-        "type": "text",
-        "fieldName": "ukTax1",
-        "name": "ukTax1"
-      },
-      {
-        "type": "text",
-        "fieldName": "memCard1",
-        "name": "memCard1"
-      },
-      {
-        "type": "text",
-        "fieldName": "notes1",
-        "name": "notes1"
-      },
-      {
-        "type": "text",
-        "name": "lastName"
-      },
-      {
-        "type": "date",
         "name": "dateJoined"
       },
       {
-        "type": "boolean",
+        "type": "text",
+        "fieldName": "gdpr",
         "name": "gdpr"
       },
       {
-        "type": "boolean",
+        "type": "text",
+        "fieldName": "ukTax",
         "name": "ukTax"
       },
       {
-        "type": "boolean",
+        "type": "text",
+        "fieldName": "memCard",
         "name": "memCard"
+      },
+      {
+        "type": "text",
+        "fieldName": "tel",
+        "name": "tel"
+      },
+      {
+        "type": "text",
+        "fieldName": "mobile",
+        "name": "mobile"
+      },
+      {
+        "type": "text",
+        "fieldName": "email",
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "fieldName": "address1",
+        "name": "address1"
+      },
+      {
+        "type": "text",
+        "fieldName": "address2",
+        "name": "address2"
+      },
+      {
+        "type": "text",
+        "fieldName": "town1",
+        "name": "town1"
+      },
+      {
+        "type": "text",
+        "fieldName": "town2",
+        "name": "town2"
+      },
+      {
+        "type": "text",
+        "fieldName": "postcode",
+        "name": "postcode"
+      },
+      {
+        "type": "number",
+        "fieldName": "memDetsId",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "memDetsId"
+      },
+      {
+        "type": "text",
+        "fieldName": "notes",
+        "name": "notes"
       },
       {
         "type": "text",
@@ -118,176 +116,403 @@
       },
       {
         "type": "number",
-        "name": "memDetsId"
+        "name": "memdetsid"
+      },
+      {
+        "type": "number",
+        "name": "tbl_member_detail_id"
       }
     ]
   },
   "exec": {
-    "steps": {
-      "name": "update",
-      "module": "dbupdater",
-      "action": "update",
-      "options": {
-        "connection": "db",
-        "sql": {
-          "type": "update",
-          "values": [
-            {
-              "table": "tbl_member_details",
-              "column": "memNo",
-              "type": "number",
-              "value": "{{$_POST.memNo1}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "title",
-              "type": "text",
-              "value": "{{$_POST.title1}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "firstName",
-              "type": "text",
-              "value": "{{$_POST.firstName1}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "lastName",
-              "type": "text",
-              "value": "{{$_POST.lastName}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "dateJoined",
-              "type": "date",
-              "value": "{{$_POST.dateJoined}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "gdpr",
-              "type": "boolean",
-              "value": "{{$_POST.gdpr}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "ukTax",
-              "type": "boolean",
-              "value": "{{$_POST.ukTax}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "memCard",
-              "type": "boolean",
-              "value": "{{$_POST.memCard}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "status",
-              "type": "text",
-              "value": "{{$_POST.status}}"
-            },
-            {
-              "table": "tbl_member_details",
-              "column": "memDetsId",
-              "type": "number",
-              "value": "{{$_POST.memDetsId}}"
-            }
-          ],
-          "table": "tbl_member_details",
-          "wheres": {
-            "condition": "AND",
-            "rules": [
+    "steps": [
+      {
+        "name": "update",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "update",
+            "values": [
               {
-                "id": "memDetsId",
-                "type": "double",
+                "table": "tbl_member_details",
+                "column": "memNo",
+                "type": "number",
+                "value": "{{$_POST.memNo}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "title",
+                "type": "text",
+                "value": "{{$_POST.title.capitalize()}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "firstName",
+                "type": "text",
+                "value": "{{$_POST.firstName.lowercase().capitalize()}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "lastName",
+                "type": "text",
+                "value": "{{$_POST.lastName.lowercase().capitalize()}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "dateJoined",
+                "type": "date",
+                "value": "{{$_POST.dateJoined}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "gdpr",
+                "type": "boolean",
+                "value": "{{$_POST.gdpr}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "ukTax",
+                "type": "boolean",
+                "value": "{{$_POST.ukTax}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCard",
+                "type": "boolean",
+                "value": "{{$_POST.memCard}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "status",
+                "type": "text",
+                "value": "{{$_POST.status}}"
+              }
+            ],
+            "table": "tbl_member_details",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "memDetsId",
+                  "field": "memDetsId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_POST.memdetsid}}",
+                  "data": {
+                    "column": "memDetsId"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "memDetsId",
+            "query": "update `tbl_member_details` set `memNo` = ?, `title` = ?, `firstName` = ?, `lastName` = ?, `dateJoined` = ?, `gdpr` = ?, `ukTax` = ?, `memCard` = ?, `status` = ? where `memDetsId` = ? returning `memDetsId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.memNo}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.title.capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.firstName.lowercase().capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.lastName.lowercase().capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.dateJoined}}",
+                "test": ""
+              },
+              {
+                "name": ":P6",
+                "type": "expression",
+                "value": "{{$_POST.gdpr}}",
+                "test": ""
+              },
+              {
+                "name": ":P7",
+                "type": "expression",
+                "value": "{{$_POST.ukTax}}",
+                "test": ""
+              },
+              {
+                "name": ":P8",
+                "type": "expression",
+                "value": "{{$_POST.memCard}}",
+                "test": ""
+              },
+              {
+                "name": ":P9",
+                "type": "expression",
+                "value": "{{$_POST.status}}",
+                "test": ""
+              },
+              {
                 "operator": "equal",
-                "value": "{{$_POST.memDetsId}}",
-                "data": {
-                  "column": "memDetsId"
-                },
-                "operation": "="
+                "type": "expression",
+                "name": ":P10",
+                "value": "{{$_POST.memdetsid}}",
+                "test": ""
               }
             ]
-          },
-          "returning": "memDetsId",
-          "query": "update `tbl_member_details` set `memNo` = ?, `title` = ?, `firstName` = ?, `lastName` = ?, `dateJoined` = ?, `gdpr` = ?, `ukTax` = ?, `memCard` = ?, `status` = ?, `memDetsId` = ? where `memDetsId` = ? returning `memDetsId`",
-          "params": [
-            {
-              "name": ":P1",
-              "type": "expression",
-              "value": "{{$_POST.memNo1}}",
-              "test": ""
-            },
-            {
-              "name": ":P2",
-              "type": "expression",
-              "value": "{{$_POST.title1}}",
-              "test": ""
-            },
-            {
-              "name": ":P3",
-              "type": "expression",
-              "value": "{{$_POST.firstName1}}",
-              "test": ""
-            },
-            {
-              "name": ":P4",
-              "type": "expression",
-              "value": "{{$_POST.lastName}}",
-              "test": ""
-            },
-            {
-              "name": ":P5",
-              "type": "expression",
-              "value": "{{$_POST.dateJoined}}",
-              "test": ""
-            },
-            {
-              "name": ":P6",
-              "type": "expression",
-              "value": "{{$_POST.gdpr}}",
-              "test": ""
-            },
-            {
-              "name": ":P7",
-              "type": "expression",
-              "value": "{{$_POST.ukTax}}",
-              "test": ""
-            },
-            {
-              "name": ":P8",
-              "type": "expression",
-              "value": "{{$_POST.memCard}}",
-              "test": ""
-            },
-            {
-              "name": ":P9",
-              "type": "expression",
-              "value": "{{$_POST.status}}",
-              "test": ""
-            },
-            {
-              "name": ":P10",
-              "type": "expression",
-              "value": "{{$_POST.memDetsId}}",
-              "test": ""
-            },
-            {
-              "operator": "equal",
-              "type": "expression",
-              "name": ":P11",
-              "value": "{{$_POST.memDetsId}}",
-              "test": ""
-            }
-          ]
-        }
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
       },
-      "meta": [
-        {
-          "name": "affected",
-          "type": "number"
-        }
-      ]
-    }
+      {
+        "name": "updatePers",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "tbl_member_detail_id",
+                "type": "number",
+                "value": "{{$_POST.tbl_member_detail_id}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "tel",
+                "type": "text",
+                "value": "{{$_POST.tel}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "mobile",
+                "type": "text",
+                "value": "{{$_POST.mobile}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "email",
+                "type": "text",
+                "value": "{{$_POST.email.lowercase()}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "notes",
+                "type": "text",
+                "value": "{{$_POST.notes}}"
+              }
+            ],
+            "table": "tbl_member_detail_stbl_mem_pers",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_detail_id",
+                  "field": "tbl_member_detail_id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_POST.memdetsid}}",
+                  "data": {
+                    "column": "tbl_member_detail_id"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "memPersId",
+            "query": "update `tbl_member_detail_stbl_mem_pers` set `tbl_member_detail_id` = ?, `tel` = ?, `mobile` = ?, `email` = ?, `notes` = ? where `tbl_member_detail_id` = ? returning `memPersId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.tbl_member_detail_id}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.tel}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.mobile}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.email.lowercase()}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.notes}}",
+                "test": ""
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P6",
+                "value": "{{$_POST.memdetsid}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "updateAdd",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "tbl_member_detail_id",
+                "type": "number",
+                "value": "{{$_POST.tbl_member_detail_id}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "address1",
+                "type": "text",
+                "value": "{{$_POST.address1.capitalize()}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "address2",
+                "type": "text",
+                "value": "{{$_POST.address2.capitalize()}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "town1",
+                "type": "text",
+                "value": "{{$_POST.town1.capitalize()}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "town2",
+                "type": "text",
+                "value": "{{$_POST.town2.capitalize()}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "postcode",
+                "type": "text",
+                "value": "{{$_POST.postcode.uppercase()}}"
+              }
+            ],
+            "table": "tbl_member_detail_stbl_mem_address",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_detail_id",
+                  "field": "tbl_member_detail_id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_POST.memdetsid}}",
+                  "data": {
+                    "column": "tbl_member_detail_id"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "memAddId",
+            "query": "update `tbl_member_detail_stbl_mem_address` set `tbl_member_detail_id` = ?, `address1` = ?, `address2` = ?, `town1` = ?, `town2` = ?, `postcode` = ? where `tbl_member_detail_id` = ? returning `memAddId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.tbl_member_detail_id}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.address1.capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.address2.capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.town1.capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.town2.capitalize()}}",
+                "test": ""
+              },
+              {
+                "name": ":P6",
+                "type": "expression",
+                "value": "{{$_POST.postcode.uppercase()}}",
+                "test": ""
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P7",
+                "value": "{{$_POST.memdetsid}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      }
+    ]
   }
 }

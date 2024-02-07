@@ -117,6 +117,10 @@
       {
         "type": "text",
         "name": "postcode"
+      },
+      {
+        "type": "number",
+        "name": "status"
       }
     ]
   },
@@ -141,19 +145,19 @@
                 "table": "tbl_member_details",
                 "column": "title",
                 "type": "text",
-                "value": "{{$_POST.title.capitalize()}}"
+                "value": "{{$_POST.title.lowercase().capitalize()}}"
               },
               {
                 "table": "tbl_member_details",
                 "column": "firstName",
                 "type": "text",
-                "value": "{{$_POST.firstName.capitalize()}}"
+                "value": "{{$_POST.firstName.lowercase().capitalize()}}"
               },
               {
                 "table": "tbl_member_details",
                 "column": "lastName",
                 "type": "text",
-                "value": "{{$_POST.lastName.capitalize()}}"
+                "value": "{{$_POST.lastName.lowercase().capitalize()}}"
               },
               {
                 "table": "tbl_member_details",
@@ -178,11 +182,17 @@
                 "column": "memCard",
                 "type": "boolean",
                 "value": "{{$_POST.memCard.default(0)}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "status",
+                "type": "number",
+                "value": "{{1}}"
               }
             ],
             "table": "tbl_member_details",
             "returning": "memDetsId",
-            "query": "insert into `tbl_member_details` (`dateJoined`, `firstName`, `gdpr`, `lastName`, `memCard`, `memNo`, `title`, `ukTax`) values (?, ?, ?, ?, ?, ?, ?, ?) returning `memDetsId`",
+            "query": "insert into `tbl_member_details` (`dateJoined`, `firstName`, `gdpr`, `lastName`, `memCard`, `memNo`, `status`, `title`, `ukTax`) values (?, ?, ?, ?, ?, ?, ?, ?, ?) returning `memDetsId`",
             "params": [
               {
                 "name": ":P1",
@@ -193,19 +203,19 @@
               {
                 "name": ":P2",
                 "type": "expression",
-                "value": "{{$_POST.title.capitalize()}}",
+                "value": "{{$_POST.title.lowercase().capitalize()}}",
                 "test": ""
               },
               {
                 "name": ":P3",
                 "type": "expression",
-                "value": "{{$_POST.firstName.capitalize()}}",
+                "value": "{{$_POST.firstName.lowercase().capitalize()}}",
                 "test": ""
               },
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.lastName.capitalize()}}",
+                "value": "{{$_POST.lastName.lowercase().capitalize()}}",
                 "test": ""
               },
               {
@@ -230,6 +240,12 @@
                 "name": ":P8",
                 "type": "expression",
                 "value": "{{$_POST.memCard.default(0)}}",
+                "test": ""
+              },
+              {
+                "name": ":P9",
+                "type": "expression",
+                "value": "{{1}}",
                 "test": ""
               }
             ]

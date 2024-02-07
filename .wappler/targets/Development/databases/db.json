@@ -142,6 +142,28 @@
         "tablePrefix": "tbl_member_detail_",
         "parent": "tbl_member_details"
       },
+      "tbl_payment_type": {
+        "columns": {
+          "payTypeid": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "description": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
       "tbl_member_details": {
         "columns": {
           "memDetsId": {
@@ -193,7 +215,8 @@
               "type": "date",
               "primary": false,
               "unique": false,
-              "nullable": true
+              "nullable": true,
+              "default": "knex.fn.now()"
             }
           },
           "gdpr": {
@@ -222,7 +245,7 @@
           },
           "status": {
             "db": {
-              "type": "string",
+              "type": "integer",
               "maxLength": 255,
               "primary": false,
               "unique": false,
@@ -234,8 +257,115 @@
         "db": {},
         "sub": {
           "tbl_member_detail_stbl_mem_pers": "tbl_member_detail_id",
-          "tbl_member_detail_stbl_mem_address": "tbl_member_detail_id"
+          "tbl_member_detail_stbl_mem_address": "tbl_member_detail_id",
+          "tbl_member_detail_stbl_payments": "tbl_member_detail_id"
         }
+      },
+      "tbl_membershipType": {
+        "columns": {
+          "memTypeId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "memTypeDesc": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "cost": {
+            "db": {
+              "type": "float",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
+      "tbl_member_detail_stbl_payments": {
+        "columns": {
+          "paymentId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "tbl_member_detail_id": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "memDetsId",
+              "inTable": "tbl_member_details",
+              "referenceType": "integer",
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            }
+          },
+          "payType": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "datePaid": {
+            "db": {
+              "type": "date",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "notes": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "amount": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "memCat": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "newRenewal": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {},
+        "tablePrefix": "tbl_member_detail_",
+        "parent": "tbl_member_details"
       }
     },
     "views": {}

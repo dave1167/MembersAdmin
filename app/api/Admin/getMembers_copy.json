@@ -135,8 +135,24 @@
               "column": "status"
             },
             {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "email"
+            },
+            {
               "table": "tbl_member_details",
               "column": "dateJoined"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "tel"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "email"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "mobile"
             }
           ],
           "params": [],
@@ -144,59 +160,60 @@
             "name": "tbl_member_details"
           },
           "primary": "memDetsId",
-          "joins": [],
-          "query": "select distinct `memDetsId`, `memNo`, `firstName`, `lastName`, `status`, `dateJoined` from `tbl_member_details` order by `lastName` ASC",
-          "sub": {
-            "stbl_mem_pers": {
-              "table": {
-                "name": "tbl_member_detail_stbl_mem_pers",
-                "alias": "stbl_mem_pers"
-              },
-              "key": "tbl_member_detail_id"
-            },
-            "stbl_mem_address": {
-              "type": "select",
-              "table": {
-                "name": "tbl_member_detail_stbl_mem_address",
-                "alias": "stbl_mem_address"
-              },
-              "key": "tbl_member_detail_id",
-              "columns": [
-                {
-                  "table": "stbl_mem_address",
-                  "column": "address1"
-                },
-                {
-                  "table": "stbl_mem_address",
-                  "column": "address2"
-                },
-                {
-                  "table": "stbl_mem_address",
-                  "column": "town1"
-                },
-                {
-                  "table": "stbl_mem_address",
-                  "column": "town2"
-                },
-                {
-                  "table": "stbl_mem_address",
-                  "column": "postcode"
-                }
-              ],
-              "params": [],
-              "primary": "memAddId",
-              "joins": [],
-              "query": "select `address1`, `address2`, `town1`, `town2`, `postcode` from `tbl_member_detail_stbl_mem_address` as `stbl_mem_address`"
-            }
-          },
-          "orders": [
+          "joins": [
             {
-              "table": "tbl_member_details",
-              "column": "lastName",
-              "direction": "ASC"
+              "table": "tbl_member_detail_stbl_mem_pers",
+              "column": "*",
+              "type": "LEFT",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_member_detail_stbl_mem_pers",
+                    "column": "tbl_member_detail_id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_details",
+                      "column": "memDetsId"
+                    }
+                  }
+                ]
+              },
+              "primary": "memPersId"
             }
           ],
-          "distinct": true
+          "query": "select `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memNo`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`status`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_details`.`dateJoined`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`mobile` from `tbl_member_details` left join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`status` = ?",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "tbl_member_details.status",
+                "field": "tbl_member_details.status",
+                "type": "string",
+                "operator": "equal",
+                "value": "1",
+                "data": {
+                  "table": "tbl_member_details",
+                  "column": "status",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "primary": false,
+                    "unique": false,
+                    "nullable": true,
+                    "default": "1",
+                    "name": "status"
+                  }
+                },
+                "operation": "=",
+                "table": "tbl_member_details"
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          }
         }
       },
       "output": true,
@@ -222,64 +239,20 @@
           "name": "status"
         },
         {
+          "type": "text",
+          "name": "email"
+        },
+        {
           "type": "date",
           "name": "dateJoined"
         },
         {
-          "name": "stbl_mem_pers",
-          "type": "array",
-          "sub": [
-            {
-              "type": "number",
-              "name": "memPersId"
-            },
-            {
-              "type": "number",
-              "name": "tbl_member_detail_id"
-            },
-            {
-              "type": "text",
-              "name": "tel"
-            },
-            {
-              "type": "text",
-              "name": "mobile"
-            },
-            {
-              "type": "text",
-              "name": "email"
-            },
-            {
-              "type": "text",
-              "name": "notes"
-            }
-          ]
+          "type": "text",
+          "name": "tel"
         },
         {
-          "name": "stbl_mem_address",
-          "type": "array",
-          "sub": [
-            {
-              "type": "text",
-              "name": "address1"
-            },
-            {
-              "type": "text",
-              "name": "address2"
-            },
-            {
-              "type": "text",
-              "name": "town1"
-            },
-            {
-              "type": "text",
-              "name": "town2"
-            },
-            {
-              "type": "text",
-              "name": "postcode"
-            }
-          ]
+          "type": "text",
+          "name": "mobile"
         }
       ],
       "outputType": "array"

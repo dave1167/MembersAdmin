@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "memdetid"
+      }
+    ],
+    "$_POST": [
+      {
+        "type": "number",
+        "name": "tbl_member_detail_id"
+      },
+      {
+        "type": "number",
+        "name": "payType"
+      },
+      {
+        "type": "date",
+        "name": "datePaid"
+      },
+      {
+        "type": "text",
+        "name": "notes"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "insert",
+      "module": "dbupdater",
+      "action": "insert",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "insert",
+          "values": [
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "tbl_member_detail_id",
+              "type": "number",
+              "value": "{{$_GET.memdetid}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "payType",
+              "type": "number",
+              "value": "{{$_POST.payType}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "datePaid",
+              "type": "date",
+              "value": "{{$_POST.datePaid}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "notes",
+              "type": "text",
+              "value": "{{$_POST.notes}}"
+            }
+          ],
+          "table": "tbl_member_detail_stbl_payments",
+          "returning": "paymentId",
+          "query": "insert into `tbl_member_detail_stbl_payments` (`datePaid`, `notes`, `payType`, `tbl_member_detail_id`) values (?, ?, ?, ?) returning `paymentId`",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_GET.memdetid}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.payType}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.datePaid}}",
+              "test": ""
+            },
+            {
+              "name": ":P4",
+              "type": "expression",
+              "value": "{{$_POST.notes}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "identity",
+          "type": "text"
+        },
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}
