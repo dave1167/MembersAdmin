@@ -252,6 +252,14 @@
               "nullable": true,
               "default": "1"
             }
+          },
+          "memCategory": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
           }
         },
         "db": {},

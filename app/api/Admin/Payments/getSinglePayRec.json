@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "number",
+        "name": "payid"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "single",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "paymentId"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "tbl_member_detail_id"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "payType"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "datePaid"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "notes"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "amount"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "memCat"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "newRenewal"
+            }
+          ],
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.payid}}",
+              "test": "24"
+            }
+          ],
+          "table": {
+            "name": "tbl_member_detail_stbl_payments"
+          },
+          "primary": "paymentId",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "tbl_member_detail_stbl_payments.paymentId",
+                "field": "tbl_member_detail_stbl_payments.paymentId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_GET.payid}}",
+                "data": {
+                  "table": "tbl_member_detail_stbl_payments",
+                  "column": "paymentId",
+                  "type": "number",
+                  "columnObj": {
+                    "type": "increments",
+                    "primary": true,
+                    "unique": false,
+                    "nullable": false,
+                    "name": "paymentId"
+                  }
+                },
+                "operation": "=",
+                "table": "tbl_member_detail_stbl_payments"
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "query": "select `paymentId`, `tbl_member_detail_id`, `payType`, `datePaid`, `notes`, `amount`, `memCat`, `newRenewal` from `tbl_member_detail_stbl_payments` where `tbl_member_detail_stbl_payments`.`paymentId` = ?"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "paymentId"
+        },
+        {
+          "type": "number",
+          "name": "tbl_member_detail_id"
+        },
+        {
+          "type": "number",
+          "name": "payType"
+        },
+        {
+          "type": "date",
+          "name": "datePaid"
+        },
+        {
+          "type": "text",
+          "name": "notes"
+        },
+        {
+          "type": "number",
+          "name": "amount"
+        },
+        {
+          "type": "number",
+          "name": "memCat"
+        },
+        {
+          "type": "number",
+          "name": "newRenewal"
+        }
+      ],
+      "outputType": "object"
+    }
+  }
+}

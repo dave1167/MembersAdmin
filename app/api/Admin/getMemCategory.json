@@ -22,40 +22,40 @@
           "type": "select",
           "columns": [
             {
-              "table": "tbl_payment_type",
-              "column": "description"
+              "table": "tbl_membershipType",
+              "column": "memTypeId"
             },
             {
-              "table": "tbl_payment_type",
-              "column": "payTypeid"
+              "table": "tbl_membershipType",
+              "column": "memTypeDesc"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "cost"
             }
           ],
           "params": [],
           "table": {
-            "name": "tbl_payment_type"
+            "name": "tbl_membershipType"
           },
-          "primary": "payTypeid",
+          "primary": "memTypeId",
           "joins": [],
-          "query": "select `description`, `payTypeid` from `tbl_payment_type` order by `description` ASC",
-          "orders": [
-            {
-              "table": "tbl_payment_type",
-              "column": "description",
-              "direction": "ASC",
-              "recid": 1
-            }
-          ]
+          "query": "select `memTypeId`, `memTypeDesc`, `cost` from `tbl_membershipType`"
         }
       },
       "output": true,
       "meta": [
         {
+          "type": "number",
+          "name": "memTypeId"
+        },
+        {
           "type": "text",
-          "name": "description"
+          "name": "memTypeDesc"
         },
         {
           "type": "number",
-          "name": "payTypeid"
+          "name": "cost"
         }
       ],
       "outputType": "array"

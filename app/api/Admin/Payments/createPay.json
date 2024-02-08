@@ -1,5 +1,9 @@
 {
   "meta": {
+    "options": {
+      "linkedFile": "/views/admin/members.ejs",
+      "linkedForm": "form1"
+    },
     "$_GET": [
       {
         "type": "text",
@@ -13,15 +17,61 @@
       },
       {
         "type": "number",
-        "name": "payType"
+        "fieldName": "paymethHidden",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "paymethHidden"
       },
       {
-        "type": "date",
+        "type": "number",
+        "fieldName": "finalOutput",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "finalOutput"
+      },
+      {
+        "type": "number",
+        "fieldName": "amount",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "amount"
+      },
+      {
+        "type": "text",
+        "fieldName": "datePaid",
         "name": "datePaid"
       },
       {
         "type": "text",
+        "fieldName": "memberDetsId",
+        "name": "memberDetsId"
+      },
+      {
+        "type": "text",
+        "fieldName": "selectPayType",
+        "name": "selectPayType"
+      },
+      {
+        "type": "text",
+        "fieldName": "notes",
         "name": "notes"
+      },
+      {
+        "type": "text",
+        "name": "memCat"
+      },
+      {
+        "type": "number",
+        "name": "paymentId"
       }
     ]
   },
@@ -39,13 +89,13 @@
               "table": "tbl_member_detail_stbl_payments",
               "column": "tbl_member_detail_id",
               "type": "number",
-              "value": "{{$_GET.memdetid}}"
+              "value": "{{$_POST.memberDetsId}}"
             },
             {
               "table": "tbl_member_detail_stbl_payments",
               "column": "payType",
               "type": "number",
-              "value": "{{$_POST.payType}}"
+              "value": "{{$_POST.finalOutput}}"
             },
             {
               "table": "tbl_member_detail_stbl_payments",
@@ -58,22 +108,46 @@
               "column": "notes",
               "type": "text",
               "value": "{{$_POST.notes}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "memCat",
+              "type": "text",
+              "value": "{{$_POST.memCat}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "amount",
+              "type": "number",
+              "value": "{{$_POST.amount}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "paymentId",
+              "type": "number",
+              "value": "{{$_POST.paymentId}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "newRenewal",
+              "type": "number",
+              "value": "{{2}}"
             }
           ],
           "table": "tbl_member_detail_stbl_payments",
           "returning": "paymentId",
-          "query": "insert into `tbl_member_detail_stbl_payments` (`datePaid`, `notes`, `payType`, `tbl_member_detail_id`) values (?, ?, ?, ?) returning `paymentId`",
+          "query": "insert into `tbl_member_detail_stbl_payments` (`amount`, `datePaid`, `memCat`, `newRenewal`, `notes`, `payType`, `paymentId`, `tbl_member_detail_id`) values (?, ?, ?, ?, ?, ?, ?, ?) returning `paymentId`",
           "params": [
             {
               "name": ":P1",
               "type": "expression",
-              "value": "{{$_GET.memdetid}}",
+              "value": "{{$_POST.memberDetsId}}",
               "test": ""
             },
             {
               "name": ":P2",
               "type": "expression",
-              "value": "{{$_POST.payType}}",
+              "value": "{{$_POST.finalOutput}}",
               "test": ""
             },
             {
@@ -86,6 +160,30 @@
               "name": ":P4",
               "type": "expression",
               "value": "{{$_POST.notes}}",
+              "test": ""
+            },
+            {
+              "name": ":P5",
+              "type": "expression",
+              "value": "{{$_POST.memCat}}",
+              "test": ""
+            },
+            {
+              "name": ":P6",
+              "type": "expression",
+              "value": "{{$_POST.amount}}",
+              "test": ""
+            },
+            {
+              "name": ":P7",
+              "type": "expression",
+              "value": "{{$_POST.paymentId}}",
+              "test": ""
+            },
+            {
+              "name": ":P8",
+              "type": "expression",
+              "value": "{{2}}",
               "test": ""
             }
           ]
