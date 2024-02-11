@@ -20,7 +20,8 @@
             {
               "table": "tbl_member_detail_stbl_payments",
               "column": "datePaid",
-              "aggregate": "MAX"
+              "aggregate": "MAX",
+              "alias": "dueDate"
             }
           ],
           "params": [
@@ -64,20 +65,21 @@
                     "name": "tbl_member_detail_id"
                   }
                 },
-                "operation": "="
+                "operation": "=",
+                "table": "tbl_member_detail_stbl_payments"
               }
             ],
             "conditional": null,
             "valid": true
           },
-          "query": "select max(`datePaid`) from `tbl_member_detail_stbl_payments` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ?"
+          "query": "select max(`datePaid`) as `dueDate` from `tbl_member_detail_stbl_payments` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ?"
         }
       },
       "output": true,
       "meta": [
         {
           "type": "date",
-          "name": "datePaid"
+          "name": "dueDate"
         }
       ],
       "outputType": "object"

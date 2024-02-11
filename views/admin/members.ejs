@@ -1,5 +1,5 @@
 <!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="members" appConnect="local" components="{dmxBootstrap5Modal:{},dmxBrowser:{},dmxStateManagement:{},dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxValidator:{},dmxDatePicker:{},dmxBootbox5:{},dmxDatastore:{},dmxMoment:{},dmxNotifications:{}}" jquery_slim_35="cdn" moment_2="cdn" -->
-<dmx-serverconnect id="scgetLastPay" url="/api/Admin/Payments/getLastPayment"></dmx-serverconnect>
+<dmx-serverconnect id="scgetLastPay" url="/api/Admin/Payments/getLastPayment" noload="true"></dmx-serverconnect>
 
 <dmx-datetime id="var1"></dmx-datetime>
 <dmx-notifications id="notifies1" timeout="6000"></dmx-notifications>
@@ -307,10 +307,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
-                            <div class="d-block">
-                                <input id="inpPayDue" name="nextPayDue" type="text" class="form-control" dmx-bind:value="scgetLastPay.data.query.datePaid">
-
-                            </div>
+                            <p dmx-text="scGetSingleMem.data.query.dateJoined.formatDate('MMMM')+' '+scgetLastPay.data.query.dueDate.addYears(1).formatDate('yyyy')">A nice paragraph</p>
                         </div>
                     </div>
                     <div class="row">
@@ -506,7 +503,7 @@
                             <tr>
                                 <td class="align-middle">
                                     <div class="row row-cols-4">
-                                        <div class="col-1 me-4"><button id="btnEdit" class="btn btn-success align-self-center shadow ps-2 text-justify" dmx-on:click="scgetLastPay.load({memdetsid: memDetsId});scGetSingleMem.load({memdetsid: memDetsId});modEdit.show();modEdit.update()"><i class="fas fa-edit fa-lg iconSpacer"></i></button></div>
+                                        <div class="col-1 me-4"><button id="btnEdit" class="btn btn-success align-self-center shadow ps-2 text-justify" dmx-on:click="run([{run:{outputType:'text',action:`scgetLastPay.load({memdetsid: memDetsId})`}},{run:{outputType:'text',action:`session1.set(\'lastDatePaid\',scgetLastPay.data.query.datePaid)`}},{run:{outputType:'text',action:`session1.set(\'lastDatePaid\',scgetLastPay.data.query.datePaid)`}},{run:{outputType:'text',action:`scGetSingleMem.load({memdetsid: memDetsId})`}},{run:{outputType:'text',action:`modEdit.show()`}},{run:{outputType:'text',action:`modEdit.update()`}}])"><i class="fas fa-edit fa-lg iconSpacer"></i></button></div>
                                         <div class="col-1 ms-3"><button id="btnArchive" class="btn btn-danger align-self-center shadow" dmx-on:click="run({confirm:{name:'FOLP Membership',outputType:'boolean',message:`\'You are about to archive \'+firstName+\' \'+lastName+\'. Please confirm?\'`,then:{steps:[{run:{outputType:'text',action:`scArchive.load({memdetsid: memDetsId})`}},{run:{outputType:'text',action:`scGetMembers.load({})`}}]}}})"><i class="fas fa-archive fa-lg"></i></button></div>
                                     </div>
 

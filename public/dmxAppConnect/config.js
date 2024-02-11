@@ -22,6 +22,10 @@ dmx.config({
         "name": "payType"
       },
       {
+        "type": "text",
+        "name": "lastDatePaid"
+      },
+      {
         "type": "number",
         "name": "memDetesID"
       },
