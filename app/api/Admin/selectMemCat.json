@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_membershipType",
+              "column": "memTypeId"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "memTypeDesc"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "cost"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_membershipType"
+          },
+          "primary": "memTypeId",
+          "joins": [],
+          "query": "select `memTypeId`, `memTypeDesc`, `cost` from `tbl_membershipType`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "memTypeId"
+        },
+        {
+          "type": "text",
+          "name": "memTypeDesc"
+        },
+        {
+          "type": "number",
+          "name": "cost"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

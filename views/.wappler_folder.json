@@ -1,0 +1,14 @@
+{
+  "test1.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "test2.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "test3.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  }
+}

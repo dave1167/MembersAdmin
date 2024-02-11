@@ -64,7 +64,7 @@
               "type": "expression",
               "name": ":P1",
               "value": "{{$_GET.memdetsid}}",
-              "test": ""
+              "test": "2"
             }
           ],
           "table": {
@@ -94,7 +94,7 @@
               "primary": "payTypeid"
             }
           ],
-          "query": "select `tbl_member_detail_stbl_payments`.`payType`, `tbl_member_detail_stbl_payments`.`datePaid`, `tbl_member_detail_stbl_payments`.`notes`, `tbl_payment_type`.`description`, `tbl_member_detail_stbl_payments`.`tbl_member_detail_id`, `tbl_member_detail_stbl_payments`.`amount`, `tbl_member_detail_stbl_payments`.`memCat`, `tbl_member_detail_stbl_payments`.`newRenewal` from `tbl_member_detail_stbl_payments` inner join `tbl_payment_type` on `tbl_payment_type`.`payTypeid` = `tbl_member_detail_stbl_payments`.`payType` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ?",
+          "query": "select `tbl_member_detail_stbl_payments`.`payType`, `tbl_member_detail_stbl_payments`.`datePaid`, `tbl_member_detail_stbl_payments`.`notes`, `tbl_payment_type`.`description`, `tbl_member_detail_stbl_payments`.`tbl_member_detail_id`, `tbl_member_detail_stbl_payments`.`amount`, `tbl_member_detail_stbl_payments`.`memCat`, `tbl_member_detail_stbl_payments`.`newRenewal` from `tbl_member_detail_stbl_payments` inner join `tbl_payment_type` on `tbl_payment_type`.`payTypeid` = `tbl_member_detail_stbl_payments`.`payType` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ? order by `tbl_member_detail_stbl_payments`.`datePaid` DESC",
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -127,7 +127,14 @@
             ],
             "conditional": null,
             "valid": true
-          }
+          },
+          "orders": [
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "datePaid",
+              "direction": "DESC"
+            }
+          ]
         }
       },
       "output": true,

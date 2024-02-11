@@ -121,6 +121,14 @@
       {
         "type": "number",
         "name": "tbl_member_detail_id"
+      },
+      {
+        "type": "number",
+        "name": "memCategory"
+      },
+      {
+        "type": "number",
+        "name": "memCat"
       }
     ]
   },
@@ -188,6 +196,12 @@
                 "column": "status",
                 "type": "text",
                 "value": "{{$_POST.status}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCategory",
+                "type": "number",
+                "value": "{{$_POST.memCat}}"
               }
             ],
             "table": "tbl_member_details",
@@ -210,7 +224,7 @@
               "valid": true
             },
             "returning": "memDetsId",
-            "query": "update `tbl_member_details` set `memNo` = ?, `title` = ?, `firstName` = ?, `lastName` = ?, `dateJoined` = ?, `gdpr` = ?, `ukTax` = ?, `memCard` = ?, `status` = ? where `memDetsId` = ? returning `memDetsId`",
+            "query": "update `tbl_member_details` set `memNo` = ?, `title` = ?, `firstName` = ?, `lastName` = ?, `dateJoined` = ?, `gdpr` = ?, `ukTax` = ?, `memCard` = ?, `status` = ?, `memCategory` = ? where `memDetsId` = ? returning `memDetsId`",
             "params": [
               {
                 "name": ":P1",
@@ -267,9 +281,15 @@
                 "test": ""
               },
               {
+                "name": ":P10",
+                "type": "expression",
+                "value": "{{$_POST.memCat}}",
+                "test": ""
+              },
+              {
                 "operator": "equal",
                 "type": "expression",
-                "name": ":P10",
+                "name": ":P11",
                 "value": "{{$_POST.memdetsid}}",
                 "test": ""
               }

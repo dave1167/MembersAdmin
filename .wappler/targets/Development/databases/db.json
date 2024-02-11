@@ -348,7 +348,7 @@
           },
           "amount": {
             "db": {
-              "type": "integer",
+              "type": "float",
               "primary": false,
               "unique": false,
               "nullable": true

@@ -88,6 +88,10 @@
             {
               "table": "tbl_member_details",
               "column": "memDetsId"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "memCategory"
             }
           ],
           "params": [
@@ -147,7 +151,7 @@
               "primary": "memAddId"
             }
           ],
-          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`mobile`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`notes`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode`, `tbl_member_details`.`memDetsId` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`memDetsId` = ?",
+          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`mobile`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`notes`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode`, `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memCategory` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`memDetsId` = ?",
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -251,6 +255,10 @@
         {
           "type": "number",
           "name": "memDetsId"
+        },
+        {
+          "type": "number",
+          "name": "memCategory"
         }
       ],
       "outputType": "object"

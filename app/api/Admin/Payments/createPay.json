@@ -12,48 +12,36 @@
     ],
     "$_POST": [
       {
-        "type": "number",
-        "name": "tbl_member_detail_id"
+        "type": "text",
+        "fieldName": "ptText",
+        "name": "ptText"
       },
       {
-        "type": "number",
-        "fieldName": "paymethHidden",
-        "options": {
-          "rules": {
-            "core:number": {}
-          }
-        },
-        "name": "paymethHidden"
-      },
-      {
-        "type": "number",
-        "fieldName": "finalOutput",
-        "options": {
-          "rules": {
-            "core:number": {}
-          }
-        },
-        "name": "finalOutput"
-      },
-      {
-        "type": "number",
+        "type": "text",
         "fieldName": "amount",
-        "options": {
-          "rules": {
-            "core:number": {}
-          }
-        },
         "name": "amount"
       },
       {
         "type": "text",
         "fieldName": "datePaid",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
         "name": "datePaid"
       },
       {
         "type": "text",
         "fieldName": "memberDetsId",
         "name": "memberDetsId"
+      },
+      {
+        "type": "text",
+        "fieldName": "text1",
+        "name": "text1"
       },
       {
         "type": "text",
@@ -66,139 +54,280 @@
         "name": "notes"
       },
       {
-        "type": "text",
-        "name": "memCat"
+        "type": "number",
+        "name": "paymethHidden"
       },
       {
         "type": "number",
         "name": "paymentId"
+      },
+      {
+        "type": "text",
+        "fieldName": "amount1",
+        "name": "amount1"
+      },
+      {
+        "type": "number",
+        "fieldName": "memcat",
+        "options": {
+          "rules": {}
+        },
+        "name": "memcat"
       }
     ]
   },
   "exec": {
-    "steps": {
-      "name": "insert",
-      "module": "dbupdater",
-      "action": "insert",
-      "options": {
-        "connection": "db",
-        "sql": {
-          "type": "insert",
-          "values": [
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "tbl_member_detail_id",
-              "type": "number",
-              "value": "{{$_POST.memberDetsId}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "payType",
-              "type": "number",
-              "value": "{{$_POST.finalOutput}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "datePaid",
-              "type": "date",
-              "value": "{{$_POST.datePaid}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "notes",
-              "type": "text",
-              "value": "{{$_POST.notes}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "memCat",
-              "type": "text",
-              "value": "{{$_POST.memCat}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "amount",
-              "type": "number",
-              "value": "{{$_POST.amount}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "paymentId",
-              "type": "number",
-              "value": "{{$_POST.paymentId}}"
-            },
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "newRenewal",
-              "type": "number",
-              "value": "{{2}}"
-            }
-          ],
-          "table": "tbl_member_detail_stbl_payments",
-          "returning": "paymentId",
-          "query": "insert into `tbl_member_detail_stbl_payments` (`amount`, `datePaid`, `memCat`, `newRenewal`, `notes`, `payType`, `paymentId`, `tbl_member_detail_id`) values (?, ?, ?, ?, ?, ?, ?, ?) returning `paymentId`",
-          "params": [
-            {
-              "name": ":P1",
-              "type": "expression",
-              "value": "{{$_POST.memberDetsId}}",
-              "test": ""
-            },
-            {
-              "name": ":P2",
-              "type": "expression",
-              "value": "{{$_POST.finalOutput}}",
-              "test": ""
-            },
-            {
-              "name": ":P3",
-              "type": "expression",
-              "value": "{{$_POST.datePaid}}",
-              "test": ""
-            },
-            {
-              "name": ":P4",
-              "type": "expression",
-              "value": "{{$_POST.notes}}",
-              "test": ""
-            },
-            {
-              "name": ":P5",
-              "type": "expression",
-              "value": "{{$_POST.memCat}}",
-              "test": ""
-            },
-            {
-              "name": ":P6",
-              "type": "expression",
-              "value": "{{$_POST.amount}}",
-              "test": ""
-            },
-            {
-              "name": ":P7",
-              "type": "expression",
-              "value": "{{$_POST.paymentId}}",
-              "test": ""
-            },
-            {
-              "name": ":P8",
-              "type": "expression",
-              "value": "{{2}}",
-              "test": ""
-            }
-          ]
+    "steps": [
+      {
+        "name": "",
+        "options": {
+          "comment": "This routine creates the pay record  but also pulls out the cost of membership it needs to be a static value to preserve legacy price changes\n"
         }
       },
-      "meta": [
-        {
-          "name": "identity",
-          "type": "text"
+      {
+        "name": "query",
+        "module": "dbconnector",
+        "action": "single",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "tbl_member_details",
+                "column": "memDetsId",
+                "recid": 1
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCategory",
+                "recid": 2
+              },
+              {
+                "table": "tbl_membershipType",
+                "column": "memTypeDesc",
+                "recid": 3
+              },
+              {
+                "table": "tbl_membershipType",
+                "column": "cost",
+                "alias": "currentFee",
+                "recid": 4
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.memdetid}}",
+                "test": "2"
+              }
+            ],
+            "table": {
+              "name": "tbl_member_details"
+            },
+            "primary": "memDetsId",
+            "joins": [
+              {
+                "table": "tbl_membershipType",
+                "column": "*",
+                "type": "INNER",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "tbl_membershipType",
+                      "column": "memTypeId",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "tbl_member_details",
+                        "column": "memCategory"
+                      }
+                    }
+                  ]
+                },
+                "primary": "memTypeId"
+              }
+            ],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_details.memDetsId",
+                  "field": "tbl_member_details.memDetsId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.memdetid}}",
+                  "data": {
+                    "table": "tbl_member_details",
+                    "column": "memDetsId",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "primary": true,
+                      "unique": false,
+                      "nullable": false,
+                      "name": "memDetsId"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memCategory`, `tbl_membershipType`.`memTypeDesc`, `tbl_membershipType`.`cost` as `currentFee` from `tbl_member_details` inner join `tbl_membershipType` on `tbl_membershipType`.`memTypeId` = `tbl_member_details`.`memCategory` where `tbl_member_details`.`memDetsId` = ?"
+          }
         },
-        {
-          "name": "affected",
-          "type": "number"
-        }
-      ]
-    }
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "memDetsId"
+          },
+          {
+            "type": "number",
+            "name": "memCategory"
+          },
+          {
+            "type": "text",
+            "name": "memTypeDesc"
+          },
+          {
+            "type": "number",
+            "name": "currentFee"
+          }
+        ],
+        "outputType": "object",
+        "disabled": true
+      },
+      {
+        "name": "insert",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "tbl_member_detail_id",
+                "type": "number",
+                "value": "{{$_POST.memberDetsId}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "payType",
+                "type": "number",
+                "value": "{{$_POST.ptText}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "datePaid",
+                "type": "date",
+                "value": "{{$_POST.datePaid}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "notes",
+                "type": "text",
+                "value": "{{$_POST.notes}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "memCat",
+                "type": "text",
+                "value": "{{$_POST.memcat}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "amount",
+                "type": "number",
+                "value": "{{$_POST.amount1}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "paymentId",
+                "type": "number",
+                "value": "{{$_POST.paymentId}}"
+              },
+              {
+                "table": "tbl_member_detail_stbl_payments",
+                "column": "newRenewal",
+                "type": "number",
+                "value": "{{2}}"
+              }
+            ],
+            "table": "tbl_member_detail_stbl_payments",
+            "returning": "paymentId",
+            "query": "insert into `tbl_member_detail_stbl_payments` (`amount`, `datePaid`, `memCat`, `newRenewal`, `notes`, `payType`, `paymentId`, `tbl_member_detail_id`) values (?, ?, ?, ?, ?, ?, ?, ?) returning `paymentId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.memberDetsId}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.ptText}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.datePaid}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.notes}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.memcat}}",
+                "test": ""
+              },
+              {
+                "name": ":P6",
+                "type": "expression",
+                "value": "{{$_POST.amount1}}",
+                "test": ""
+              },
+              {
+                "name": ":P7",
+                "type": "expression",
+                "value": "{{$_POST.paymentId}}",
+                "test": ""
+              },
+              {
+                "name": ":P8",
+                "type": "expression",
+                "value": "{{2}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ],
+        "output": true
+      }
+    ]
   }
 }

@@ -35,13 +35,49 @@
                 "column": "cost"
               }
             ],
-            "params": [],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.memdetsid}}",
+                "test": "1"
+              }
+            ],
             "table": {
               "name": "tbl_membershipType"
             },
             "primary": "memTypeId",
             "joins": [],
-            "query": "select `memTypeId`, `memTypeDesc`, `cost` from `tbl_membershipType`"
+            "query": "select `memTypeId`, `memTypeDesc`, `cost` from `tbl_membershipType` where `tbl_membershipType`.`memTypeId` = ?",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_membershipType.memTypeId",
+                  "field": "tbl_membershipType.memTypeId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.memdetsid}}",
+                  "data": {
+                    "table": "tbl_membershipType",
+                    "column": "memTypeId",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "primary": true,
+                      "unique": false,
+                      "nullable": false,
+                      "name": "memTypeId"
+                    }
+                  },
+                  "operation": "=",
+                  "table": "tbl_membershipType"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
           }
         },
         "output": true,

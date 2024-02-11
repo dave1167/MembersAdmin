@@ -1,0 +1,67 @@
+{
+  "name": "query",
+  "module": "dbconnector",
+  "action": "single",
+  "options": {
+    "connection": "db",
+    "sql": {
+      "type": "select",
+      "columns": [
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "payType"
+        }
+      ],
+      "params": [
+        {
+          "operator": "equal",
+          "type": "expression",
+          "name": ":P1",
+          "value": "{{$_GET.payid}}",
+          "test": "45"
+        }
+      ],
+      "table": {
+        "name": "tbl_member_detail_stbl_payments"
+      },
+      "primary": "paymentId",
+      "joins": [],
+      "wheres": {
+        "condition": "AND",
+        "rules": [
+          {
+            "id": "tbl_member_detail_stbl_payments.paymentId",
+            "field": "tbl_member_detail_stbl_payments.paymentId",
+            "type": "double",
+            "operator": "equal",
+            "value": "{{$_GET.payid}}",
+            "data": {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "paymentId",
+              "type": "number",
+              "columnObj": {
+                "type": "increments",
+                "primary": true,
+                "unique": false,
+                "nullable": false,
+                "name": "paymentId"
+              }
+            },
+            "operation": "="
+          }
+        ],
+        "conditional": null,
+        "valid": true
+      },
+      "query": "select `payType` from `tbl_member_detail_stbl_payments` where `tbl_member_detail_stbl_payments`.`paymentId` = ?"
+    }
+  },
+  "output": true,
+  "meta": [
+    {
+      "type": "number",
+      "name": "payType"
+    }
+  ],
+  "outputType": "object"
+}

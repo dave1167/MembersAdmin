@@ -8,57 +8,135 @@
       {
         "type": "text",
         "name": "dir"
+      },
+      {
+        "type": "number",
+        "name": "memdetsid"
       }
     ]
   },
   "exec": {
-    "steps": {
-      "name": "query",
-      "module": "dbconnector",
-      "action": "select",
-      "options": {
-        "connection": "db",
-        "sql": {
-          "type": "select",
-          "columns": [
-            {
-              "table": "tbl_membershipType",
-              "column": "memTypeId"
-            },
-            {
-              "table": "tbl_membershipType",
-              "column": "memTypeDesc"
-            },
-            {
-              "table": "tbl_membershipType",
-              "column": "cost"
-            }
-          ],
-          "params": [],
-          "table": {
-            "name": "tbl_membershipType"
-          },
-          "primary": "memTypeId",
-          "joins": [],
-          "query": "select `memTypeId`, `memTypeDesc`, `cost` from `tbl_membershipType`"
+    "steps": [
+      {
+        "name": "",
+        "options": {
+          "comment": "Pulls out the member category "
         }
       },
-      "output": true,
-      "meta": [
-        {
-          "type": "number",
-          "name": "memTypeId"
+      {
+        "name": "query",
+        "module": "dbconnector",
+        "action": "select",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "tbl_membershipType",
+                "column": "memTypeId"
+              },
+              {
+                "table": "tbl_membershipType",
+                "column": "memTypeDesc"
+              },
+              {
+                "table": "tbl_membershipType",
+                "column": "cost"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCategory"
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.memdetsid}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "tbl_membershipType"
+            },
+            "primary": "memTypeId",
+            "joins": [
+              {
+                "table": "tbl_member_details",
+                "column": "*",
+                "type": "INNER",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "tbl_member_details",
+                      "column": "memCategory",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "tbl_membershipType",
+                        "column": "memTypeId"
+                      }
+                    }
+                  ]
+                },
+                "primary": "memDetsId"
+              }
+            ],
+            "query": "select `tbl_membershipType`.`memTypeId`, `tbl_membershipType`.`memTypeDesc`, `tbl_membershipType`.`cost`, `tbl_member_details`.`memCategory` from `tbl_membershipType` inner join `tbl_member_details` on `tbl_member_details`.`memCategory` = `tbl_membershipType`.`memTypeId` where `tbl_member_details`.`memDetsId` = ?",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_details.memDetsId",
+                  "field": "tbl_member_details.memDetsId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.memdetsid}}",
+                  "data": {
+                    "table": "tbl_member_details",
+                    "column": "memDetsId",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "primary": true,
+                      "unique": false,
+                      "nullable": false,
+                      "name": "memDetsId"
+                    }
+                  },
+                  "operation": "=",
+                  "table": "tbl_membershipType"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
+          }
         },
-        {
-          "type": "text",
-          "name": "memTypeDesc"
-        },
-        {
-          "type": "number",
-          "name": "cost"
-        }
-      ],
-      "outputType": "array"
-    }
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "memTypeId"
+          },
+          {
+            "type": "text",
+            "name": "memTypeDesc"
+          },
+          {
+            "type": "number",
+            "name": "cost"
+          },
+          {
+            "type": "number",
+            "name": "memCategory"
+          }
+        ],
+        "outputType": "array"
+      }
+    ]
   }
 }

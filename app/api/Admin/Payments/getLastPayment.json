@@ -2,20 +2,8 @@
   "meta": {
     "$_GET": [
       {
-        "type": "text",
-        "name": "sort"
-      },
-      {
-        "type": "text",
-        "name": "dir"
-      },
-      {
         "type": "number",
         "name": "memdetsid"
-      },
-      {
-        "type": "text",
-        "name": "payid"
       }
     ]
   },
@@ -23,7 +11,7 @@
     "steps": {
       "name": "query",
       "module": "dbconnector",
-      "action": "select",
+      "action": "single",
       "options": {
         "connection": "db",
         "sql": {
@@ -31,9 +19,8 @@
           "columns": [
             {
               "table": "tbl_member_detail_stbl_payments",
-              "column": "paymentId",
-              "aggregate": "MAX",
-              "alias": "payId"
+              "column": "datePaid",
+              "aggregate": "MAX"
             }
           ],
           "params": [
@@ -42,7 +29,7 @@
               "type": "expression",
               "name": ":P1",
               "value": "{{$_GET.memdetsid}}",
-              "test": "79"
+              "test": "2"
             }
           ],
           "table": {
@@ -50,6 +37,7 @@
           },
           "primary": "paymentId",
           "joins": [],
+          "groupBy": [],
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -76,33 +64,23 @@
                     "name": "tbl_member_detail_id"
                   }
                 },
-                "operation": "=",
-                "table": "tbl_member_detail_stbl_payments"
+                "operation": "="
               }
             ],
             "conditional": null,
             "valid": true
           },
-          "query": "select max(`paymentId`) as `payId` from `tbl_member_detail_stbl_payments` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ? order by `datePaid` DESC",
-          "orders": [
-            {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "datePaid",
-              "direction": "DESC",
-              "recid": 1
-            }
-          ],
-          "groupBy": []
+          "query": "select max(`datePaid`) from `tbl_member_detail_stbl_payments` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ?"
         }
       },
       "output": true,
       "meta": [
         {
-          "type": "number",
-          "name": "payId"
+          "type": "date",
+          "name": "datePaid"
         }
       ],
-      "outputType": "array"
+      "outputType": "object"
     }
   }
 }

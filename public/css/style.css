@@ -62,7 +62,7 @@ label.font-weight-bold.col-auto.col-form-label {
   width: 100%;
   padding: 0.375rem 0.75rem;
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5;
   color: var(--bs-body-color);
   -webkit-appearance: none;
@@ -76,4 +76,18 @@ label.font-weight-bold.col-auto.col-form-label {
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
+}
+select {
+  word-wrap: normal;
+}
+select {
+  -webkit-appearance: menulist;
+  box-sizing: border-box;
+  align-items: center;
+  border: 1px solid;
+  white-space: pre;
+  -webkit-rtl-ordering: logical;
+  color: black;
+  background-color: rgb(167, 33, 33);
+  cursor: default;
 }

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "number",
+        "name": "payid"
+      },
+      {
+        "type": "number",
+        "name": "memdetsid"
+      }
+    ],
+    "$_SESSION": [
+      {
+        "type": "number",
+        "name": "payType"
+      }
+    ]
+  },
+  "exec": {}
+}
