@@ -12,6 +12,10 @@
       {
         "type": "text",
         "name": "dir"
+      },
+      {
+        "type": "date",
+        "name": "payduedate"
       }
     ],
     "$_POST": [
@@ -121,6 +125,14 @@
       {
         "type": "number",
         "name": "status"
+      },
+      {
+        "type": "number",
+        "name": "memCategory"
+      },
+      {
+        "type": "date",
+        "name": "payDueDate"
       }
     ]
   },
@@ -462,6 +474,64 @@
             "name": "identity",
             "type": "text"
           },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "tbl_member_details",
+                "column": "payDueDate",
+                "type": "date",
+                "value": "{{$_GET.payduedate}}"
+              }
+            ],
+            "table": "tbl_member_details",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "memDetsId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_POST.memDetsId}}",
+                  "data": {
+                    "column": "memDetsId"
+                  },
+                  "operation": "="
+                }
+              ]
+            },
+            "returning": "memDetsId",
+            "query": "update `tbl_member_details` set `payDueDate` = ? where `memDetsId` = ? returning `memDetsId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_GET.payduedate}}",
+                "test": ""
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P2",
+                "value": "{{$_POST.memDetsId}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
           {
             "name": "affected",
             "type": "number"

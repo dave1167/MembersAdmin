@@ -22,7 +22,7 @@
       },
       {
         "type": "text",
-        "fieldName": "firstName1",
+        "fieldName": "firstName",
         "name": "firstName"
       },
       {
@@ -35,7 +35,12 @@
         "fieldName": "dateJoined",
         "options": {
           "rules": {
-            "core:date": {}
+            "core:required": {
+              "param": ""
+            },
+            "core:date": {
+              "param": ""
+            }
           }
         },
         "name": "dateJoined"
@@ -116,6 +121,7 @@
       },
       {
         "type": "number",
+        "fieldName": "memdetsid",
         "name": "memdetsid"
       },
       {
@@ -128,7 +134,13 @@
       },
       {
         "type": "number",
+        "fieldName": "memCat",
         "name": "memCat"
+      },
+      {
+        "type": "text",
+        "fieldName": "payDue",
+        "name": "payDue"
       }
     ]
   },
@@ -202,6 +214,12 @@
                 "column": "memCategory",
                 "type": "number",
                 "value": "{{$_POST.memCat}}"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "payDueDate",
+                "type": "date",
+                "value": "{{$_POST.payDue}}"
               }
             ],
             "table": "tbl_member_details",
@@ -224,7 +242,7 @@
               "valid": true
             },
             "returning": "memDetsId",
-            "query": "update `tbl_member_details` set `memNo` = ?, `title` = ?, `firstName` = ?, `lastName` = ?, `dateJoined` = ?, `gdpr` = ?, `ukTax` = ?, `memCard` = ?, `status` = ?, `memCategory` = ? where `memDetsId` = ? returning `memDetsId`",
+            "query": "update `tbl_member_details` set `memNo` = ?, `title` = ?, `firstName` = ?, `lastName` = ?, `dateJoined` = ?, `gdpr` = ?, `ukTax` = ?, `memCard` = ?, `status` = ?, `memCategory` = ?, `payDueDate` = ? where `memDetsId` = ? returning `memDetsId`",
             "params": [
               {
                 "name": ":P1",
@@ -287,9 +305,15 @@
                 "test": ""
               },
               {
+                "name": ":P11",
+                "type": "expression",
+                "value": "{{$_POST.payDue}}",
+                "test": ""
+              },
+              {
                 "operator": "equal",
                 "type": "expression",
-                "name": ":P11",
+                "name": ":P12",
                 "value": "{{$_POST.memdetsid}}",
                 "test": ""
               }

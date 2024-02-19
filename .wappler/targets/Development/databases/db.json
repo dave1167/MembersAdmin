@@ -260,6 +260,14 @@
               "unique": false,
               "nullable": true
             }
+          },
+          "payDueDate": {
+            "db": {
+              "type": "date",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
           }
         },
         "db": {},

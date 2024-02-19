@@ -10,7 +10,8 @@
       "font-size-base": 0.75,
       "info": "#252B5B",
       "warning": "#f3d72f",
-      "secondary": "#6c75aa"
+      "secondary": "#6c75aa",
+      "body-secondary-bg": "#ed960f"
     },
     "advanced": {}
   }

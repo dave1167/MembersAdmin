@@ -6,8 +6,12 @@
     },
     "$_GET": [
       {
-        "type": "text",
-        "name": "memdetid"
+        "type": "date",
+        "name": "payduedate"
+      },
+      {
+        "type": "number",
+        "name": "memdetsid"
       }
     ],
     "$_POST": [
@@ -73,6 +77,10 @@
           "rules": {}
         },
         "name": "memcat"
+      },
+      {
+        "type": "number",
+        "name": "memDetsId"
       }
     ]
   },
@@ -327,6 +335,67 @@
           }
         ],
         "output": true
+      },
+      {
+        "name": "update",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "tbl_member_details",
+                "column": "payDueDate",
+                "type": "date",
+                "value": "{{$_GET.payduedate}}"
+              }
+            ],
+            "table": "tbl_member_details",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "memDetsId",
+                  "field": "memDetsId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.memdetsid}}",
+                  "data": {
+                    "column": "memDetsId"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "memDetsId",
+            "query": "update `tbl_member_details` set `payDueDate` = ? where `memDetsId` = ?",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_GET.payduedate}}",
+                "test": ""
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P2",
+                "value": "{{$_GET.memdetsid}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
       }
     ]
   }
