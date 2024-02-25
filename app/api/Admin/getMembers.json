@@ -139,20 +139,122 @@
               "column": "dateJoined"
             }
           ],
-          "params": [],
+          "params": [
+            {
+              "operator": "contains",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.filter}}",
+              "test": ""
+            },
+            {
+              "operator": "contains",
+              "type": "expression",
+              "name": ":P2",
+              "value": "{{$_GET.filter}}",
+              "test": ""
+            }
+          ],
           "table": {
             "name": "tbl_member_details"
           },
           "primary": "memDetsId",
           "joins": [],
-          "query": "select distinct `memDetsId`, `memNo`, `firstName`, `lastName`, `status`, `dateJoined` from `tbl_member_details` order by `lastName` ASC",
+          "query": "select distinct `memDetsId`, `memNo`, `firstName`, `lastName`, `status`, `dateJoined` from `tbl_member_details` where `tbl_member_details`.`firstName` like ? or `tbl_member_details`.`lastName` like ? order by `lastName` ASC",
           "sub": {
             "stbl_mem_pers": {
+              "type": "select",
               "table": {
                 "name": "tbl_member_detail_stbl_mem_pers",
                 "alias": "stbl_mem_pers"
               },
-              "key": "tbl_member_detail_id"
+              "key": "tbl_member_detail_id",
+              "columns": [
+                {
+                  "table": "stbl_mem_pers",
+                  "column": "tel"
+                },
+                {
+                  "table": "stbl_mem_pers",
+                  "column": "mobile"
+                },
+                {
+                  "table": "stbl_mem_pers",
+                  "column": "email"
+                },
+                {
+                  "table": "stbl_mem_pers",
+                  "column": "notes"
+                }
+              ],
+              "params": [
+                {
+                  "operator": "contains",
+                  "type": "expression",
+                  "name": ":P1",
+                  "value": "{{$_GET.filter}}",
+                  "test": ""
+                },
+                {
+                  "operator": "contains",
+                  "type": "expression",
+                  "name": ":P2",
+                  "value": "{{$_GET.filter}}",
+                  "test": ""
+                }
+              ],
+              "primary": "memPersId",
+              "joins": [],
+              "wheres": {
+                "condition": "OR",
+                "rules": [
+                  {
+                    "id": "stbl_mem_pers.email",
+                    "field": "stbl_mem_pers.email",
+                    "type": "string",
+                    "operator": "contains",
+                    "value": "{{$_GET.filter}}",
+                    "data": {
+                      "table": "stbl_mem_pers",
+                      "column": "email",
+                      "type": "text",
+                      "columnObj": {
+                        "type": "string",
+                        "maxLength": 30,
+                        "primary": false,
+                        "unique": false,
+                        "nullable": true,
+                        "name": "email"
+                      }
+                    },
+                    "operation": "LIKE"
+                  },
+                  {
+                    "id": "stbl_mem_pers.email",
+                    "field": "stbl_mem_pers.email",
+                    "type": "string",
+                    "operator": "contains",
+                    "value": "{{$_GET.filter}}",
+                    "data": {
+                      "table": "stbl_mem_pers",
+                      "column": "email",
+                      "type": "text",
+                      "columnObj": {
+                        "type": "string",
+                        "maxLength": 30,
+                        "primary": false,
+                        "unique": false,
+                        "nullable": true,
+                        "name": "email"
+                      }
+                    },
+                    "operation": "LIKE"
+                  }
+                ],
+                "conditional": null,
+                "valid": true
+              },
+              "query": "select `tel`, `mobile`, `email`, `notes` from `tbl_member_detail_stbl_mem_pers` as `stbl_mem_pers` where `stbl_mem_pers`.`email` like ? or `stbl_mem_pers`.`email` like ?"
             },
             "stbl_mem_address": {
               "type": "select",
@@ -193,10 +295,60 @@
             {
               "table": "tbl_member_details",
               "column": "lastName",
-              "direction": "ASC"
+              "direction": "ASC",
+              "recid": 1
             }
           ],
-          "distinct": true
+          "distinct": true,
+          "wheres": {
+            "condition": "OR",
+            "rules": [
+              {
+                "id": "tbl_member_details.firstName",
+                "field": "tbl_member_details.firstName",
+                "type": "string",
+                "operator": "contains",
+                "value": "{{$_GET.filter}}",
+                "data": {
+                  "table": "tbl_member_details",
+                  "column": "firstName",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 30,
+                    "primary": false,
+                    "unique": false,
+                    "nullable": true,
+                    "name": "firstName"
+                  }
+                },
+                "operation": "LIKE"
+              },
+              {
+                "id": "tbl_member_details.lastName",
+                "field": "tbl_member_details.lastName",
+                "type": "string",
+                "operator": "contains",
+                "value": "{{$_GET.filter}}",
+                "data": {
+                  "table": "tbl_member_details",
+                  "column": "lastName",
+                  "type": "text",
+                  "columnObj": {
+                    "type": "string",
+                    "maxLength": 30,
+                    "primary": false,
+                    "unique": false,
+                    "nullable": true,
+                    "name": "lastName"
+                  }
+                },
+                "operation": "LIKE"
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          }
         }
       },
       "output": true,
@@ -229,14 +381,6 @@
           "name": "stbl_mem_pers",
           "type": "array",
           "sub": [
-            {
-              "type": "number",
-              "name": "memPersId"
-            },
-            {
-              "type": "number",
-              "name": "tbl_member_detail_id"
-            },
             {
               "type": "text",
               "name": "tel"

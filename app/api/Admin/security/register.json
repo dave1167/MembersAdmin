@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/admin/userreg.ejs",
+      "linkedForm": "register1"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "firstname",
+        "options": {
+          "rules": {}
+        },
+        "name": "firstname"
+      },
+      {
+        "type": "text",
+        "fieldName": "lastName",
+        "options": {
+          "rules": {}
+        },
+        "name": "lastName"
+      },
+      {
+        "type": "text",
+        "fieldName": "email",
+        "options": {
+          "rules": {
+            "core:email": {}
+          }
+        },
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "fieldName": "password",
+        "name": "password"
+      },
+      {
+        "type": "number",
+        "fieldName": "select1",
+        "name": "select1"
+      },
+      {
+        "type": "text",
+        "fieldName": "usrFirstName",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "usrFirstName"
+      },
+      {
+        "type": "text",
+        "fieldName": "usrLastName",
+        "name": "usrLastName"
+      },
+      {
+        "type": "text",
+        "fieldName": "selectRole",
+        "name": "selectRole"
+      },
+      {
+        "type": "text",
+        "name": "verificationCode"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "email",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{$_POST.email.lowercase()}}"
+        },
+        "meta": [],
+        "outputType": "text"
+      },
+      {
+        "name": "code",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{$_POST.email.sha1(email)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "insert",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "tbl_users",
+                "column": "usrFirstName",
+                "type": "text",
+                "value": "{{$_POST.usrFirstName}}"
+              },
+              {
+                "table": "tbl_users",
+                "column": "usrLastName",
+                "type": "text",
+                "value": "{{$_POST.usrLastName}}"
+              },
+              {
+                "table": "tbl_users",
+                "column": "userEmail",
+                "type": "text",
+                "value": "{{email}}"
+              },
+              {
+                "table": "tbl_users",
+                "column": "password",
+                "type": "text",
+                "value": "{{$_POST.password.sha512('MurrayField%02$')}}"
+              },
+              {
+                "table": "tbl_users",
+                "column": "verificationCode",
+                "type": "text",
+                "value": "{{code}}"
+              }
+            ],
+            "table": "tbl_users",
+            "returning": "userId",
+            "query": "insert into `tbl_users` (`password`, `userEmail`, `usrFirstName`, `usrLastName`, `verificationCode`) values (?, ?, ?, ?, ?) returning `userId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.usrFirstName}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.usrLastName}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{email}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.password.sha512('MurrayField%02$')}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{code}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "insertRole",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "tbl_user_role",
+                "column": "userId",
+                "type": "text",
+                "value": "{{insert.identity}}"
+              },
+              {
+                "table": "tbl_user_role",
+                "column": "role",
+                "type": "text",
+                "value": "{{$_POST.selectRole}}"
+              }
+            ],
+            "table": "tbl_user_role",
+            "returning": "userRoleId",
+            "query": "insert into `tbl_user_role` (`role`, `userId`) values (?, ?) returning `userRoleId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{insert.identity}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.selectRole}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "validate",
+        "module": "validator",
+        "action": "validate",
+        "options": {
+          "data": [
+            {
+              "name": "validate_1",
+              "value": "",
+              "rules": {
+                "db:notexists": {
+                  "param": {
+                    "connection": "db",
+                    "table": "tbl_users",
+                    "column": "userEmail"
+                  },
+                  "message": "Use is already Registered"
+                }
+              },
+              "fieldName": "email"
+            }
+          ]
+        },
+        "disabled": true
+      }
+    ]
+  }
+}

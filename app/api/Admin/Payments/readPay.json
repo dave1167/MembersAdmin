@@ -34,10 +34,6 @@
               "column": "datePaid"
             },
             {
-              "table": "tbl_member_detail_stbl_payments",
-              "column": "notes"
-            },
-            {
               "table": "tbl_payment_type",
               "column": "description"
             },
@@ -56,6 +52,10 @@
             {
               "table": "tbl_member_detail_stbl_payments",
               "column": "newRenewal"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "paymentId"
             }
           ],
           "params": [
@@ -64,7 +64,7 @@
               "type": "expression",
               "name": ":P1",
               "value": "{{$_GET.memdetsid}}",
-              "test": "2"
+              "test": "1"
             }
           ],
           "table": {
@@ -94,7 +94,7 @@
               "primary": "payTypeid"
             }
           ],
-          "query": "select `tbl_member_detail_stbl_payments`.`payType`, `tbl_member_detail_stbl_payments`.`datePaid`, `tbl_member_detail_stbl_payments`.`notes`, `tbl_payment_type`.`description`, `tbl_member_detail_stbl_payments`.`tbl_member_detail_id`, `tbl_member_detail_stbl_payments`.`amount`, `tbl_member_detail_stbl_payments`.`memCat`, `tbl_member_detail_stbl_payments`.`newRenewal` from `tbl_member_detail_stbl_payments` inner join `tbl_payment_type` on `tbl_payment_type`.`payTypeid` = `tbl_member_detail_stbl_payments`.`payType` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ? order by `tbl_member_detail_stbl_payments`.`datePaid` DESC",
+          "query": "select `tbl_member_detail_stbl_payments`.`payType`, `tbl_member_detail_stbl_payments`.`datePaid`, `tbl_payment_type`.`description`, `tbl_member_detail_stbl_payments`.`tbl_member_detail_id`, `tbl_member_detail_stbl_payments`.`amount`, `tbl_member_detail_stbl_payments`.`memCat`, `tbl_member_detail_stbl_payments`.`newRenewal`, `tbl_member_detail_stbl_payments`.`paymentId` from `tbl_member_detail_stbl_payments` inner join `tbl_payment_type` on `tbl_payment_type`.`payTypeid` = `tbl_member_detail_stbl_payments`.`payType` where `tbl_member_detail_stbl_payments`.`tbl_member_detail_id` = ? order by `tbl_member_detail_stbl_payments`.`datePaid` DESC",
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -149,10 +149,6 @@
         },
         {
           "type": "text",
-          "name": "notes"
-        },
-        {
-          "type": "text",
           "name": "description"
         },
         {
@@ -170,6 +166,10 @@
         {
           "type": "number",
           "name": "newRenewal"
+        },
+        {
+          "type": "number",
+          "name": "paymentId"
         }
       ],
       "outputType": "array"

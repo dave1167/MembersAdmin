@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "number",
+        "name": "memcatid"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "single",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_membershipType",
+              "column": "memTypeId"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "memTypeDesc"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "cost"
+            }
+          ],
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.memcatid}}",
+              "test": "1"
+            }
+          ],
+          "table": {
+            "name": "tbl_membershipType"
+          },
+          "primary": "memTypeId",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "tbl_membershipType.memTypeId",
+                "field": "tbl_membershipType.memTypeId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_GET.memcatid}}",
+                "data": {
+                  "table": "tbl_membershipType",
+                  "column": "memTypeId",
+                  "type": "number",
+                  "columnObj": {
+                    "type": "increments",
+                    "primary": true,
+                    "unique": false,
+                    "nullable": false,
+                    "name": "memTypeId"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "query": "select `memTypeId`, `memTypeDesc`, `cost` from `tbl_membershipType` where `tbl_membershipType`.`memTypeId` = ?"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "memTypeId"
+        },
+        {
+          "type": "text",
+          "name": "memTypeDesc"
+        },
+        {
+          "type": "number",
+          "name": "cost"
+        }
+      ],
+      "outputType": "object"
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "name": "query",
+  "module": "dbconnector",
+  "action": "single",
+  "options": {
+    "connection": "db",
+    "sql": {
+      "type": "select",
+      "columns": [
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "paymentId"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "tbl_member_detail_id"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "payType"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "datePaid"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "payNotes"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "amount"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "memCat"
+        },
+        {
+          "table": "tbl_member_detail_stbl_payments",
+          "column": "newRenewal"
+        },
+        {
+          "table": "tbl_payment_type",
+          "column": "description"
+        }
+      ],
+      "params": [
+        {
+          "operator": "equal",
+          "type": "expression",
+          "name": ":P1",
+          "value": "{{$_GET.payid}}",
+          "test": "83"
+        }
+      ],
+      "table": {
+        "name": "tbl_member_detail_stbl_payments"
+      },
+      "primary": "paymentId",
+      "joins": [
+        {
+          "table": "tbl_payment_type",
+          "column": "*",
+          "type": "INNER",
+          "clauses": {
+            "condition": "AND",
+            "rules": [
+              {
+                "table": "tbl_payment_type",
+                "column": "payTypeid",
+                "operator": "equal",
+                "operation": "=",
+                "value": {
+                  "table": "tbl_member_detail_stbl_payments",
+                  "column": "payType"
+                }
+              }
+            ]
+          },
+          "primary": "payTypeid"
+        }
+      ],
+      "wheres": {
+        "condition": "AND",
+        "rules": [
+          {
+            "id": "tbl_member_detail_stbl_payments.paymentId",
+            "field": "tbl_member_detail_stbl_payments.paymentId",
+            "type": "double",
+            "operator": "equal",
+            "value": "{{$_GET.payid}}",
+            "data": {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "paymentId",
+              "type": "number",
+              "columnObj": {
+                "type": "increments",
+                "primary": true,
+                "unique": false,
+                "nullable": false,
+                "name": "paymentId"
+              }
+            },
+            "operation": "="
+          }
+        ],
+        "conditional": null,
+        "valid": true
+      },
+      "query": "select `tbl_member_detail_stbl_payments`.`paymentId`, `tbl_member_detail_stbl_payments`.`tbl_member_detail_id`, `tbl_member_detail_stbl_payments`.`payType`, `tbl_member_detail_stbl_payments`.`datePaid`, `tbl_member_detail_stbl_payments`.`payNotes`, `tbl_member_detail_stbl_payments`.`amount`, `tbl_member_detail_stbl_payments`.`memCat`, `tbl_member_detail_stbl_payments`.`newRenewal`, `tbl_payment_type`.`description` from `tbl_member_detail_stbl_payments` inner join `tbl_payment_type` on `tbl_payment_type`.`payTypeid` = `tbl_member_detail_stbl_payments`.`payType` where `tbl_member_detail_stbl_payments`.`paymentId` = ?"
+    }
+  },
+  "output": true,
+  "meta": [
+    {
+      "type": "number",
+      "name": "paymentId"
+    },
+    {
+      "type": "number",
+      "name": "tbl_member_detail_id"
+    },
+    {
+      "type": "number",
+      "name": "payType"
+    },
+    {
+      "type": "date",
+      "name": "datePaid"
+    },
+    {
+      "type": "text",
+      "name": "payNotes"
+    },
+    {
+      "type": "number",
+      "name": "amount"
+    },
+    {
+      "type": "number",
+      "name": "memCat"
+    },
+    {
+      "type": "number",
+      "name": "newRenewal"
+    },
+    {
+      "type": "text",
+      "name": "description"
+    }
+  ],
+  "outputType": "object"
+}

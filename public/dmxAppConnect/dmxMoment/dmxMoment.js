@@ -1,8 +1,8 @@
 /*!
  DMXzone Moment
- Version: 1.0.0
- (c) 2018 DMXzone.com
- @build 2018-09-18 16:36:14
+ Version: 2.0.0-beta.2
+ (c) 2023 Wappler.io
+ @build 2023-09-08 15:05:06
  */
-dmx.Component("moment",{initialData:{locale:"en"},attributes:{locale:{type:String,default:"en"}},methods:{setLocale:function(e){this.setLocale(e)}},render:function(e){moment||alert("Moment is missing!"),this.update({})},update:function(e){e.locale!=this.props.locale&&this.setLocale(this.props.locale)},setLocale:function(e){moment.locale("auto"==e?window.navigator.language:e),this.set("locale",moment.locale())}});
-//# sourceMappingURL=../maps/dmxMoment.js.map
+dmx.Component("moment",{initialData:{locale:"en"},attributes:{locale:{type:String,default:"en"}},methods:{setLocale(m){this._setLocale(m)}},init(){moment.dmxComponent=this,this._setLocale(this.props.locale)},performUpdate(m){m.has("locale")&&this._setLocale(this.props.locale)},_setLocale(m){moment.locale("auto"==m?window.navigator.language:m),this.set("locale",moment.locale())}}),(()=>{let m;const e=moment().format("YYYY-MM-DD HH:mm:ss.SSS"),o=moment().format("YYYY-MM-DD"),t=t=>(void 0===m&&(m=document.querySelector('dmx-moment, [is="dmx-moment"]')),m&&dmx.parse("locale",m.dmxComponent),"now"==t&&(t=e),"today"==t&&(t=o),moment(t));dmx.Formatters("string",{momentIsValid:m=>t(m).isValid(),momentMin:(...m)=>moment.min(...m).format("YYYY-MM-DD HH:mm:ss.SSS"),momentMax:(...m)=>moment.max(...m).format("YYYY-MM-DD HH:mm:ss.SSS"),momentAdd:(m,e,o)=>t(m).add(e,o).format("YYYY-MM-DD HH:mm:ss.SSS"),momentSubtract:(m,e,o)=>t(m).subtract(e,o).format("YYYY-MM-DD HH:mm:ss.SSS"),momentFormat:(m,e)=>t(m).format(e),momentFromNow:(m,e)=>t(m).fromNow(e),momentFrom:(m,e,o)=>t(m).from(e,o),momentToNow:(m,e)=>t(m).toNow(e),momentTo:(m,e,o)=>t(m).to(e,o),momentCalendar:(m,e)=>t(m).calendar(e),momentDiff:(m,e,o,a)=>t(m).diff(e,o,a),momentDaysInMonth:m=>t(m).daysInMonth(),momentToObject:m=>t(m).toObject(),momentIsBefore:(m,e,o)=>t(m).isBefore(e,o),momentIsSame:(m,e,o)=>t(m).isSame(e,o),momentIsAfter:(m,e,o)=>t(m).isAfter(e,o),momentIsSameOrBefore:(m,e,o)=>t(m).isSameOrBefore(e,o),momentIsSameOrAfter:(m,e,o)=>t(m).isSameOrAfter(e,o),momentIsBetween:(m,e,o,a)=>t(m).isBetween(e,o,a),momentIsLeapYear:m=>t(m).isLeapYear()})})();
+//# sourceMappingURL=dmxMoment.js.map

@@ -15,6 +15,21 @@
       "path": "/admin/members",
       "page": "admin/members",
       "layout": "admin"
+    },
+    {
+      "path": "/log_inV2",
+      "page": "log_inV2",
+      "layout": "admin"
+    },
+    {
+      "path": "/login",
+      "page": "login",
+      "layout": "main"
+    },
+    {
+      "path": "/admin/userreg",
+      "page": "admin/userreg",
+      "layout": "admin"
     }
   ]
 }

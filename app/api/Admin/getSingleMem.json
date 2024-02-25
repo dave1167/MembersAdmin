@@ -96,6 +96,10 @@
             {
               "table": "tbl_member_details",
               "column": "payDueDate"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "cost"
             }
           ],
           "params": [
@@ -104,7 +108,7 @@
               "type": "expression",
               "name": ":P1",
               "value": "{{$_GET.memdetsid}}",
-              "test": "1"
+              "test": "2"
             }
           ],
           "table": {
@@ -153,9 +157,30 @@
                 ]
               },
               "primary": "memAddId"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_membershipType",
+                    "column": "memTypeId",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_details",
+                      "column": "memCategory"
+                    }
+                  }
+                ]
+              },
+              "primary": "memTypeId"
             }
           ],
-          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`mobile`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`notes`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode`, `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`memDetsId` = ?",
+          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_detail_stbl_mem_pers`.`tel`, `tbl_member_detail_stbl_mem_pers`.`mobile`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_pers`.`notes`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode`, `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate`, `tbl_membershipType`.`cost` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_membershipType` on `tbl_membershipType`.`memTypeId` = `tbl_member_details`.`memCategory` where `tbl_member_details`.`memDetsId` = ?",
           "wheres": {
             "condition": "AND",
             "rules": [
@@ -267,6 +292,10 @@
         {
           "type": "date",
           "name": "payDueDate"
+        },
+        {
+          "type": "number",
+          "name": "cost"
         }
       ],
       "outputType": "object"

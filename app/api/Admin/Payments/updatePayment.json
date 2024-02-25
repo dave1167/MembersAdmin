@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/admin/members.ejs",
+      "linkedForm": "serverconnectform3"
+    },
+    "$_GET": [
+      {
+        "type": "number",
+        "name": "amount"
+      }
+    ],
+    "$_POST": [
+      {
+        "type": "number",
+        "fieldName": "tbl_member_detail_id",
+        "name": "tbl_member_detail_id"
+      },
+      {
+        "type": "number",
+        "fieldName": "payType",
+        "name": "payType"
+      },
+      {
+        "type": "date",
+        "fieldName": "datePaid",
+        "options": {
+          "rules": {
+            "core:date": {}
+          }
+        },
+        "name": "datePaid"
+      },
+      {
+        "type": "text",
+        "fieldName": "payNotes",
+        "name": "payNotes"
+      },
+      {
+        "type": "number",
+        "fieldName": "amount",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "amount"
+      },
+      {
+        "type": "number",
+        "fieldName": "memCat",
+        "name": "memCat"
+      },
+      {
+        "type": "number",
+        "fieldName": "newRenewal",
+        "name": "newRenewal"
+      },
+      {
+        "type": "number",
+        "fieldName": "paymentId",
+        "name": "paymentId"
+      },
+      {
+        "type": "number",
+        "fieldName": "inpPayType",
+        "options": {
+          "rules": {
+            "core:number": {}
+          }
+        },
+        "name": "inpPayType"
+      },
+      {
+        "type": "text",
+        "fieldName": "amount1",
+        "name": "amount1"
+      },
+      {
+        "type": "text",
+        "fieldName": "selectPayType",
+        "name": "selectPayType"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "updatePayment",
+      "module": "dbupdater",
+      "action": "update",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "update",
+          "values": [
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "tbl_member_detail_id",
+              "type": "number",
+              "value": "{{$_POST.tbl_member_detail_id}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "payType",
+              "type": "number",
+              "value": "{{$_POST.inpPayType}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "datePaid",
+              "type": "date",
+              "value": "{{$_POST.datePaid}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "payNotes",
+              "type": "text",
+              "value": "{{$_POST.payNotes}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "amount",
+              "type": "number",
+              "value": "{{$_GET.amount}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "memCat",
+              "type": "number",
+              "value": "{{$_POST.memCat}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "newRenewal",
+              "type": "number",
+              "value": "{{$_POST.newRenewal}}"
+            },
+            {
+              "table": "tbl_member_detail_stbl_payments",
+              "column": "paymentId",
+              "type": "number",
+              "value": "{{$_POST.paymentId}}"
+            }
+          ],
+          "table": "tbl_member_detail_stbl_payments",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "paymentId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.paymentId}}",
+                "data": {
+                  "column": "paymentId"
+                },
+                "operation": "="
+              }
+            ]
+          },
+          "returning": "paymentId",
+          "query": "update `tbl_member_detail_stbl_payments` set `tbl_member_detail_id` = ?, `payType` = ?, `datePaid` = ?, `payNotes` = ?, `amount` = ?, `memCat` = ?, `newRenewal` = ?, `paymentId` = ? where `paymentId` = ? returning `paymentId`",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.tbl_member_detail_id}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.inpPayType}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.datePaid}}",
+              "test": ""
+            },
+            {
+              "name": ":P4",
+              "type": "expression",
+              "value": "{{$_POST.payNotes}}",
+              "test": ""
+            },
+            {
+              "name": ":P5",
+              "type": "expression",
+              "value": "{{$_GET.amount}}",
+              "test": ""
+            },
+            {
+              "name": ":P6",
+              "type": "expression",
+              "value": "{{$_POST.memCat}}",
+              "test": ""
+            },
+            {
+              "name": ":P7",
+              "type": "expression",
+              "value": "{{$_POST.newRenewal}}",
+              "test": ""
+            },
+            {
+              "name": ":P8",
+              "type": "expression",
+              "value": "{{$_POST.paymentId}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P9",
+              "value": "{{$_POST.paymentId}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ],
+      "output": true
+    }
+  }
+}

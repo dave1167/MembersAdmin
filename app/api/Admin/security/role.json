@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_role",
+              "column": "roleId"
+            },
+            {
+              "table": "tbl_role",
+              "column": "roleDesc"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_role"
+          },
+          "primary": "roleId",
+          "joins": [],
+          "query": "select `roleId`, `roleDesc` from `tbl_role`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "roleId"
+        },
+        {
+          "type": "text",
+          "name": "roleDesc"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

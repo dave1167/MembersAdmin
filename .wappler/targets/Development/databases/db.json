@@ -346,7 +346,7 @@
               "nullable": true
             }
           },
-          "notes": {
+          "payNotes": {
             "db": {
               "type": "text",
               "primary": false,
@@ -382,6 +382,154 @@
         "db": {},
         "tablePrefix": "tbl_member_detail_",
         "parent": "tbl_member_details"
+      },
+      "tbl_user_sbTblUserRole_sbTbleRoles": {
+        "columns": {
+          "id": {
+            "db_edits": {
+              "name": "sTbId",
+              "type": "increments"
+            },
+            "status": {
+              "new": true
+            }
+          },
+          "sbTblUserRole_id": {
+            "db_edits": {
+              "name": "sbTblUserRole_id",
+              "type": "reference",
+              "references": "userRoleid",
+              "referenceType": "integer",
+              "inTable": "tbl_user_sbTblUserRole",
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            },
+            "status": {
+              "new": true
+            }
+          }
+        },
+        "db": {},
+        "db_edits": {
+          "name": "sbTbleRoles"
+        },
+        "tablePrefix": "tbl_user_sbTblUserRole_",
+        "status": {
+          "new": true,
+          "children_modified": true
+        },
+        "parent": "tbl_user_sbTblUserRole"
+      },
+      "tbl_user_role": {
+        "columns": {
+          "userRoleId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "userId": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "role": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
+      "tbl_role": {
+        "columns": {
+          "roleId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "roleDesc": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
+      "tbl_users": {
+        "columns": {
+          "userId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "userEmail": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "password": {
+            "db": {
+              "type": "string",
+              "maxLength": 14,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "usrFirstName": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "usrLastName": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "verificationCode": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
       }
     },
     "views": {}

@@ -17,7 +17,7 @@
       "type": "local"
     }
   ],
-  "hostingType": "wappler",
+  "hostingType": "docker",
   "projectServerModel": "node",
   "runtime": "capacitor",
   "webRootFolder": "/public",
@@ -28,9 +28,17 @@
   "targets": [
     {
       "name": "Development",
-      "remoteURL": "http://localhost:3000",
-      "access": "local",
-      "targetType": "wappler",
+      "remoteURL": "http://localhost:8100",
+      "webServerPort": 8100,
+      "webServerLang": "node",
+      "targetType": "docker",
+      "webServer": "node",
+      "NodeVersion": "16",
+      "NodeOS": "bullseye",
+      "NodeImageType": "slim",
+      "webLoggingMaxFiles": "5",
+      "webLoggingMaxFileSize": "10m",
+      "dockerTimezone": "Etc/UTC",
       "databaseConnectionType": "sqlite",
       "useRedis": true,
       "redisPersist": true,

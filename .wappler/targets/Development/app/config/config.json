@@ -1,4 +1,11 @@
 {
-  "debug": true,
-  "secret": "JSHVBzg22R4l8du"
+    "debug": true,
+    "secret": "JSHVBzg22R4l8du",
+    "redis": "redis://redis",
+    "session": {
+        "store": {
+            "$type": "redis",
+            "ttl": 86400
+        }
+    }
 }

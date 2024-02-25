@@ -10,5 +10,33 @@
   "test3.ejs": {
     "layoutPage": "admin",
     "description": ""
+  },
+  "login.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "log_in.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "loginV4.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "log_inV2.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "add_user.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "user_reg.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "userReg.ejs": {
+    "layoutPage": "main",
+    "description": ""
   }
 }

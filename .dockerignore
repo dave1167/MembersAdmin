@@ -1,8 +1,5 @@
-# add git-ignore syntax here of things you don't want copied into docker image
-
-.git
-.svn
 .wappler
-*Dockerfile*
-*docker-compose*
+**/.git
+**/.svn
 node_modules
+public/New%20folder

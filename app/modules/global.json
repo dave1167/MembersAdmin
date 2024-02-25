@@ -12,6 +12,14 @@
       {
         "type": "date",
         "name": "payduedate"
+      },
+      {
+        "type": "number",
+        "name": "amount"
+      },
+      {
+        "type": "text",
+        "name": "filter"
       }
     ],
     "$_SESSION": [

@@ -189,19 +189,19 @@
                 "table": "tbl_member_details",
                 "column": "gdpr",
                 "type": "boolean",
-                "value": "{{$_POST.gdpr}}"
+                "value": "{{$_POST.gdpr.default(0)}}"
               },
               {
                 "table": "tbl_member_details",
                 "column": "ukTax",
                 "type": "boolean",
-                "value": "{{$_POST.ukTax}}"
+                "value": "{{$_POST.ukTax.default(0)}}"
               },
               {
                 "table": "tbl_member_details",
                 "column": "memCard",
                 "type": "boolean",
-                "value": "{{$_POST.memCard}}"
+                "value": "{{$_POST.memCard.default(0)}}"
               },
               {
                 "table": "tbl_member_details",
@@ -277,19 +277,19 @@
               {
                 "name": ":P6",
                 "type": "expression",
-                "value": "{{$_POST.gdpr}}",
+                "value": "{{$_POST.gdpr.default(0)}}",
                 "test": ""
               },
               {
                 "name": ":P7",
                 "type": "expression",
-                "value": "{{$_POST.ukTax}}",
+                "value": "{{$_POST.ukTax.default(0)}}",
                 "test": ""
               },
               {
                 "name": ":P8",
                 "type": "expression",
-                "value": "{{$_POST.memCard}}",
+                "value": "{{$_POST.memCard.default(0)}}",
                 "test": ""
               },
               {

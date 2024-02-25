@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/login.ejs",
+      "linkedForm": "login1"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "password",
+        "name": "password"
+      },
+      {
+        "type": "text",
+        "fieldName": "email",
+        "name": "email"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "email",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{$_POST.email.lowercase()}}"
+        },
+        "meta": [],
+        "outputType": "text"
+      },
+      {
+        "name": "identity",
+        "module": "auth",
+        "action": "login",
+        "options": {
+          "provider": "security",
+          "username": "{{email}}",
+          "password": "{{$_POST.password.sha256('India02*lose1')}}"
+        },
+        "output": true,
+        "meta": []
+      }
+    ]
+  }
+}
