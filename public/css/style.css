@@ -77,10 +77,9 @@ label.font-weight-bold.col-auto.col-form-label {
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
+
 select {
   word-wrap: normal;
-}
-select {
   -webkit-appearance: menulist;
   box-sizing: border-box;
   align-items: center;
@@ -88,6 +87,25 @@ select {
   white-space: pre;
   -webkit-rtl-ordering: logical;
   color: black;
-  background-color: rgb(167, 33, 33);
+  background-color: rgb(214, 228, 19);
   cursor: default;
+}
+
+.nav-link {
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: 16px;
+  font-weight: var(--bs-nav-link-font-weight);
+  color: var(--bs-nav-link-color);
+  text-decoration: none;
+  text-align: left;
+  background: none;
+  border: 0;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+.nav-link:hover {
+  background-color: aquamarine;
 }

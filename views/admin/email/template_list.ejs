@@ -1,0 +1,83 @@
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="template_list" appConnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxSummernote:{}}" jquery_slim_35="cdn" -->
+<div class="modal" id="modTemplateEditor" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Template Editor</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group mb-3 row">
+                                <legend class="col-sm-2 col-form-label">One switch</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" value="" id="input1" name="input1">
+                                        <label class="form-check-label" for="input1">Single switch</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['fullscreen','codeview','help']]]"></textarea>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<meta name="ac:route" content="/admin/email/template_list">
+<dmx-serverconnect id="scTemplateList" url="/api/Admin/templates/templateList"></dmx-serverconnect>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h4>Document Templates</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th dmx-hide="!scTemplateList.data.query[0].templateId.isEmpty()"></th>
+                                <th dmx-hide="!scTemplateList.data.query[0].templateId.isEmpty()"></th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th dmx-hide="scTemplateList.data.query[0].templateId">Type</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scTemplateList.data.query" id="tableRepeat1">
+                            <tr>
+                                <td>
+                                    <button id="btn1" class="btn btn-primary" dmx-on:click="modTemplateEditor.show()">
+                                        <i class="fas fa-edit fa-lg"></i></button>
+                                </td>
+                                <td dmx-text="templateId" dmx-hide="!templateId.isEmpty()"></td>
+                                <td dmx-text="tempTitle"></td>
+                                <td dmx-text="tempDescription"></td>
+                                <td dmx-text="templateType" dmx-hide="scTemplateList.data.query[0].templateId"></td>
+                                <td>
+                                    <p class="text-white bg-body-secondary" dmx-show="templateType==0">Document Template</p>
+                                    <p class="text-light bg-danger" dmx-show="templateType==1">Email Template</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

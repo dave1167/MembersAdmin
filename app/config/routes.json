@@ -1,19 +1,41 @@
 {
   "routes": [
     {
+      "path": "/unauth2.ejs",
+      "url": ""
+    },
+    {
       "path": "/",
-      "page": "index",
-      "routeType": "page",
+      "url": ""
+    },
+    {
+      "path": "/admin/dashboard",
+      "page": "admin/dashboard",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/payments1",
+      "page": "/admin/payments1",
+      "layout": "admin"
+    },
+    {
+      "path": "/unauth2",
+      "page": "/unauth2",
       "layout": "main"
     },
     {
-      "path": "/admin/dahboard",
-      "page": "admin/dahboard",
+      "path": "/admin/settings",
+      "page": "admin/settings1",
       "layout": "admin"
     },
     {
       "path": "/admin/members",
       "page": "admin/members",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/doc_menu",
+      "page": "/admin/doc_menu",
       "layout": "admin"
     },
     {
@@ -29,6 +51,26 @@
     {
       "path": "/admin/userreg",
       "page": "admin/userreg",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/email/emailTemplateEditor",
+      "page": "admin/email/emailTemplateEditor",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/email/template_list",
+      "page": "admin/email/template_list",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/test",
+      "page": "admin/test",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/doc_menu",
+      "page": "admin/doc_menu",
       "layout": "admin"
     }
   ]

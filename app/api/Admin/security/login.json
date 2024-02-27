@@ -19,26 +19,16 @@
   },
   "exec": {
     "steps": [
-      {
-        "name": "email",
-        "module": "core",
-        "action": "setvalue",
-        "options": {
-          "value": "{{$_POST.email.lowercase()}}"
-        },
-        "meta": [],
-        "outputType": "text"
-      },
+      "SecurityProviders/security",
       {
         "name": "identity",
         "module": "auth",
         "action": "login",
         "options": {
           "provider": "security",
-          "username": "{{email}}",
-          "password": "{{$_POST.password.sha256('India02*lose1')}}"
+          "username": "{{$_POST.email}}"
         },
-        "output": true,
+        "output": false,
         "meta": []
       }
     ]

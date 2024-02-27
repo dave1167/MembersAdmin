@@ -494,8 +494,8 @@
           },
           "password": {
             "db": {
-              "type": "string",
-              "maxLength": 14,
+              "type": "text",
+              "maxLength": 255,
               "primary": false,
               "unique": false,
               "nullable": true
@@ -523,6 +523,76 @@
             "db": {
               "type": "string",
               "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
+      "tbl_template_fields": {
+        "columns": {
+          "tmpFieldId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "fieldName": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
+      "tbl_templates": {
+        "columns": {
+          "templateId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "tempTitle": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "tempDescription": {
+            "db": {
+              "type": "text",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "template": {
+            "db": {
+              "type": "text",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "templateType": {
+            "db": {
+              "type": "boolean",
               "primary": false,
               "unique": false,
               "nullable": true

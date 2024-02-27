@@ -86,11 +86,20 @@
         "module": "core",
         "action": "setvalue",
         "options": {
-          "value": "{{$_POST.email.sha1(email)}}"
+          "value": "{{$_POST.email.sha1(email).trunc(6, true, '...')}}"
         },
         "meta": [],
         "outputType": "text",
         "output": true
+      },
+      {
+        "name": "hash",
+        "module": "crypto",
+        "action": "passwordHash",
+        "options": {
+          "password": "{{$_POST.password}}"
+        },
+        "outputType": "text"
       },
       {
         "name": "insert",
@@ -117,13 +126,13 @@
                 "table": "tbl_users",
                 "column": "userEmail",
                 "type": "text",
-                "value": "{{email}}"
+                "value": "{{$_POST.email}}"
               },
               {
                 "table": "tbl_users",
                 "column": "password",
                 "type": "text",
-                "value": "{{$_POST.password.sha512('MurrayField%02$')}}"
+                "value": "{{hash}}"
               },
               {
                 "table": "tbl_users",
@@ -151,13 +160,13 @@
               {
                 "name": ":P3",
                 "type": "expression",
-                "value": "{{email}}",
+                "value": "{{$_POST.email}}",
                 "test": ""
               },
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.password.sha512('MurrayField%02$')}}",
+                "value": "{{hash}}",
                 "test": ""
               },
               {
@@ -258,5 +267,8 @@
         "disabled": true
       }
     ]
+  },
+  "usedModules": {
+    "argon2": "^0.30.2"
   }
 }

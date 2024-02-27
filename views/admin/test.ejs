@@ -1,0 +1,35 @@
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="test" appConnect="local" components="{dmxBootstrap5TableGenerator:{}}" -->
+<main>
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Mem dets</th>
+            <th>Mem no</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Status</th>
+            <th>Date joined</th>
+            <th>Stbl mem pers</th>
+            <th>Stbl mem address</th>
+          </tr>
+        </thead>
+        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="serverconnect1.data.query" id="tableRepeat1">
+          <tr>
+            <td dmx-text="memDetsId"></td>
+            <td dmx-text="memNo"></td>
+            <td dmx-text="firstName"></td>
+            <td dmx-text="lastName"></td>
+            <td dmx-text="status"></td>
+            <td dmx-text="dateJoined"></td>
+            <td dmx-text="stbl_mem_pers"></td>
+            <td dmx-text="stbl_mem_address"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<meta name="ac:route" content="/admin/test">
+<dmx-serverconnect id="serverconnect1" url="/api/Admin/getMembers"></dmx-serverconnect>

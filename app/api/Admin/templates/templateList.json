@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_templates",
+              "column": "templateId"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "tempTitle"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "tempDescription"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "template"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "templateType"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_templates"
+          },
+          "primary": "templateId",
+          "joins": [],
+          "query": "select `templateId`, `tempTitle`, `tempDescription`, `template`, `templateType` from `tbl_templates`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "templateId"
+        },
+        {
+          "type": "text",
+          "name": "tempTitle"
+        },
+        {
+          "type": "text",
+          "name": "tempDescription"
+        },
+        {
+          "type": "text",
+          "name": "template"
+        },
+        {
+          "type": "number",
+          "name": "templateType"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

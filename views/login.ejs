@@ -1,7 +1,9 @@
-<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="login" appConnect="local" components="{dmxLazyLoad:{}}" -->
+<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="login" appConnect="local" components="{dmxLazyLoad:{},dmxBrowser:{}}" -->
+<div is="dmx-browser" id="browser1"></div>
+<dmx-serverconnect id="scLogin" url="/api/Admin/security/login" noload="true"></dmx-serverconnect>
 <meta name="ac:route" content="/login">
 <div class="container">
-    <form id="login1">
+    <form id="login1" method="post" is="dmx-serverconnect-form" action="/api/Admin/security/login" dmx-on:success="browser1.goto('/admin/members')" dmx-on:unauthorized="browser1.goto('unauth2.ejs')">
         <div class="row pt-2 pb-2">
 
             <div class="col"></div>
@@ -19,11 +21,6 @@
 
                         </div>
 
-                        <div class="row mt-4">
-                            <div class="col">
-                                <input type="password" id="inp_password" name="password" class="form-control" placeholder="Password">
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col mt-4">
                                 <input type="text" id="inp_email" name="email" class="form-control" placeholder="Email">
@@ -31,7 +28,13 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col">
-                                <button id="login1_submit" class="btn btn-secondary text-light mb-2" type="button">Submit</button>
+                                <input type="password" id="inp_password" name="password" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col">
+                                <button id="login1_submit" class="btn btn-secondary text-light mb-2" type="submit" dmx-on:click="">Submit</button>
                             </div>
                         </div>
 

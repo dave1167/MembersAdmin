@@ -1,0 +1,14 @@
+{
+  "emailTemplate.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "emailTemplateEditor.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "template_list.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  }
+}

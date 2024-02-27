@@ -3,11 +3,29 @@
   "module": "auth",
   "action": "provider",
   "options": {
-    "secret": "AVTDD4oD5ysVBeO",
-    "provider": "Static",
+    "secret": "1J0NlrrUjiLMTEP",
+    "provider": "Database",
     "connection": "db",
-    "users": {},
-    "perms": {}
+    "users": {
+      "table": "tbl_users",
+      "identity": "userId",
+      "username": "userEmail",
+      "password": "password"
+    },
+    "permissions": {
+      "Administrator": {
+        "table": "tbl_user_role",
+        "identity": "role",
+        "conditions": [
+          {
+            "column": "role",
+            "operator": "=",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    "passwordVerify": true
   },
   "meta": [
     {

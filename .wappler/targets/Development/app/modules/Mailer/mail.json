@@ -1,0 +1,6 @@
+{
+  "name": "mail",
+  "module": "mail",
+  "action": "setup",
+  "options": {}
+}

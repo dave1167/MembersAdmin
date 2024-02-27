@@ -38,5 +38,17 @@
   "userReg.ejs": {
     "layoutPage": "main",
     "description": ""
+  },
+  "unauthorised.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "unauth.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "unauth2.ejs": {
+    "layoutPage": "main",
+    "description": ""
   }
 }

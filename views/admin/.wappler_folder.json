@@ -3,15 +3,27 @@
     "layoutPage": "admin",
     "description": ""
   },
-  "dahboard.ejs": {
-    "layoutPage": "admin",
-    "description": ""
-  },
   "members.ejs": {
     "layoutPage": "admin",
     "description": ""
   },
   "userreg.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "dashboard.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "payments.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "test.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "doc_menu.ejs": {
     "layoutPage": "admin",
     "description": ""
   }

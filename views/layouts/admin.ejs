@@ -36,17 +36,38 @@
   <script src="/dmxAppConnect/dmxDatastore/dmxDatastore.js" defer></script>
   <script src="/dmxAppConnect/dmxMoment/dmxMoment.js" defer></script>
   <script src="/dmxAppConnect/dmxBootstrap5Toasts/dmxBootstrap5Toasts.js" defer></script>
+  <script src="/dmxAppConnect/dmxBootstrap5Navigation/dmxBootstrap5Navigation.js" defer></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxSummernote/summernote-bs5.min.css" />
+  <script src="/dmxAppConnect/dmxSummernote/summernote-bs5.min.js" defer></script>
+  <script src="/dmxAppConnect/dmxSummernote/dmxSummernote.js" defer></script>
 </head>
 
 <body is="dmx-app" id="admin">
   <dmx-notifications id="notifies1"></dmx-notifications>
   <div class="offcanvas offcanvas-start" id="offcanvas1" is="dmx-bs5-offcanvas" tabindex="-1">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Offcanvas title</h5>
+      <nav></nav>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <p>Offcanvas body text goes here.</p>
+      <div class="row">
+        <div class="col">
+          <nav class="navbar navbar-expand-lg flex-column justify-content-start align-items-center text-start fw-bolder" style="--bs-navbar-active-color: #3f28f0; --bs-navbar-toggler-font-size: 1.55px;">
+            <div class="navbar-nav nav-fill flex-column fw-bolder justify-content-between text-start">
+              <a class="nav-item nav-link active" href="/admin/dashboard" internal="true">
+                <i class="fas fa-chart-line fa-lg iconSpacer"></i>DASHBOARD</a>
+              <a class="nav-item nav-link" href="/admin/members" internal="true">
+                <i class="fas fa-user-friends iconSpacer fa-lg"></i>MEMBERS</a>
+              <a class="nav-item nav-link" href="/admin/payments1">
+                <i class="fas fa-pound-sign fa-lg iconSpacer"></i>PAYMENTS</a>
+              <a class="nav-item nav-link" href="/admin/doc_menu" internal="true">
+                <i class="fas fa-envelope iconSpacer fa-lg"></i>DOCUMENTS</a>
+              <a class="nav-item nav-link" href="/admin/settings" internal="true">
+                <i class="fas fa-cogs iconSpacer fa-lg"></i>SETTINGS</a>
+            </div>
+          </nav>
+        </div>
+      </div>
     </div>
   </div>
   <div class="container-fluid">

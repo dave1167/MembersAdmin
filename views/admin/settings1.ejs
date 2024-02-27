@@ -1,0 +1,47 @@
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="dashboard" appconnect="local" style="--bs-body-bg: #fffeee;" -->
+<main>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h1>Settings</h1>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<meta name="ac:route" content="/admin/settings">
+
+<script>
+  function calculateDueDate(joinDate,lastPayment) {
+  // Parse joinDate to get day and month components
+  const joinDateObj = new Date(joinDate);
+  const day = joinDateObj.getDate();
+  const month = joinDateObj.getMonth() + 1; // Adding 1 because getMonth() returns 0-indexed month
+
+  // Get the current year
+  const currentYear = new Date().getFullYear();
+
+  // Combine day, month from joinDate and current year to create paymentDueDate
+  let paymentDueDate = new Date(`${currentYear}-${month}-${day}`);
+
+  // Convert lastPayment to Date object
+ // Split lastPayment date string and create Date object
+  const lastPaymentComponents = lastPayment.split("-");
+  const lastPaymentDate = new Date(
+    parseInt(lastPaymentComponents[0]),
+    parseInt(lastPaymentComponents[1]) - 1, // Subtracting 1 because months are 0-indexed
+    parseInt(lastPaymentComponents[2])
+  );
+//alert(lastPaymentDate);
+  // If lastPaymentDate is after paymentDueDate, add one year to paymentDueDate
+  if (lastPaymentDate > paymentDueDate) {
+    paymentDueDate.setFullYear(paymentDueDate.getFullYear() + 1);
+  }
+dmx.global.set('payDueDate', payDueDate);
+ alert (paymentDueDate);
+ //return paymentDueDate;
+}
+ 
+
+</script>
