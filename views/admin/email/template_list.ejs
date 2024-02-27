@@ -1,6 +1,6 @@
 <!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="template_list" appConnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxSummernote:{}}" jquery_slim_35="cdn" -->
 <div class="modal" id="modTemplateEditor" is="dmx-bs5-modal" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-fullscreen" role="document">
+    <div class="modal-dialog modal-fullscreen modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Template Editor</h3>
@@ -9,13 +9,20 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
+
+                        <div class="align-self-center col-7">
+                            <div class="form-group mb-3">
+                                <label for="input2" class="form-label">Template Title</label>
+                                <input type="text" class="form-control" id="input2" name="input2" aria-describedby="input2_help" placeholder="Enter some text">
+                            </div>
+                        </div>
                         <div class="col">
                             <div class="form-group mb-3 row">
-                                <legend class="col-sm-2 col-form-label">One switch</legend>
+                                <legend class="col-sm-2 col-form-label">Template Type</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" value="" id="input1" name="input1">
-                                        <label class="form-check-label" for="input1">Single switch</label>
+                                        <label class="form-check-label" for="input1">Documnet</label>
                                     </div>
                                 </div>
                             </div>
@@ -23,9 +30,24 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['fullscreen','codeview','help']]]"></textarea>
+                            <div class="form-group mb-3">
+                                <label for="textarea1" class="form-label">Description</label>
+                                <textarea id="textarea1" class="form-control"></textarea>
+                                <small id="textarea1_Help" class="form-text text-muted">Enter your large text here.</small>
+                            </div>
                         </div>
-                        <div class="col-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['fullscreen','codeview','help']]]" theme="bootstrap5" min-height="300" max-height="500"></textarea>
+                        </div>
+                        <div class="col-4 border border-1 rounded rounded-3 border-info">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="fw-bold">Template Fields</h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
