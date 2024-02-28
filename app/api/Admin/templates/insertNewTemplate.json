@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/admin/email/template_list.ejs",
+      "linkedForm": "formCreateTemp"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "title",
+        "name": "title"
+      },
+      {
+        "type": "text",
+        "fieldName": "tempDesc",
+        "name": "tempDesc"
+      },
+      {
+        "type": "text",
+        "fieldName": "editor2",
+        "name": "editor2"
+      },
+      {
+        "type": "text",
+        "fieldName": "inpTempSelect",
+        "name": "inpTempSelect"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "insert",
+      "module": "dbupdater",
+      "action": "insert",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "insert",
+          "values": [
+            {
+              "table": "tbl_templates",
+              "column": "tempTitle",
+              "type": "text",
+              "value": "{{$_POST.title}}"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "tempDescription",
+              "type": "text",
+              "value": "{{$_POST.tempDesc}}"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "template",
+              "type": "text",
+              "value": "{{$_POST.editor2}}"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "templateType",
+              "type": "boolean",
+              "value": "{{$_POST.inpTempSelect.default(0)}}"
+            }
+          ],
+          "table": "tbl_templates",
+          "returning": "templateId",
+          "query": "insert into `tbl_templates` (`tempDescription`, `tempTitle`, `template`, `templateType`) values (?, ?, ?, ?) returning `templateId`",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.title}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.tempDesc}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.editor2}}",
+              "test": ""
+            },
+            {
+              "name": ":P4",
+              "type": "expression",
+              "value": "{{$_POST.inpTempSelect.default(0)}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "identity",
+          "type": "text"
+        },
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

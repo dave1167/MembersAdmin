@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_template_fields",
+              "column": "tmpFieldId"
+            },
+            {
+              "table": "tbl_template_fields",
+              "column": "fieldName"
+            },
+            {
+              "table": "tbl_template_fields",
+              "column": "tblName"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_template_fields"
+          },
+          "primary": "tmpFieldId",
+          "joins": [],
+          "query": "select `tmpFieldId`, `fieldName`, `tblName` from `tbl_template_fields`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "tmpFieldId"
+        },
+        {
+          "type": "text",
+          "name": "fieldName"
+        },
+        {
+          "type": "text",
+          "name": "tblName"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

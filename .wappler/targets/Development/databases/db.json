@@ -549,6 +549,15 @@
               "unique": false,
               "nullable": true
             }
+          },
+          "tblName": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
           }
         },
         "db": {}
