@@ -20,6 +20,22 @@
       {
         "type": "text",
         "name": "filter"
+      },
+      {
+        "type": "date",
+        "name": "monthfilterstart"
+      },
+      {
+        "type": "date",
+        "name": "monthfilterend"
+      },
+      {
+        "type": "text",
+        "name": "datepaid"
+      },
+      {
+        "type": "number",
+        "name": "memcat"
       }
     ],
     "$_SESSION": [

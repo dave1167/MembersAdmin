@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "varMthStrt",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{$_GET.monthfilterstart}}"
+        },
+        "meta": [],
+        "outputType": "date",
+        "output": true
+      },
+      {
+        "name": "query",
+        "module": "dbconnector",
+        "action": "select",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "tbl_member_details",
+                "column": "memNo"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "title"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "firstName"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "lastName"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "dateJoined"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "gdpr"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "ukTax"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCard"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "status"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCategory"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "payDueDate"
+              }
+            ],
+            "params": [
+              {
+                "operator": "between",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.monthfilterstart}}",
+                "test": ""
+              },
+              {
+                "operator": "between",
+                "type": "expression",
+                "name": ":P2",
+                "value": "{{$_GET.monthfilterend}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "tbl_member_details"
+            },
+            "primary": "memDetsId",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_details.payDueDate",
+                  "field": "tbl_member_details.payDueDate",
+                  "type": "date",
+                  "operator": "between",
+                  "value": [
+                    "{{$_GET.monthfilterstart}}",
+                    "{{$_GET.monthfilterend}}"
+                  ],
+                  "data": {
+                    "table": "tbl_member_details",
+                    "column": "payDueDate",
+                    "type": "date",
+                    "columnObj": {
+                      "type": "date",
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "payDueDate"
+                    }
+                  },
+                  "operation": "BETWEEN",
+                  "table": "tbl_member_details"
+                },
+                {
+                  "id": "tbl_member_details.status",
+                  "field": "tbl_member_details.status",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": 1,
+                  "data": {
+                    "table": "tbl_member_details",
+                    "column": "status",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "integer",
+                      "maxLength": 255,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "default": "1",
+                      "name": "status"
+                    }
+                  },
+                  "operation": "=",
+                  "table": "tbl_member_details"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select `memNo`, `title`, `firstName`, `lastName`, `dateJoined`, `gdpr`, `ukTax`, `memCard`, `status`, `memCategory`, `payDueDate` from `tbl_member_details` where `tbl_member_details`.`payDueDate` between ? and ? and `tbl_member_details`.`status` = ?"
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "memNo"
+          },
+          {
+            "type": "text",
+            "name": "title"
+          },
+          {
+            "type": "text",
+            "name": "firstName"
+          },
+          {
+            "type": "text",
+            "name": "lastName"
+          },
+          {
+            "type": "date",
+            "name": "dateJoined"
+          },
+          {
+            "type": "boolean",
+            "name": "gdpr"
+          },
+          {
+            "type": "boolean",
+            "name": "ukTax"
+          },
+          {
+            "type": "boolean",
+            "name": "memCard"
+          },
+          {
+            "type": "number",
+            "name": "status"
+          },
+          {
+            "type": "number",
+            "name": "memCategory"
+          },
+          {
+            "type": "date",
+            "name": "payDueDate"
+          }
+        ],
+        "outputType": "array"
+      }
+    ]
+  }
+}

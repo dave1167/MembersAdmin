@@ -137,6 +137,18 @@
             {
               "table": "tbl_member_details",
               "column": "dateJoined"
+            },
+            {
+              "table": "tbl_member_details",
+              "column": "memCategory"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "memTypeDesc"
+            },
+            {
+              "table": "tbl_membershipType",
+              "column": "cost"
             }
           ],
           "params": [
@@ -159,8 +171,30 @@
             "name": "tbl_member_details"
           },
           "primary": "memDetsId",
-          "joins": [],
-          "query": "select distinct `memDetsId`, `memNo`, `firstName`, `lastName`, `status`, `dateJoined` from `tbl_member_details` where `tbl_member_details`.`firstName` like ? or `tbl_member_details`.`lastName` like ? order by `lastName` ASC",
+          "joins": [
+            {
+              "table": "tbl_membershipType",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_membershipType",
+                    "column": "memTypeId",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_details",
+                      "column": "memCategory"
+                    }
+                  }
+                ]
+              },
+              "primary": "memTypeId"
+            }
+          ],
+          "query": "select distinct `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memNo`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`status`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`memCategory`, `tbl_membershipType`.`memTypeDesc`, `tbl_membershipType`.`cost` from `tbl_member_details` inner join `tbl_membershipType` on `tbl_membershipType`.`memTypeId` = `tbl_member_details`.`memCategory` where `tbl_member_details`.`firstName` like ? or `tbl_member_details`.`lastName` like ? or `tbl_member_details`.`status` = ? order by `tbl_member_details`.`lastName` ASC",
           "sub": {
             "stbl_mem_pers": {
               "type": "select",
@@ -344,6 +378,28 @@
                   }
                 },
                 "operation": "LIKE"
+              },
+              {
+                "id": "tbl_member_details.status",
+                "field": "tbl_member_details.status",
+                "type": "double",
+                "operator": "equal",
+                "value": 1,
+                "data": {
+                  "table": "tbl_member_details",
+                  "column": "status",
+                  "type": "number",
+                  "columnObj": {
+                    "type": "integer",
+                    "maxLength": 255,
+                    "primary": false,
+                    "unique": false,
+                    "nullable": true,
+                    "default": "1",
+                    "name": "status"
+                  }
+                },
+                "operation": "="
               }
             ],
             "conditional": null,
@@ -376,6 +432,18 @@
         {
           "type": "date",
           "name": "dateJoined"
+        },
+        {
+          "type": "number",
+          "name": "memCategory"
+        },
+        {
+          "type": "text",
+          "name": "memTypeDesc"
+        },
+        {
+          "type": "number",
+          "name": "cost"
         },
         {
           "name": "stbl_mem_pers",

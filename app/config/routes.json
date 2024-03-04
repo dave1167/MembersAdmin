@@ -1,6 +1,11 @@
 {
   "routes": [
     {
+      "path": "/admin/memberTest",
+      "page": "admin/memberTest",
+      "layout": "admin"
+    },
+    {
       "path": "/unauth2.ejs",
       "url": ""
     },
@@ -71,6 +76,16 @@
     {
       "path": "/admin/doc_menu",
       "page": "admin/doc_menu",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/email/renewals",
+      "page": "admin/email/renewals",
+      "layout": "admin"
+    },
+    {
+      "path": "/admin/members-copyoooo",
+      "page": "admin/members-copyoooo",
       "layout": "admin"
     }
   ]

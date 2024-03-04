@@ -40,7 +40,7 @@
                 "operator": "equal",
                 "type": "expression",
                 "name": ":P1",
-                "value": "{{$_GET.memdetsid}}",
+                "value": "{{$_GET.memcat}}",
                 "test": "1"
               }
             ],
@@ -58,7 +58,7 @@
                   "field": "tbl_membershipType.memTypeId",
                   "type": "double",
                   "operator": "equal",
-                  "value": "{{$_GET.memdetsid}}",
+                  "value": "{{$_GET.memcat}}",
                   "data": {
                     "table": "tbl_membershipType",
                     "column": "memTypeId",
@@ -71,8 +71,7 @@
                       "name": "memTypeId"
                     }
                   },
-                  "operation": "=",
-                  "table": "tbl_membershipType"
+                  "operation": "="
                 }
               ],
               "conditional": null,
@@ -98,12 +97,15 @@
         "outputType": "array"
       },
       {
-        "name": "",
+        "name": "memTypeCost",
         "module": "core",
         "action": "setvalue",
-        "options": {},
+        "options": {
+          "value": "{{query[0].cost}}"
+        },
         "meta": [],
-        "outputType": "text"
+        "outputType": "number",
+        "output": true
       }
     ]
   }

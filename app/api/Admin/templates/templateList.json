@@ -39,7 +39,8 @@
             },
             {
               "table": "tbl_templates",
-              "column": "templateType"
+              "column": "templateType",
+              "aggregate": ""
             }
           ],
           "params": [],
@@ -70,7 +71,7 @@
           "name": "template"
         },
         {
-          "type": "number",
+          "type": "boolean",
           "name": "templateType"
         }
       ],

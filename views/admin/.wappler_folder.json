@@ -26,5 +26,21 @@
   "doc_menu.ejs": {
     "layoutPage": "admin",
     "description": ""
+  },
+  "testfukwit.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "notwork.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "another.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "members-copyoooo.ejs": {
+    "layoutPage": "admin",
+    "description": ""
   }
 }

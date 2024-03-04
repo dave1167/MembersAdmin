@@ -1,0 +1,11 @@
+{
+  "name": "query",
+  "module": "dbconnector",
+  "action": "single",
+  "options": {
+    "connection": "db"
+  },
+  "output": true,
+  "meta": [],
+  "outputType": "object"
+}

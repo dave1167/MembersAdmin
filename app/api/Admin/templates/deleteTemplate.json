@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "tempid"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "delete",
+      "module": "dbupdater",
+      "action": "delete",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "delete",
+          "table": "tbl_templates",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "templateId",
+                "field": "templateId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_GET.tempid}}",
+                "data": {
+                  "column": "templateId"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "templateId",
+          "query": "delete from `tbl_templates` where `templateId` = ?",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.tempid}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

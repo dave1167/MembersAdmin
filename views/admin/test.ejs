@@ -1,4 +1,24 @@
-<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="test" appConnect="local" components="{dmxBootstrap5TableGenerator:{}}" -->
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="test" appConnect="local" components="{dmxBootstrap5TableGenerator:{},dmxBootstrap5Modal:{}}" -->
+<script is="dmx-flow" id="flow1" type="text/dmx-flow">{
+  run: {outputType: "text", action: "{{modal1.show()}}"}
+}</script>
+<div class="modal" id="modal1" is="dmx-bs5-modal" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <main>
   <div class="row">
     <div class="col">
@@ -17,6 +37,9 @@
         </thead>
         <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="serverconnect1.data.query" id="tableRepeat1">
           <tr>
+            <td>
+              <button id="btn1" class="btn" dmx-on:click="flow1.run()">Button</button>Cell
+            </td>
             <td dmx-text="memDetsId"></td>
             <td dmx-text="memNo"></td>
             <td dmx-text="firstName"></td>

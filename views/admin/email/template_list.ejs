@@ -1,4 +1,7 @@
-<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="template_list" appconnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxSummernote:{}}" jquery_slim_35="cdn" dmx-on:click="" -->
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="template_list" appconnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxSummernote:{},dmxBootstrap5Tooltips:{}}" jquery_slim_35="cdn" dmx-on:click="" -->
+<dmx-serverconnect id="scdeleteTemp" url="/api/Admin/templates/deleteTemplate" noload="true"></dmx-serverconnect>
+<dmx-serverconnect id="scUpdateTemp" url="/api/Admin/templates/updateTemplate"></dmx-serverconnect>
+<dmx-serverconnect id="scGetTemplate" url="/api/Admin/templates/getTemplate"></dmx-serverconnect>
 <dmx-serverconnect id="scTemplateFields" url="/api/Admin/templates/templateField"></dmx-serverconnect>
 <dmx-serverconnect id="scTemplateList" url="/api/Admin/templates/templateList"></dmx-serverconnect>
 <div class="modal" id="modTemplateEditor" is="dmx-bs5-modal" tabindex="-1">
@@ -11,75 +14,84 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="row">
+                    <form id="form1" method="post" is="dmx-serverconnect-form" action="/api/Admin/templates/updateTemplate">
+                        <div class="row">
+                            <div class="col">
 
-                        <div class="align-self-center col-7">
-                            <div class="form-group mb-3">
-                                <label for="input2" class="form-label">Template Title</label>
-                                <input type="text" class="form-control" id="input2" name="input2" aria-describedby="input2_help" placeholder="Enter some text">
+                            </div>
+
+                            <div class="align-self-center col-7">
+                                <div class="form-group mb-3">
+                                    <label for="inpTitle" class="form-label">Template Title</label>
+                                    <input type="text" class="form-control" id="inpTitle" name="title" aria-describedby="input2_help" placeholder="Enter Tite" dmx-bind:value="scGetTemplate.data.query.tempTitle">
+                                    <input type="hidden" class="form-control" id="inpTempId" name="tempId" aria-describedby="input2_help" placeholder="Enter some text" dmx-bind:value="scGetTemplate.data.query.templateId">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group mb-3 row">
+
+                                    <div class="col-sm-10">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" value="1" id="input1" name="inptempSel">
+
+                                        </div>
+                                    </div>
+                                    <legend class="col-sm-2 col-form-label">Email</legend><label class="form-check-label" for="input1">Document</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="form-group mb-3 row">
-
-                                <div class="col-sm-10">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" value="" id="input1" name="input1">
-
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group mb-3">
+                                    <label for="textarea1" class="form-label">Description</label>
+                                    <textarea id="textarea1" class="form-control" dmx-bind:value="scGetTemplate.data.query.tempDescription" name="tempDesc"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['help']]]" max-height="600" min-height="400" dialogs-in-body="true" dmx-bind:value="scGetTemplate.data.query.template" theme="lite"></textarea>
+                            </div>
+                            <div class="col-4 border border-1 rounded rounded-3 border-info">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="fw-bold">Template Fields</h5>
                                     </div>
                                 </div>
-                                <legend class="col-sm-2 col-form-label">Email</legend><label class="form-check-label" for="input1">Document</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group mb-3">
-                                <label for="textarea1" class="form-label">Description</label>
-                                <textarea id="textarea1" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['help']]]" max-height="600" min-height="400"></textarea>
-                        </div>
-                        <div class="col-4 border border-1 rounded rounded-3 border-info">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="fw-bold">Template Fields</h5>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Field name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scTemplateFields.data.query" id="tableRepeat2">
-                                                <tr>
-                                                    <td>
-                                                        <button id="btn2" class="btn btn-primary" dmx-on:click="editor1.insertText(fieldName)"><i class="far fa-file-alt fa-2x"></i></button>
-                                                    </td>
-                                                    <td dmx-text="tmpFieldId" dmx-hide="!tmpFieldId.isEmpty()"></td>
-                                                    <td dmx-text="tblName" dmx-on:click="editor1.insertText(fieldName)"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Field name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scTemplateFields.data.query" id="tableRepeat2">
+                                                    <tr>
+                                                        <td>
+                                                            <button id="btn2" class="btn btn-primary" dmx-on:click="editor1.insertText(fieldName)"><i class="far fa-file-alt fa-2x"></i></button>
+                                                        </td>
+                                                        <td dmx-text="tmpFieldId" dmx-hide="!tmpFieldId.isEmpty()"></td>
+                                                        <td dmx-text="tblName" dmx-on:click="editor1.insertText(fieldName)"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+
+
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-success" dmx-on:click="form1.submit();form1.reset();scTemplateList.load({});modTemplateEditor.hide()">Save changes</button>
             </div>
         </div>
     </div>
@@ -169,7 +181,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success " dmx-on:click="formCreateTemp.submit()">
+                <button type="submit" class="btn btn-success " dmx-on:click="formCreateTemp.submit();formCreateTemp.reset();modCreateTemplate.hide()">
                     <i class="fas fa-plus-circle iconSpacer fa-lg"></i>Create New Template</button>
             </div>
         </div>
@@ -207,8 +219,13 @@
                         <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scTemplateList.data.query" id="tableRepeat1">
                             <tr>
                                 <td>
-                                    <button id="btn1" class="btn btn-primary" dmx-on:click="modTemplateEditor.show()">
+                                    <button id="btn1" class="btn btn-primary" dmx-on:click="scGetTemplate.load({templateid: templateId});modTemplateEditor.show()">
                                         <i class="fas fa-edit fa-lg"></i></button>
+                                </td>
+                                <td>
+                                    <button id="btn5" class="btn btn-danger" dmx-on:click="run({confirm:{outputType:'boolean',message:'Are you sure want to delete this template?',then:{steps:{run:{outputType:'text',action:`scdeleteTemp.load({tempid: templateId});scTemplateList.load({})`}}}}})" dmx-bs-tooltip="'Delete a template'">
+                                        <i class="fas fa-trash fa-lg"></i></button>
+
                                 </td>
                                 <td dmx-text="templateId" dmx-hide="!templateId.isEmpty()"></td>
                                 <td dmx-text="tempTitle"></td>

@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/admin/email/template_list.ejs",
+      "linkedForm": "form1"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "title",
+        "name": "title"
+      },
+      {
+        "type": "text",
+        "fieldName": "tempId",
+        "name": "tempId"
+      },
+      {
+        "type": "text",
+        "fieldName": "input1",
+        "name": "input1"
+      },
+      {
+        "type": "text",
+        "fieldName": "textarea1",
+        "name": "textarea1"
+      },
+      {
+        "type": "text",
+        "fieldName": "editor1",
+        "name": "editor1"
+      },
+      {
+        "type": "number",
+        "name": "templateId"
+      },
+      {
+        "type": "text",
+        "fieldName": "tempDesc",
+        "name": "tempDesc"
+      },
+      {
+        "type": "text",
+        "fieldName": "inptempSel",
+        "name": "inptempSel"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "update",
+      "module": "dbupdater",
+      "action": "update",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "update",
+          "values": [
+            {
+              "table": "tbl_templates",
+              "column": "tempTitle",
+              "type": "text",
+              "value": "{{$_POST.title}}"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "tempDescription",
+              "type": "text",
+              "value": "{{$_POST.tempDesc}}"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "template",
+              "type": "text",
+              "value": "{{$_POST.editor1}}"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "templateType",
+              "type": "boolean",
+              "value": "{{$_POST.inptempSel.default(0)}}"
+            }
+          ],
+          "table": "tbl_templates",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "templateId",
+                "field": "templateId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.tempId}}",
+                "data": {
+                  "column": "templateId"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "templateId",
+          "query": "update `tbl_templates` set `tempTitle` = ?, `tempDescription` = ?, `template` = ?, `templateType` = ? where `templateId` = ? returning `templateId`",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.title}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.tempDesc}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.editor1}}",
+              "test": ""
+            },
+            {
+              "name": ":P4",
+              "type": "expression",
+              "value": "{{$_POST.inptempSel.default(0)}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P5",
+              "value": "{{$_POST.tempId}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

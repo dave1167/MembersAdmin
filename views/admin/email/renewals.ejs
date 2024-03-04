@@ -1,0 +1,102 @@
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="reminder" appConnect="local" components="{dmxFormatter:{},dmxBootstrap5TableGenerator:{}}" -->
+<dmx-serverconnect id="scRenewal" url="/api/Admin/reminders/renewals" dmx-param:monthfilterstart="inpStartDate.value" dmx-param:monthfilterend="inpEndDate.value"></dmx-serverconnect>
+<dmx-datetime id="var1" interval="days"></dmx-datetime>
+<dmx-value id="varStrtDate" dmx-bind:value="'01'+select1.value+var1.datetime"></dmx-value>
+<meta name="ac:route" content="/admin/email/renewals">
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h4>Reminders</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col">
+                <div class="form-group mb-3">
+                    <label for="select1" class="form-label">Select</label>
+                    <select id="select1" class="form-select" dmx-on:updated="run({runJS:{outputType:'text',function:'displayFirstAndLastDayOfMonth',args:[`value`,`var1.datetime.getYear(var1.datetime)`]}})">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col offset-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input id="inpStartDate" name="inpStartDate" type="text" class="form-control" dmx-bind:value="mthStart">
+
+            </div>
+            <div class="col"><input id="inpEndDate" name="inpEndDate" class="form-control" dmx-bind:value="mthFinish"></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Mem no</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Date joined</th>
+                                <th>Status</th>
+                                <th>Mem category</th>
+                                <th>Pay due date</th>
+                            </tr>
+                        </thead>
+                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scRenewal.data.query" id="tableRepeat1">
+                            <tr>
+                                <td dmx-text="memNo.pad(4)"></td>
+                                <td dmx-text="firstName"></td>
+                                <td dmx-text="lastName"></td>
+                                <td dmx-text="dateJoined.formatDate('dd-MM-yyyy')"></td>
+                                <td dmx-text="status"></td>
+                                <td dmx-text="memCategory"></td>
+                                <td dmx-text="payDueDate"></td>
+                                <td dmx-text="scRenewal.data.query[0].datePaid">Cell</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+</main>
+
+<script>
+    function displayFirstAndLastDayOfMonth(monthNumber, currentYear) {
+    // Calculate the previous year
+    const previousYear = currentYear ;
+
+    // Create a Date object for the first day of the specified month
+    const firstDayOfMonth = new Date(`${monthNumber}/1/${previousYear}`);
+    const firstDayFormatted = `${firstDayOfMonth.getFullYear()}-${(firstDayOfMonth.getMonth() + 1).toString().padStart(2, '0')}-${firstDayOfMonth.getDate().toString().padStart(2, '0')}`;
+
+    // Get the last day of the specified month by setting the day to 0 of the next month
+    const lastDayOfMonth = new Date(firstDayOfMonth);
+    lastDayOfMonth.setMonth(lastDayOfMonth.getMonth() + 1);
+    lastDayOfMonth.setDate(0);
+    const lastDayFormatted = `${lastDayOfMonth.getFullYear()}-${(lastDayOfMonth.getMonth() + 1).toString().padStart(2, '0')}-${lastDayOfMonth.getDate().toString().padStart(2, '0')}`;
+
+    // Display the first and last day of the specified month using alerts
+     dmx.app.set('mthStart', firstDayFormatted);
+     dmx.app.set('mthFinish', lastDayFormatted);
+ //   alert("First day of the specified month: " + firstDayFormatted);
+ //   alert("Last day of the specified month: " + lastDayFormatted);
+}
+
+
+
+</script>

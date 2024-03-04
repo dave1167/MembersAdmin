@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "templateid"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "single",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_templates",
+              "column": "templateId"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "tempTitle"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "tempDescription"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "template"
+            },
+            {
+              "table": "tbl_templates",
+              "column": "templateType"
+            }
+          ],
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_GET.templateid}}",
+              "test": "1"
+            }
+          ],
+          "table": {
+            "name": "tbl_templates"
+          },
+          "primary": "templateId",
+          "joins": [],
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "tbl_templates.templateId",
+                "field": "tbl_templates.templateId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_GET.templateid}}",
+                "data": {
+                  "table": "tbl_templates",
+                  "column": "templateId",
+                  "type": "number",
+                  "columnObj": {
+                    "type": "increments",
+                    "primary": true,
+                    "unique": false,
+                    "nullable": false,
+                    "name": "templateId"
+                  }
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "query": "select `templateId`, `tempTitle`, `tempDescription`, `template`, `templateType` from `tbl_templates` where `tbl_templates`.`templateId` = ?"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "templateId"
+        },
+        {
+          "type": "text",
+          "name": "tempTitle"
+        },
+        {
+          "type": "text",
+          "name": "tempDescription"
+        },
+        {
+          "type": "text",
+          "name": "template"
+        },
+        {
+          "type": "boolean",
+          "name": "templateType"
+        }
+      ],
+      "outputType": "object"
+    }
+  }
+}

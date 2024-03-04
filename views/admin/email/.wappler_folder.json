@@ -10,5 +10,17 @@
   "template_list.ejs": {
     "layoutPage": "admin",
     "description": ""
+  },
+  "reminder2.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "reminder2a.ejs": {
+    "layoutPage": "admin",
+    "description": ""
+  },
+  "renewals.ejs": {
+    "layoutPage": "admin",
+    "description": ""
   }
 }
