@@ -2,7 +2,7 @@
   "meta": {
     "options": {
       "linkedFile": "/views/admin/email/template_list.ejs",
-      "linkedForm": "form1"
+      "linkedForm": "formCreateTemp"
     },
     "$_POST": [
       {
@@ -12,27 +12,13 @@
       },
       {
         "type": "text",
-        "fieldName": "tempId",
-        "name": "tempId"
+        "fieldName": "inpTempSelect",
+        "name": "inpTempSelect"
       },
       {
         "type": "text",
-        "fieldName": "input1",
-        "name": "input1"
-      },
-      {
-        "type": "text",
-        "fieldName": "textarea1",
-        "name": "textarea1"
-      },
-      {
-        "type": "text",
-        "fieldName": "editor1",
-        "name": "editor1"
-      },
-      {
-        "type": "number",
-        "name": "templateId"
+        "fieldName": "emailSubjectLine",
+        "name": "emailSubjectLine"
       },
       {
         "type": "text",
@@ -41,24 +27,28 @@
       },
       {
         "type": "text",
-        "fieldName": "inptempSel",
-        "name": "inptempSel"
+        "fieldName": "editor2",
+        "name": "editor2"
       },
       {
         "type": "text",
-        "name": "emailSubjectLine"
+        "name": "template"
+      },
+      {
+        "type": "boolean",
+        "name": "templateType"
       }
     ]
   },
   "exec": {
     "steps": {
-      "name": "update",
+      "name": "insert",
       "module": "dbupdater",
-      "action": "update",
+      "action": "insert",
       "options": {
         "connection": "db",
         "sql": {
-          "type": "update",
+          "type": "insert",
           "values": [
             {
               "table": "tbl_templates",
@@ -76,13 +66,13 @@
               "table": "tbl_templates",
               "column": "template",
               "type": "text",
-              "value": "{{$_POST.editor1}}"
+              "value": "{{$_POST.editor2}}"
             },
             {
               "table": "tbl_templates",
               "column": "templateType",
               "type": "boolean",
-              "value": "{{$_POST.inptempSel.default(0)}}"
+              "value": "{{$_POST.inpTempSelect}}"
             },
             {
               "table": "tbl_templates",
@@ -92,26 +82,8 @@
             }
           ],
           "table": "tbl_templates",
-          "wheres": {
-            "condition": "AND",
-            "rules": [
-              {
-                "id": "templateId",
-                "field": "templateId",
-                "type": "double",
-                "operator": "equal",
-                "value": "{{$_POST.tempId}}",
-                "data": {
-                  "column": "templateId"
-                },
-                "operation": "="
-              }
-            ],
-            "conditional": null,
-            "valid": true
-          },
           "returning": "templateId",
-          "query": "update `tbl_templates` set `tempTitle` = ?, `tempDescription` = ?, `template` = ?, `templateType` = ?, `emailSubjectLine` = ? where `templateId` = ? returning `templateId`",
+          "query": "insert into `tbl_templates` (`emailSubjectLine`, `tempDescription`, `tempTitle`, `template`, `templateType`) values (?, ?, ?, ?, ?) returning `templateId`",
           "params": [
             {
               "name": ":P1",
@@ -128,13 +100,13 @@
             {
               "name": ":P3",
               "type": "expression",
-              "value": "{{$_POST.editor1}}",
+              "value": "{{$_POST.editor2}}",
               "test": ""
             },
             {
               "name": ":P4",
               "type": "expression",
-              "value": "{{$_POST.inptempSel.default(0)}}",
+              "value": "{{$_POST.inpTempSelect}}",
               "test": ""
             },
             {
@@ -142,18 +114,15 @@
               "type": "expression",
               "value": "{{$_POST.emailSubjectLine}}",
               "test": ""
-            },
-            {
-              "operator": "equal",
-              "type": "expression",
-              "name": ":P6",
-              "value": "{{$_POST.tempId}}",
-              "test": ""
             }
           ]
         }
       },
       "meta": [
+        {
+          "name": "identity",
+          "type": "text"
+        },
         {
           "name": "affected",
           "type": "number"

@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "tbl_template_fields",
+              "column": "tmpFieldId"
+            },
+            {
+              "table": "tbl_template_fields",
+              "column": "labelName"
+            },
+            {
+              "table": "tbl_template_fields",
+              "column": "field"
+            },
+            {
+              "table": "tbl_template_fields",
+              "column": "mappedMemberField"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "tbl_template_fields"
+          },
+          "primary": "tmpFieldId",
+          "joins": [],
+          "query": "select `tmpFieldId`, `labelName`, `field`, `mappedMemberField` from `tbl_template_fields`"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "tmpFieldId"
+        },
+        {
+          "type": "text",
+          "name": "labelName"
+        },
+        {
+          "type": "text",
+          "name": "field"
+        },
+        {
+          "type": "text",
+          "name": "mappedMemberField"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

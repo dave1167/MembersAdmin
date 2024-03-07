@@ -1,0 +1,433 @@
+{
+  meta: {
+    $param: [
+      {type: "date", name: "startMth"},
+      {type: "date", name: "finMth"},
+      {type: "number", name: "tempId"}
+    ]
+  },
+  exec: {
+    steps: [
+      {
+        serverConnect: {
+          name: "sc",
+          output: true,
+          outputType: "object",
+          meta: [
+            {
+              name: "data",
+              type: "object",
+              sub: [
+                {
+                  name: "query",
+                  type: "array",
+                  sub: [
+                    {type: "number", name: "memNo"},
+                    {type: "text", name: "title"},
+                    {type: "text", name: "firstName"},
+                    {type: "text", name: "lastName"},
+                    {type: "date", name: "dateJoined"},
+                    {type: "boolean", name: "gdpr"},
+                    {type: "boolean", name: "ukTax"},
+                    {type: "boolean", name: "memCard"},
+                    {type: "number", name: "status"},
+                    {type: "number", name: "memCategory"},
+                    {type: "date", name: "payDueDate"},
+                    {type: "text", name: "email"},
+                    {type: "text", name: "address1"},
+                    {type: "text", name: "address2"},
+                    {type: "text", name: "town1"},
+                    {type: "text", name: "town2"},
+                    {type: "text", name: "postcode"}
+                  ]
+                }
+              ]
+            },
+            {
+              name: "state",
+              type: "object",
+              sub: [
+                {name: "executing", type: "boolean"},
+                {name: "uploading", type: "boolean"},
+                {name: "processing", type: "boolean"},
+                {name: "downloading", type: "boolean"}
+              ]
+            },
+            {
+              name: "uploadProgress",
+              type: "object",
+              sub: [
+                {name: "position", type: "number"},
+                {name: "total", type: "number"},
+                {name: "percent", type: "number"}
+              ]
+            },
+            {
+              name: "downloadProgress",
+              type: "object",
+              sub: [
+                {name: "position", type: "number"},
+                {name: "total", type: "number"},
+                {name: "percent", type: "number"}
+              ]
+            },
+            {
+              name: "lastError",
+              type: "object",
+              sub: [
+                {name: "status", type: "number"},
+                {name: "message", type: "text"},
+                {name: "response", type: "text"}
+              ]
+            },
+            {name: "status", type: "number"}
+          ],
+          url: "/api/Admin/reminders/getFilterMems",
+          site: "membershipV2",
+          params: {
+            monthfilterstart: "{{$param.startMth}}",
+            monthfilterend: "{{$param.finMth}}"
+          }
+        }
+      },
+      {
+        serverConnect: {
+          name: "scFieldList",
+          outputType: "object",
+          url: "/api/Admin/reminders/getFieldList",
+          site: "membershipV2"
+        }
+      },
+      {
+        serverConnect: {
+          name: "scGetTemplate",
+          output: true,
+          outputType: "object",
+          meta: [
+            {
+              name: "data",
+              type: "object",
+              sub: [
+                {
+                  name: "query",
+                  type: "object",
+                  sub: [
+                    {type: "number", name: "templateId"},
+                    {type: "text", name: "tempTitle"},
+                    {type: "text", name: "tempDescription"},
+                    {type: "text", name: "template"},
+                    {type: "boolean", name: "templateType"},
+                    {type: "text", name: "emailSubjectLine"}
+                  ]
+                }
+              ]
+            },
+            {
+              name: "state",
+              type: "object",
+              sub: [
+                {name: "executing", type: "boolean"},
+                {name: "uploading", type: "boolean"},
+                {name: "processing", type: "boolean"},
+                {name: "downloading", type: "boolean"}
+              ]
+            },
+            {
+              name: "uploadProgress",
+              type: "object",
+              sub: [
+                {name: "position", type: "number"},
+                {name: "total", type: "number"},
+                {name: "percent", type: "number"}
+              ]
+            },
+            {
+              name: "downloadProgress",
+              type: "object",
+              sub: [
+                {name: "position", type: "number"},
+                {name: "total", type: "number"},
+                {name: "percent", type: "number"}
+              ]
+            },
+            {
+              name: "lastError",
+              type: "object",
+              sub: [
+                {name: "status", type: "number"},
+                {name: "message", type: "text"},
+                {name: "response", type: "text"}
+              ]
+            },
+            {name: "status", type: "number"}
+          ],
+          url: "/api/Admin/reminders/getTemplate",
+          site: "membershipV2",
+          params: {tempid: "{{$param.tempId}}"}
+        }
+      },
+      {
+        setStorage: {key: "template", value: "{{scGetTemplate.data.query.template}}"}
+      },
+      {
+        getStorage: {name: "var", output: true, outputType: "text", key: "template"}
+      },
+      {
+        bootbox.alert: {disabled: true, message: "{{var+' template '}}"}
+      },
+      {
+        repeat: {
+          name: "repeat",
+          output: true,
+          outputType: "array",
+          meta: [
+            {name: "$index", type: "number"},
+            {name: "$number", type: "number"},
+            {name: "$name", type: "text"},
+            {name: "$value", type: "object"},
+            {name: "memNo", type: "number"},
+            {name: "title", type: "text"},
+            {name: "firstName", type: "text"},
+            {name: "lastName", type: "text"},
+            {name: "dateJoined", type: "date"},
+            {name: "gdpr", type: "boolean"},
+            {name: "ukTax", type: "boolean"},
+            {name: "memCard", type: "boolean"},
+            {name: "status", type: "number"},
+            {name: "memCategory", type: "number"},
+            {name: "payDueDate", type: "date"},
+            {name: "email", type: "text"},
+            {name: "address1", type: "text"},
+            {name: "address2", type: "text"},
+            {name: "town1", type: "text"},
+            {name: "town2", type: "text"},
+            {name: "postcode", type: "text"}
+          ],
+          repeat: "{{sc.data.query}}",
+          outputFields: [],
+          exec: {
+            steps: [
+              {
+                alert: {output: true, message: "{{sc.data.query[$index].firstName}}"}
+              },
+              {
+                comment: {msg: "ADDRESS1\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var.replace(scFieldList.data.query[0].field, sc.data.query[$index].address1)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "ADDRESS2\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[1].field, sc.data.query[$index].address2)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "TOWN 1\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[2].field, sc.data.query[$index].lastName)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "TOWN 1\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[3].field, sc.data.query[$index].town1)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "TOWN 2\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[4].field, sc.data.query[$index].town2)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "EMAIL\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[5].field, sc.data.query[$index].postcode)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "EMAIL\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[6].field, sc.data.query[$index].email)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "FIRST NAME\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[7].field, sc.data.query[$index].firstName)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                comment: {msg: "MEM NO\n"}
+              },
+              {
+                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+              },
+              {
+                assign: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  value: "{{var1.replace(scFieldList.data.query[8].field, sc.data.query[$index].memNo)}}"
+                }
+              },
+              {
+                setStorage: {key: "template", value: "{{var1.pad(4, 0, 'left')}}"}
+              },
+              {
+                serverConnect: {
+                  name: "scCreateEmail",
+                  output: true,
+                  outputType: "object",
+                  meta: [
+                    {
+                      name: "data",
+                      type: "object",
+                      sub: []
+                    },
+                    {
+                      name: "state",
+                      type: "object",
+                      sub: [
+                        {name: "executing", type: "boolean"},
+                        {name: "uploading", type: "boolean"},
+                        {name: "processing", type: "boolean"},
+                        {name: "downloading", type: "boolean"}
+                      ]
+                    },
+                    {
+                      name: "uploadProgress",
+                      type: "object",
+                      sub: [
+                        {name: "position", type: "number"},
+                        {name: "total", type: "number"},
+                        {name: "percent", type: "number"}
+                      ]
+                    },
+                    {
+                      name: "downloadProgress",
+                      type: "object",
+                      sub: [
+                        {name: "position", type: "number"},
+                        {name: "total", type: "number"},
+                        {name: "percent", type: "number"}
+                      ]
+                    },
+                    {
+                      name: "lastError",
+                      type: "object",
+                      sub: [
+                        {name: "status", type: "number"},
+                        {name: "message", type: "text"},
+                        {name: "response", type: "text"}
+                      ]
+                    },
+                    {name: "status", type: "number"}
+                  ],
+                  url: "/api/Admin/reminders/createEmail",
+                  site: "membershipV2"
+                }
+              },
+              {
+                alert: {message: "{{var1}}"}
+              },
+              {
+                bootbox.alert: {disabled: true, message: "{{scFieldList.data.query[$index].field}}"}
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  includeFolders: ["dmxBootbox5"]
+}

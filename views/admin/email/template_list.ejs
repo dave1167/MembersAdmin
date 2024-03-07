@@ -1,4 +1,4 @@
-<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="template_list" appconnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxSummernote:{},dmxBootstrap5Tooltips:{}}" jquery_slim_35="cdn" dmx-on:click="" -->
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="template_list" appconnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{},dmxBootstrap5Modal:{},dmxSummernote:{},dmxBootstrap5Tooltips:{},dmxSummernoteFileUpload:{}}" jquery_slim_35="cdn" dmx-on:click="" -->
 <dmx-serverconnect id="scdeleteTemp" url="/api/Admin/templates/deleteTemplate" noload="true"></dmx-serverconnect>
 <dmx-serverconnect id="scUpdateTemp" url="/api/Admin/templates/updateTemplate"></dmx-serverconnect>
 <dmx-serverconnect id="scGetTemplate" url="/api/Admin/templates/getTemplate"></dmx-serverconnect>
@@ -15,29 +15,26 @@
             <div class="modal-body">
                 <div class="container">
                     <form id="form1" method="post" is="dmx-serverconnect-form" action="/api/Admin/templates/updateTemplate">
-                        <div class="row">
-                            <div class="col">
+                        <div class="row row-cols-8">
 
-                            </div>
-
-                            <div class="align-self-center col-7">
+                            <div class="align-self-center col-4">
                                 <div class="form-group mb-3">
                                     <label for="inpTitle" class="form-label">Template Title</label>
                                     <input type="text" class="form-control" id="inpTitle" name="title" aria-describedby="input2_help" placeholder="Enter Tite" dmx-bind:value="scGetTemplate.data.query.tempTitle">
                                     <input type="hidden" class="form-control" id="inpTempId" name="tempId" aria-describedby="input2_help" placeholder="Enter some text" dmx-bind:value="scGetTemplate.data.query.templateId">
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-group mb-3 row">
+                            <div class="col-2">
+                                <p class="text-end fw-bold">Email</p>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-check form-switch form-check-inline">
+                                    <input class="form-check-input" type="checkbox" value="1" id="input1" name="inptempSel">
 
-                                    <div class="col-sm-10">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" value="1" id="input1" name="inptempSel">
-
-                                        </div>
-                                    </div>
-                                    <legend class="col-sm-2 col-form-label">Email</legend><label class="form-check-label" for="input1">Document</label>
                                 </div>
+                            </div>
+                            <div class="col-2 text-start">
+                                <p class="fw-bold text-start">Documents</p>
                             </div>
                         </div>
                         <div class="row">
@@ -46,11 +43,14 @@
                                     <label for="textarea1" class="form-label">Description</label>
                                     <textarea id="textarea1" class="form-control" dmx-bind:value="scGetTemplate.data.query.tempDescription" name="tempDesc"></textarea>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label for="textarea3" class="form-label">Email Subject</label><input id="inpSubjLine" name="emailSubjectLine" type="text" class="form-control" dmx-bind:value="scTemplateList.data.query[0].emailSubjectLine" dmx-bs-tooltip="'This is the title that will appear in the Email Subject Line'">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['help']]]" max-height="600" min-height="400" dialogs-in-body="true" dmx-bind:value="scGetTemplate.data.query.template" theme="lite"></textarea>
+                                <textarea id="editor1" name="editor1" is="dmx-summernote" dmx-bind:toolbar="[['style',['style']],['font',['bold','underline','clear']],['fontname',['fontname']],['color',['color']],['para',['ul','ol','paragraph']],['table',['table']],['insert',['link','picture','video']],['view',['fullscreen','codeview','help']],[]]" height="400" max-height="600" dialogs-in-body="true" theme="lite" dmx-plugin:file="" dmx-bind:value="scGetTemplate.data.query.template"></textarea>
                             </div>
                             <div class="col-4 border border-1 rounded rounded-3 border-info">
                                 <div class="row">
@@ -106,7 +106,7 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form id="formCreateTemp" method="post" is="dmx-serverconnect-form" action="/api/Admin/templates/insertNewTemplate">
+                    <form id="formCreateTemp" method="post" is="dmx-serverconnect-form" action="/api/Admin/templates/createTemplate">
                         <div class="row">
 
                             <div class="align-self-center col-7">
@@ -134,6 +134,15 @@
                                 <div class="form-group mb-3">
                                     <label for="textarea2" class="form-label">Description</label>
                                     <textarea id="textarea2" class="form-control" name="tempDesc"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group mb-3">
+                                    <label for="textarea3" class="form-label">Email Subject</label>
+                                    <input id="inpSubjectLine" name="emailSubjectLine" type="text" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -208,32 +217,23 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th dmx-hide="!scTemplateList.data.query[0].templateId.isEmpty()"></th>
-                                <th dmx-hide="!scTemplateList.data.query[0].templateId.isEmpty()"></th>
+                                <th scope="row"></th>
                                 <th>Title</th>
                                 <th>Description</th>
-                                <th dmx-hide="scTemplateList.data.query[0].templateId">Type</th>
-                                <th>Type</th>
+                                <th>Template Type</th>
                             </tr>
                         </thead>
-                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scTemplateList.data.query" id="tableRepeat1">
+                        <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scTemplateList.data.query" id="tableRepeat4">
                             <tr>
                                 <td>
-                                    <button id="btn1" class="btn btn-primary" dmx-on:click="scGetTemplate.load({templateid: templateId});modTemplateEditor.show()">
-                                        <i class="fas fa-edit fa-lg"></i></button>
+                                    <button id="btn1" class="btn btn-primary" dmx-on:click="scGetTemplate.load({templateid: templateId});modTemplateEditor.show()"><i class="fas fa-edit fa-lg"></i></button>
                                 </td>
-                                <td>
-                                    <button id="btn5" class="btn btn-danger" dmx-on:click="run({confirm:{outputType:'boolean',message:'Are you sure want to delete this template?',then:{steps:{run:{outputType:'text',action:`scdeleteTemp.load({tempid: templateId});scTemplateList.load({})`}}}}})" dmx-bs-tooltip="'Delete a template'">
-                                        <i class="fas fa-trash fa-lg"></i></button>
-
-                                </td>
-                                <td dmx-text="templateId" dmx-hide="!templateId.isEmpty()"></td>
+                                <td dmx-text="templateId" dmx-hide="scGetTemplate.data.query.isEmpty()"></td>
                                 <td dmx-text="tempTitle"></td>
                                 <td dmx-text="tempDescription"></td>
-                                <td dmx-text="templateType" dmx-hide="scTemplateList.data.query[0].templateId"></td>
                                 <td>
-                                    <p class="text-white bg-body-secondary ps-3" dmx-show="templateType==0">Document Template</p>
-                                    <p class="text-light bg-danger ps-3" dmx-show="templateType==1">Email Template</p>
+                                    <p dmx-show="templateType==1">Email Template</p>
+                                    <p dmx-show="templateType==0">Document Template</p>
                                 </td>
                             </tr>
                         </tbody>

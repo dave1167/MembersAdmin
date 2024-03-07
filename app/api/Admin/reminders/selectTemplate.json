@@ -3,7 +3,15 @@
     "$_GET": [
       {
         "type": "text",
-        "name": "templateid"
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      },
+      {
+        "type": "text",
+        "name": "emtemplateid"
       }
     ]
   },
@@ -11,7 +19,7 @@
     "steps": {
       "name": "query",
       "module": "dbconnector",
-      "action": "single",
+      "action": "select",
       "options": {
         "connection": "db",
         "sql": {
@@ -19,44 +27,30 @@
           "columns": [
             {
               "table": "tbl_templates",
-              "column": "templateId",
-              "recid": 1
+              "column": "tempTitle"
             },
             {
               "table": "tbl_templates",
-              "column": "tempTitle",
-              "recid": 2
+              "column": "tempDescription"
             },
             {
               "table": "tbl_templates",
-              "column": "tempDescription",
-              "recid": 3
+              "column": "templateType"
             },
             {
               "table": "tbl_templates",
-              "column": "template",
-              "recid": 4
+              "column": "templateId"
             },
             {
               "table": "tbl_templates",
-              "column": "templateType",
-              "recid": 5
+              "column": "template"
             },
             {
               "table": "tbl_templates",
-              "column": "emailSubjectLine",
-              "recid": 6
+              "column": "emailSubjectLine"
             }
           ],
-          "params": [
-            {
-              "operator": "equal",
-              "type": "expression",
-              "name": ":P1",
-              "value": "{{$_GET.templateid}}",
-              "test": "1"
-            }
-          ],
+          "params": [],
           "table": {
             "name": "tbl_templates"
           },
@@ -66,21 +60,21 @@
             "condition": "AND",
             "rules": [
               {
-                "id": "tbl_templates.templateId",
-                "field": "tbl_templates.templateId",
-                "type": "double",
+                "id": "tbl_templates.templateType",
+                "field": "tbl_templates.templateType",
+                "type": "boolean",
                 "operator": "equal",
-                "value": "{{$_GET.templateid}}",
+                "value": true,
                 "data": {
                   "table": "tbl_templates",
-                  "column": "templateId",
-                  "type": "number",
+                  "column": "templateType",
+                  "type": "boolean",
                   "columnObj": {
-                    "type": "increments",
-                    "primary": true,
+                    "type": "boolean",
+                    "primary": false,
                     "unique": false,
-                    "nullable": false,
-                    "name": "templateId"
+                    "nullable": true,
+                    "name": "templateType"
                   }
                 },
                 "operation": "=",
@@ -90,15 +84,11 @@
             "conditional": null,
             "valid": true
           },
-          "query": "select `templateId`, `tempTitle`, `tempDescription`, `template`, `templateType`, `emailSubjectLine` from `tbl_templates` where `tbl_templates`.`templateId` = ?"
+          "query": "select `tempTitle`, `tempDescription`, `templateType`, `templateId`, `template`, `emailSubjectLine` from `tbl_templates` where `tbl_templates`.`templateType` = ?"
         }
       },
       "output": true,
       "meta": [
-        {
-          "type": "number",
-          "name": "templateId"
-        },
         {
           "type": "text",
           "name": "tempTitle"
@@ -108,19 +98,23 @@
           "name": "tempDescription"
         },
         {
-          "type": "text",
-          "name": "template"
-        },
-        {
           "type": "boolean",
           "name": "templateType"
+        },
+        {
+          "type": "number",
+          "name": "templateId"
+        },
+        {
+          "type": "text",
+          "name": "template"
         },
         {
           "type": "text",
           "name": "emailSubjectLine"
         }
       ],
-      "outputType": "object"
+      "outputType": "array"
     }
   }
 }

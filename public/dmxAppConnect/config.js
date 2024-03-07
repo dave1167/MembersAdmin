@@ -89,5 +89,13 @@ dmx.config({
       ],
       "outputType": "object"
     }
+  },
+  "reminder": {
+    "datastore1": [
+      {
+        "type": "text",
+        "name": "message"
+      }
+    ]
   }
 });

@@ -1,5 +1,11 @@
-<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="reminder" appConnect="local" components="{dmxFormatter:{},dmxBootstrap5TableGenerator:{}}" -->
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="reminder" appConnect="local" components="{dmxFormatter:{},dmxBootstrap5TableGenerator:{},dmxDatastore:{}}" -->
+<script is="dmx-flow" id="flow1" type="text/dmx-flow" src="/app/flows/searchReplace/AppFlowSrchRep.json"></script>
+<dmx-datastore id="datastore1" session="true"></dmx-datastore>
+<dmx-serverconnect id="scCreateEmail" url="/api/Admin/reminders/createEmail" noload="true"></dmx-serverconnect>
+<dmx-serverconnect id="scGetFilterMems" url="/api/Admin/reminders/getFilterMems" noload="true"></dmx-serverconnect>
 <dmx-serverconnect id="scRenewal" url="/api/Admin/reminders/renewals" dmx-param:monthfilterstart="inpStartDate.value" dmx-param:monthfilterend="inpEndDate.value"></dmx-serverconnect>
+<dmx-serverconnect id="scTemplates" url="/api/Admin/reminders/selectTemplate"></dmx-serverconnect>
+<dmx-serverconnect id="scGetTemps" url="/api/Admin/reminders/getTemplate"></dmx-serverconnect>
 <dmx-datetime id="var1" interval="days"></dmx-datetime>
 <dmx-value id="varStrtDate" dmx-bind:value="'01'+select1.value+var1.datetime"></dmx-value>
 <meta name="ac:route" content="/admin/email/renewals">
@@ -11,11 +17,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col">
+            <div class="col-3">
                 <div class="form-group mb-3">
-                    <label for="select1" class="form-label">Select</label>
-                    <select id="select1" class="form-select" dmx-on:updated="run({runJS:{outputType:'text',function:'displayFirstAndLastDayOfMonth',args:[`value`,`var1.datetime.getYear(var1.datetime)`]}})">
+                    <label for="selectTemp" class="form-label">Select Template</label>
+                    <select id="selectTemp" class="form-select" dmx-on:updated="" dmx-bind:options="scTemplates.data.query" optiontext="tempTitle" name="selectTemplate" optionvalue="templateId">
+                    </select>
+                    <input id="text1" name="text1" type="text" class="form-control" dmx-bind:value="selectTemp.selectedValue">
+                </div>
+            </div>
+            <div class="col">
+
+                <div class="form-group mb-3">
+                    <label for="select3" class="form-label">Select</label>
+                    <select id="select3" class="form-select" dmx-on:updated="run({runJS:{outputType:'text',function:'displayFirstAndLastDayOfMonth',args:[`value`,`var1.datetime.getYear(var1.datetime)`]}})">
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -52,7 +66,7 @@
                                 <th>Last name</th>
                                 <th>Date joined</th>
                                 <th>Status</th>
-                                <th>Mem category</th>
+                                <th>Email</th>
                                 <th>Pay due date</th>
                             </tr>
                         </thead>
@@ -63,7 +77,7 @@
                                 <td dmx-text="lastName"></td>
                                 <td dmx-text="dateJoined.formatDate('dd-MM-yyyy')"></td>
                                 <td dmx-text="status"></td>
-                                <td dmx-text="memCategory"></td>
+                                <td dmx-text="email"></td>
                                 <td dmx-text="payDueDate"></td>
                                 <td dmx-text="scRenewal.data.query[0].datePaid">Cell</td>
                             </tr>
@@ -71,6 +85,13 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <button id="btn1" class="btn text-center btn-primary" style="--bs-btn-hover-border-color: rgba(56, 156, 38, 0);" dmx-on:click="flow1.run({startMth: content.inpStartDate.value, finMth: content.inpEndDate.value, tempId: content.text1.value})">Create Emails</button>
+            </div>
+            <div class="col"></div>
         </div>
 
 </main>

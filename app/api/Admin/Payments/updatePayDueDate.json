@@ -64,11 +64,6 @@
         "name": "selectPayType"
       },
       {
-        "type": "text",
-        "fieldName": "paynotes",
-        "name": "paynotes"
-      },
-      {
         "type": "number",
         "name": "payType"
       },
@@ -79,6 +74,22 @@
       {
         "type": "number",
         "name": "memCat"
+      },
+      {
+        "type": "number",
+        "fieldName": "hidMemCat",
+        "options": {
+          "rules": {}
+        },
+        "name": "hidMemCat"
+      },
+      {
+        "type": "number",
+        "fieldName": "hidAmount",
+        "options": {
+          "rules": {}
+        },
+        "name": "hidAmount"
       }
     ]
   },
@@ -278,13 +289,13 @@
                 "table": "tbl_member_detail_stbl_payments",
                 "column": "amount",
                 "type": "number",
-                "value": "{{$_POST.amount}}"
+                "value": "{{$_POST.hidAmount}}"
               },
               {
                 "table": "tbl_member_detail_stbl_payments",
                 "column": "memCat",
                 "type": "number",
-                "value": "{{$_POST.memCat}}"
+                "value": "{{$_POST.hidMemCat}}"
               },
               {
                 "table": "tbl_member_detail_stbl_payments",
@@ -324,13 +335,13 @@
               {
                 "name": ":P5",
                 "type": "expression",
-                "value": "{{$_POST.amount}}",
+                "value": "{{$_POST.hidAmount}}",
                 "test": ""
               },
               {
                 "name": ":P6",
                 "type": "expression",
-                "value": "{{$_POST.memCat}}",
+                "value": "{{$_POST.hidMemCat}}",
                 "test": ""
               }
             ]

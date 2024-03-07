@@ -109,3 +109,6 @@ select {
 .nav-link:hover {
   background-color: aquamarine;
 }
+.form-switch {
+  padding-left: 2.5em;
+}

@@ -227,7 +227,7 @@
                 <div class="container-fluid border border-2 rounded rounded-2 border-secondary mt-2">
                     <div class="row">
                         <div class="col bg-dark text-light">
-                            <h6 class="fw-bolder pt-2">Payments</h6>
+                            <h6 class="fw-bolder pt-2">Payment History</h6>
                         </div>
                     </div>
 
@@ -262,18 +262,18 @@
                                     <h6 class="mt-1 pt-2 fw-bold">Add Payment</h6>
                                 </div>
                             </div>
-                            <form method="post" site="undefined" is="dmx-serverconnect-form" id="frmScPayDueDate" action="/api/Admin/Payments/updatePayDueDate">
+                            <form method="post" site="undefined" is="dmx-serverconnect-form" id="frmScPayDueDate" action="/api/Admin/Payments/updatePayDueDate" dmx-on:success="browser1.goto('/admin/members');modPayments.hide();notifies1.success('Payment Updated')">
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group md-3">
-                                            <input id="payDueDate" name="payDueDate" class="form-control" dmx-bind:value="paymentDueDate">
+                                            <input id="payDueDate" name="payDueDate" class="form-control" dmx-bind:value="paymentDueDate" type="hidden">
 
                                         </div>
                                         <div class="form-group md-3">
                                             <label for="hiddeninp" class="form-label">Payment Method</label>
                                             <select id="selectPayType" class="form-select" dmx-bind:options="scPayType.data.query" optiontext="description" optionvalue="payTypeid" name="selectPayType" dmx-bind:value="session1.data.payType" dmx-on:changed="text2.setValue(session1.data.payType)">
                                             </select>
-                                            <input id="inpMemCatHid" name="hidMemCat" type="number" class="form-control" dmx-bind:value="modEdit.serverconnectform2.selectMemCat.selectedValue">
+                                            <input id="inpMemCatHid" name="hidMemCat" type="hidden" class="form-control" dmx-bind:value="modEdit.serverconnectform2.selectMemCat.selectedValue">
                                         </div>
 
 
@@ -281,7 +281,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group md-3 mb-1">
-                                            <input class="form-control mb-2" id="inp_hidamount" name="hidAmount" aria-describedby="input3_help" type="number" dmx-bind:value="scGetSingleMem.data.query.cost">
+                                            <input class="form-control mb-2" id="inp_hidamount" name="hidAmount" aria-describedby="input3_help" type="hidden" dmx-bind:value="scGetSingleMem.data.query.cost">
                                         </div>
 
 
@@ -290,8 +290,8 @@
                                         </div>
                                         <div class="form-group md-3 mb-2"> <label for="inp_datePaid" class="form-label">Date Paid</label>
                                         </div>
-                                        <input class="form-control" id="inp_datePaid" name="datePaid" dmx-bind:value="scGetSinglePay.data.query.datePaid" aria-describedby="inp_dateJoined_help" placeholder="Enter Date joined" dmxorgdomid="d4385" type="date">
-                                        <input class="form-control" id="inp_datePaid1" name="hiddatePaidTxt" dmx-bind:value="inp_datePaid.value" aria-describedby="inp_dateJoined_help" dmxorgdomid="d4385">
+                                        <input class="form-control" id="inp_datePaid" name="datePaid" dmx-bind:value="scGetSinglePay.data.query.datePaid" aria-describedby="inp_dateJoined_help" placeholder="Enter Date joined" dmxorgdomid="d4385" type="date" required="">
+                                        <input class="form-control" id="inp_datePaid1" name="hiddatePaidTxt" dmx-bind:value="inp_datePaid.value.padStart(4, 0)" aria-describedby="inp_dateJoined_help" dmxorgdomid="d4385" type="hidden">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -303,7 +303,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <input id="memberDetsId" name="memberDetsId" class="form-control" dmx-bind:value="modEdit.serverconnectform2.inp_memDetsId.value">
+                                        <input id="memberDetsId" name="memberDetsId" class="form-control" dmx-bind:value="modEdit.serverconnectform2.inp_memDetsId.value" type="hidden">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -328,7 +328,6 @@
             <div class="modal-footer">
 
 
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -348,24 +347,13 @@
                 </p>
                 <div class="container-fluid">
                     <div class="row">
-
-                        <div class="col">
-                            <button id="btn2" class="btn" dmx-on:click="run([{alert:{message:`serverconnectform2.inp_memDetsId.value+\' \'+serverconnectform2.inpDueDate.value`}},{run:{outputType:'text',action:`scupdatePayDueDate.load({memdetsid: serverconnectform2.inp_memDetsId.value, payduedate: serverconnectform2.inpDueDate.value})`}}])">Button</button>
-                        </div>
-                        <div class="col">
-
-
-                        </div>
-
-                    </div>
-                    <div class="row">
                         <div class="col">
                             <form is="dmx-serverconnect-form" id="serverconnectform2" method="post" action="/api/Admin/update" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-populate="scGetSingleMem.data.query" dmx-on:success="modEdit.hide();serverconnectform2.reset();browser1.goto('/admin/members');notifies1.success('Member Updated')" dmx-on:error="notifies1.danger('An Error Occured')">
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="form-group mb-3">
                                             <label for="inp_memNo">Mem no</label>
-                                            <input type="number" class="form-control" id="inp_memNo" name="memNo" dmx-bind:value="scGetSingleMem.data.query.memNo" aria-describedby="inp_memNo_help" placeholder="Enter Mem no" dmxorgdomid="d4365">
+                                            <input class="form-control" id="inp_memNo" name="memNo" dmx-bind:value="scGetSingleMem.data.query.memNo.pad(4)" aria-describedby="inp_memNo_help" placeholder="Enter Mem no" dmxorgdomid="d4365" readonly="true">
                                         </div>
                                     </div>
                                     <div class="col">

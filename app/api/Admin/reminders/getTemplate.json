@@ -2,8 +2,8 @@
   "meta": {
     "$_GET": [
       {
-        "type": "text",
-        "name": "templateid"
+        "type": "number",
+        "name": "tempid"
       }
     ]
   },
@@ -19,33 +19,27 @@
           "columns": [
             {
               "table": "tbl_templates",
-              "column": "templateId",
-              "recid": 1
+              "column": "templateId"
             },
             {
               "table": "tbl_templates",
-              "column": "tempTitle",
-              "recid": 2
+              "column": "tempTitle"
             },
             {
               "table": "tbl_templates",
-              "column": "tempDescription",
-              "recid": 3
+              "column": "tempDescription"
             },
             {
               "table": "tbl_templates",
-              "column": "template",
-              "recid": 4
+              "column": "template"
             },
             {
               "table": "tbl_templates",
-              "column": "templateType",
-              "recid": 5
+              "column": "templateType"
             },
             {
               "table": "tbl_templates",
-              "column": "emailSubjectLine",
-              "recid": 6
+              "column": "emailSubjectLine"
             }
           ],
           "params": [
@@ -53,8 +47,8 @@
               "operator": "equal",
               "type": "expression",
               "name": ":P1",
-              "value": "{{$_GET.templateid}}",
-              "test": "1"
+              "value": "{{$_GET.tempid}}",
+              "test": "10"
             }
           ],
           "table": {
@@ -70,7 +64,7 @@
                 "field": "tbl_templates.templateId",
                 "type": "double",
                 "operator": "equal",
-                "value": "{{$_GET.templateid}}",
+                "value": "{{$_GET.tempid}}",
                 "data": {
                   "table": "tbl_templates",
                   "column": "templateId",

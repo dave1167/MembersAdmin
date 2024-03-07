@@ -70,22 +70,7 @@
               "column": "email"
             }
           ],
-          "params": [
-            {
-              "operator": "between",
-              "type": "expression",
-              "name": ":P1",
-              "value": "{{$_GET.monthfilterstart}}",
-              "test": "2024-02-01"
-            },
-            {
-              "operator": "between",
-              "type": "expression",
-              "name": ":P2",
-              "value": "{{$_GET.monthfilterend}}",
-              "test": "2024-02-29"
-            }
-          ],
+          "params": [],
           "table": {
             "name": "tbl_member_details"
           },
@@ -113,61 +98,7 @@
               "primary": "memPersId"
             }
           ],
-          "wheres": {
-            "condition": "AND",
-            "rules": [
-              {
-                "id": "tbl_member_details.payDueDate",
-                "field": "tbl_member_details.payDueDate",
-                "type": "date",
-                "operator": "between",
-                "value": [
-                  "{{$_GET.monthfilterstart}}",
-                  "{{$_GET.monthfilterend}}"
-                ],
-                "data": {
-                  "table": "tbl_member_details",
-                  "column": "payDueDate",
-                  "type": "date",
-                  "columnObj": {
-                    "type": "date",
-                    "primary": false,
-                    "unique": false,
-                    "nullable": true,
-                    "name": "payDueDate"
-                  }
-                },
-                "operation": "BETWEEN",
-                "table": "tbl_member_details"
-              },
-              {
-                "id": "tbl_member_details.status",
-                "field": "tbl_member_details.status",
-                "type": "double",
-                "operator": "equal",
-                "value": 1,
-                "data": {
-                  "table": "tbl_member_details",
-                  "column": "status",
-                  "type": "number",
-                  "columnObj": {
-                    "type": "integer",
-                    "maxLength": 255,
-                    "primary": false,
-                    "unique": false,
-                    "nullable": true,
-                    "default": "1",
-                    "name": "status"
-                  }
-                },
-                "operation": "=",
-                "table": "tbl_member_details"
-              }
-            ],
-            "conditional": null,
-            "valid": true
-          },
-          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_details`.`status`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate`, `tbl_member_detail_stbl_mem_pers`.`email` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`payDueDate` between ? and ? and `tbl_member_details`.`status` = ?"
+          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_details`.`status`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate`, `tbl_member_detail_stbl_mem_pers`.`email` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId`"
         }
       },
       "output": true,

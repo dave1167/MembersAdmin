@@ -41,6 +41,10 @@
               "table": "tbl_templates",
               "column": "templateType",
               "aggregate": ""
+            },
+            {
+              "table": "tbl_templates",
+              "column": "emailSubjectLine"
             }
           ],
           "params": [],
@@ -49,7 +53,7 @@
           },
           "primary": "templateId",
           "joins": [],
-          "query": "select `templateId`, `tempTitle`, `tempDescription`, `template`, `templateType` from `tbl_templates`"
+          "query": "select `templateId`, `tempTitle`, `tempDescription`, `template`, `templateType`, `emailSubjectLine` from `tbl_templates`"
         }
       },
       "output": true,
@@ -73,6 +77,10 @@
         {
           "type": "boolean",
           "name": "templateType"
+        },
+        {
+          "type": "text",
+          "name": "emailSubjectLine"
         }
       ],
       "outputType": "array"
