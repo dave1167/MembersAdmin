@@ -72,6 +72,26 @@
             {
               "table": "tbl_member_details",
               "column": "memDetsId"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "address1"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "address2"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "town1"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "town2"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "postcode"
             }
           ],
           "params": [
@@ -115,6 +135,27 @@
                 ]
               },
               "primary": "memPersId"
+            },
+            {
+              "table": "tbl_member_detail_stbl_mem_address",
+              "column": "*",
+              "type": "INNER",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "tbl_member_detail_stbl_mem_address",
+                    "column": "tbl_member_detail_id",
+                    "operator": "equal",
+                    "operation": "=",
+                    "value": {
+                      "table": "tbl_member_detail_stbl_mem_pers",
+                      "column": "tbl_member_detail_id"
+                    }
+                  }
+                ]
+              },
+              "primary": "memAddId"
             }
           ],
           "wheres": {
@@ -171,7 +212,7 @@
             "conditional": null,
             "valid": true
           },
-          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_details`.`status`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_details`.`memDetsId` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` where `tbl_member_details`.`payDueDate` between ? and ? and `tbl_member_details`.`status` = ?"
+          "query": "select `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_details`.`status`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_details`.`memDetsId`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` where `tbl_member_details`.`payDueDate` between ? and ? and `tbl_member_details`.`status` = ?"
         }
       },
       "output": true,
@@ -227,6 +268,26 @@
         {
           "type": "number",
           "name": "memDetsId"
+        },
+        {
+          "type": "text",
+          "name": "address1"
+        },
+        {
+          "type": "text",
+          "name": "address2"
+        },
+        {
+          "type": "text",
+          "name": "town1"
+        },
+        {
+          "type": "text",
+          "name": "town2"
+        },
+        {
+          "type": "text",
+          "name": "postcode"
         }
       ],
       "outputType": "array"

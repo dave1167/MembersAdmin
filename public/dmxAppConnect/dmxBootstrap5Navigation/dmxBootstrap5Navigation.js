@@ -3,7 +3,7 @@
   // ignore if routing is enabled
   if (dmx.routing) return;
 
-  dmx.config.mapping['a.nav-link'] = 'nav-link';
+  dmx.config.mapping['a.nav-link:not([href^="#"])'] = 'nav-link';
 
   dmx.Component('nav-link', {
 

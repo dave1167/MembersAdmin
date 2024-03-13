@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "number",
+        "name": "emailid"
+      }
+    ],
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "message"
+      },
+      {
+        "type": "number",
+        "name": "emailId"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "update",
+      "module": "dbupdater",
+      "action": "update",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "update",
+          "values": [
+            {
+              "table": "tbl_emails",
+              "column": "message",
+              "type": "text",
+              "value": "{{$_POST.message}}",
+              "recid": 1
+            }
+          ],
+          "table": "tbl_emails",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "emailId",
+                "field": "emailId",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{189}}",
+                "data": {
+                  "column": "emailId"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "emailId",
+          "query": "update `tbl_emails` set `message` = ? where `emailId` = ? returning `emailId`",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.message}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P2",
+              "value": "{{189}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

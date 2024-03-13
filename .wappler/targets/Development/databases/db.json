@@ -596,6 +596,46 @@
         },
         "db": {}
       },
+      "tbl_template_fields": {
+        "columns": {
+          "tmpFieldId": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "labelName": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "field": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "mappedMemberField": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "db": {}
+      },
       "tbl_emails": {
         "columns": {
           "emailId": {
@@ -604,15 +644,6 @@
               "primary": true,
               "unique": false,
               "nullable": false
-            }
-          },
-          "message": {
-            "db": {
-              "type": "text",
-              "maxLength": 255,
-              "primary": false,
-              "unique": false,
-              "nullable": true
             }
           },
           "subject": {
@@ -667,42 +698,10 @@
               "unique": false,
               "nullable": true
             }
-          }
-        },
-        "db": {}
-      },
-      "tbl_template_fields": {
-        "columns": {
-          "tmpFieldId": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "unique": false,
-              "nullable": false
-            }
           },
-          "labelName": {
+          "message": {
             "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "unique": false,
-              "nullable": true
-            }
-          },
-          "field": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "unique": false,
-              "nullable": true
-            }
-          },
-          "mappedMemberField": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
+              "type": "text",
               "primary": false,
               "unique": false,
               "nullable": true

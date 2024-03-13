@@ -1,0 +1,759 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "subject"
+      },
+      {
+        "type": "text",
+        "name": "recipient"
+      },
+      {
+        "type": "number",
+        "name": "template"
+      },
+      {
+        "type": "text",
+        "name": "sender"
+      },
+      {
+        "type": "text",
+        "name": "attachment"
+      },
+      {
+        "type": "number",
+        "name": "sendStatus"
+      },
+      {
+        "type": "text",
+        "name": "message"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "qryGetTemp",
+        "module": "dbconnector",
+        "action": "single",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "tbl_templates",
+                "column": "templateId",
+                "recid": 1
+              },
+              {
+                "table": "tbl_templates",
+                "column": "tempTitle",
+                "recid": 2
+              },
+              {
+                "table": "tbl_templates",
+                "column": "tempDescription",
+                "recid": 3
+              },
+              {
+                "table": "tbl_templates",
+                "column": "template",
+                "recid": 4
+              },
+              {
+                "table": "tbl_templates",
+                "column": "templateType",
+                "recid": 5
+              },
+              {
+                "table": "tbl_templates",
+                "column": "emailSubjectLine",
+                "recid": 6
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.tempid}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "tbl_templates"
+            },
+            "primary": "templateId",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_templates.templateId",
+                  "field": "tbl_templates.templateId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.tempid}}",
+                  "data": {
+                    "table": "tbl_templates",
+                    "column": "templateId",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "primary": true,
+                      "unique": false,
+                      "nullable": false,
+                      "name": "templateId"
+                    }
+                  },
+                  "operation": "=",
+                  "table": "tbl_templates"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select `templateId`, `tempTitle`, `tempDescription`, `template`, `templateType`, `emailSubjectLine` from `tbl_templates` where `tbl_templates`.`templateId` = ?"
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "templateId"
+          },
+          {
+            "type": "text",
+            "name": "tempTitle"
+          },
+          {
+            "type": "text",
+            "name": "tempDescription"
+          },
+          {
+            "type": "text",
+            "name": "template"
+          },
+          {
+            "type": "boolean",
+            "name": "templateType"
+          },
+          {
+            "type": "text",
+            "name": "emailSubjectLine"
+          }
+        ],
+        "outputType": "object"
+      },
+      {
+        "name": "qryGetMembers",
+        "module": "dbconnector",
+        "action": "single",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "tbl_member_details",
+                "column": "memDetsId"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memNo"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "title"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "firstName"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "lastName"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "dateJoined"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "gdpr"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "ukTax"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCard"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "status"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "memCategory"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "payDueDate"
+              },
+              {
+                "table": "tbl_member_details",
+                "column": "lastPayment"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "email"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "address1"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "address2"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "town1"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "town2"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "postcode"
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.memdetsid}}",
+                "test": "99"
+              }
+            ],
+            "table": {
+              "name": "tbl_member_details"
+            },
+            "primary": "memDetsId",
+            "joins": [
+              {
+                "table": "tbl_member_detail_stbl_mem_pers",
+                "column": "*",
+                "type": "INNER",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "tbl_member_detail_stbl_mem_pers",
+                      "column": "tbl_member_detail_id",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "tbl_member_details",
+                        "column": "memDetsId"
+                      }
+                    }
+                  ]
+                },
+                "primary": "memPersId"
+              },
+              {
+                "table": "tbl_member_detail_stbl_mem_address",
+                "column": "*",
+                "type": "INNER",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "tbl_member_detail_stbl_mem_address",
+                      "column": "tbl_member_detail_id",
+                      "operator": "equal",
+                      "operation": "=",
+                      "value": {
+                        "table": "tbl_member_detail_stbl_mem_pers",
+                        "column": "tbl_member_detail_id"
+                      }
+                    }
+                  ]
+                },
+                "primary": "memAddId"
+              }
+            ],
+            "query": "select `tbl_member_details`.`memDetsId`, `tbl_member_details`.`memNo`, `tbl_member_details`.`title`, `tbl_member_details`.`firstName`, `tbl_member_details`.`lastName`, `tbl_member_details`.`dateJoined`, `tbl_member_details`.`gdpr`, `tbl_member_details`.`ukTax`, `tbl_member_details`.`memCard`, `tbl_member_details`.`status`, `tbl_member_details`.`memCategory`, `tbl_member_details`.`payDueDate`, `tbl_member_details`.`lastPayment`, `tbl_member_detail_stbl_mem_pers`.`email`, `tbl_member_detail_stbl_mem_address`.`address1`, `tbl_member_detail_stbl_mem_address`.`address2`, `tbl_member_detail_stbl_mem_address`.`town1`, `tbl_member_detail_stbl_mem_address`.`town2`, `tbl_member_detail_stbl_mem_address`.`postcode` from `tbl_member_details` inner join `tbl_member_detail_stbl_mem_pers` on `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` = `tbl_member_details`.`memDetsId` inner join `tbl_member_detail_stbl_mem_address` on `tbl_member_detail_stbl_mem_address`.`tbl_member_detail_id` = `tbl_member_detail_stbl_mem_pers`.`tbl_member_detail_id` where `tbl_member_details`.`memDetsId` = ?",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "tbl_member_details.memDetsId",
+                  "field": "tbl_member_details.memDetsId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_GET.memdetsid}}",
+                  "data": {
+                    "table": "tbl_member_details",
+                    "column": "memDetsId",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "primary": true,
+                      "unique": false,
+                      "nullable": false,
+                      "name": "memDetsId"
+                    }
+                  },
+                  "operation": "=",
+                  "table": "tbl_member_details"
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "memDetsId"
+          },
+          {
+            "type": "number",
+            "name": "memNo"
+          },
+          {
+            "type": "text",
+            "name": "title"
+          },
+          {
+            "type": "text",
+            "name": "firstName"
+          },
+          {
+            "type": "text",
+            "name": "lastName"
+          },
+          {
+            "type": "date",
+            "name": "dateJoined"
+          },
+          {
+            "type": "boolean",
+            "name": "gdpr"
+          },
+          {
+            "type": "boolean",
+            "name": "ukTax"
+          },
+          {
+            "type": "boolean",
+            "name": "memCard"
+          },
+          {
+            "type": "number",
+            "name": "status"
+          },
+          {
+            "type": "number",
+            "name": "memCategory"
+          },
+          {
+            "type": "date",
+            "name": "payDueDate"
+          },
+          {
+            "type": "date",
+            "name": "lastPayment"
+          },
+          {
+            "type": "text",
+            "name": "email"
+          },
+          {
+            "type": "text",
+            "name": "address1"
+          },
+          {
+            "type": "text",
+            "name": "address2"
+          },
+          {
+            "type": "text",
+            "name": "town1"
+          },
+          {
+            "type": "text",
+            "name": "town2"
+          },
+          {
+            "type": "text",
+            "name": "postcode"
+          }
+        ],
+        "outputType": "object"
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{qryGetTemp.template.replace('???FirstName???', qryGetMembers.firstName)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???LastName???', qryGetMembers.lastName)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???Email???', qryGetMembers.email)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???Address1???', qryGetMembers.address1)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???Address2???', qryGetMembers.address2)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???Town1???', qryGetMembers.town1)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???Town2???', qryGetMembers.town2)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???Postcode???', qryGetMembers.postcode)}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "template",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{template.replace('???MemNo???', qryGetMembers.memNo.pad(4, 0, 'left'))}}"
+        },
+        "meta": [],
+        "outputType": "text",
+        "output": true
+      },
+      {
+        "name": "insertEmail",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "tbl_emails",
+                "column": "subject",
+                "type": "text",
+                "value": "{{$_POST.subject}}"
+              },
+              {
+                "table": "tbl_emails",
+                "column": "recipient",
+                "type": "text",
+                "value": "{{$_POST.recipient}}"
+              },
+              {
+                "table": "tbl_emails",
+                "column": "template",
+                "type": "number",
+                "value": "{{$_POST.template}}"
+              },
+              {
+                "table": "tbl_emails",
+                "column": "sender",
+                "type": "text",
+                "value": "{{$_POST.sender}}"
+              },
+              {
+                "table": "tbl_emails",
+                "column": "attachment",
+                "type": "text",
+                "value": "{{$_POST.attachment}}"
+              },
+              {
+                "table": "tbl_emails",
+                "column": "sendStatus",
+                "type": "number",
+                "value": "{{$_POST.sendStatus}}"
+              },
+              {
+                "table": "tbl_emails",
+                "column": "message",
+                "type": "text",
+                "value": "{{template}}"
+              }
+            ],
+            "table": "tbl_emails",
+            "returning": "emailId",
+            "query": "insert into `tbl_emails` (`attachment`, `message`, `recipient`, `sendStatus`, `sender`, `subject`, `template`) values (?, ?, ?, ?, ?, ?, ?) returning `emailId`",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.subject}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.recipient}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.template}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.sender}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.attachment}}",
+                "test": ""
+              },
+              {
+                "name": ":P6",
+                "type": "expression",
+                "value": "{{$_POST.sendStatus}}",
+                "test": ""
+              },
+              {
+                "name": ":P7",
+                "type": "expression",
+                "value": "{{template}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "upFirstName",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "tbl_emails",
+                "column": "subject",
+                "type": "text",
+                "value": "{{$_POST.subject}}",
+                "recid": 1
+              },
+              {
+                "table": "tbl_emails",
+                "column": "recipient",
+                "type": "text",
+                "value": "{{$_POST.recipient}}",
+                "recid": 2
+              },
+              {
+                "table": "tbl_emails",
+                "column": "template",
+                "type": "number",
+                "value": "{{$_POST.template}}",
+                "recid": 3
+              },
+              {
+                "table": "tbl_emails",
+                "column": "sender",
+                "type": "text",
+                "value": "{{$_POST.sender}}",
+                "recid": 4
+              },
+              {
+                "table": "tbl_emails",
+                "column": "attachment",
+                "type": "text",
+                "value": "{{$_POST.attachment}}",
+                "recid": 5
+              },
+              {
+                "table": "tbl_emails",
+                "column": "sendStatus",
+                "type": "number",
+                "value": "{{$_POST.sendStatus}}",
+                "recid": 6
+              },
+              {
+                "table": "tbl_emails",
+                "column": "message",
+                "type": "text",
+                "value": "{{$_POST.message}}",
+                "recid": 7
+              }
+            ],
+            "table": "tbl_emails",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "emailId",
+                  "field": "emailId",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{insertEmail.identity}}",
+                  "data": {
+                    "column": "emailId"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "emailId",
+            "query": "update `tbl_emails` set `subject` = ?, `recipient` = ?, `template` = ?, `sender` = ?, `attachment` = ?, `sendStatus` = ?, `message` = ? where `emailId` = ?",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.subject}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.recipient}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.template}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.sender}}",
+                "test": ""
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.attachment}}",
+                "test": ""
+              },
+              {
+                "name": ":P6",
+                "type": "expression",
+                "value": "{{$_POST.sendStatus}}",
+                "test": ""
+              },
+              {
+                "name": ":P7",
+                "type": "expression",
+                "value": "{{$_POST.message}}",
+                "test": ""
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P8",
+                "value": "{{insertEmail.identity}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ],
+        "disabled": true
+      }
+    ]
+  }
+}

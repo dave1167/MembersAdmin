@@ -3,7 +3,8 @@
     $param: [
       {type: "date", name: "startMth"},
       {type: "date", name: "finMth"},
-      {type: "number", name: "tempId"}
+      {type: "number", name: "tempId"},
+      {type: "text", name: "bodyText"}
     ]
   },
   exec: {
@@ -173,7 +174,16 @@
         getStorage: {name: "var", output: true, outputType: "text", key: "template"}
       },
       {
+        bootbox.alert: {disabled: true, message: "{{'  Template '+var}}"}
+      },
+      {
+        assign: {name: "var1", outputType: "text", value: "{{var.replace('2 ', 2)}}"}
+      },
+      {
         bootbox.alert: {disabled: true, message: "{{var+' template '}}"}
+      },
+      {
+        alert: {message: "{{var1}}"}
       },
       {
         repeat: {
@@ -184,26 +194,9 @@
             {name: "$index", type: "number"},
             {name: "$number", type: "number"},
             {name: "$name", type: "text"},
-            {name: "$value", type: "object"},
-            {name: "memNo", type: "number"},
-            {name: "title", type: "text"},
-            {name: "firstName", type: "text"},
-            {name: "lastName", type: "text"},
-            {name: "dateJoined", type: "date"},
-            {name: "gdpr", type: "boolean"},
-            {name: "ukTax", type: "boolean"},
-            {name: "memCard", type: "boolean"},
-            {name: "status", type: "number"},
-            {name: "memCategory", type: "number"},
-            {name: "payDueDate", type: "date"},
-            {name: "email", type: "text"},
-            {name: "address1", type: "text"},
-            {name: "address2", type: "text"},
-            {name: "town1", type: "text"},
-            {name: "town2", type: "text"},
-            {name: "postcode", type: "text"}
+            {name: "$value", type: "object"}
           ],
-          repeat: "{{sc.data.query}}",
+          repeat: "{{var1.replace('\"nbsp\"', ' ')}}",
           outputFields: [],
           exec: {
             steps: [
@@ -217,6 +210,9 @@
                 getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
               },
               {
+                bootbox.alert: {disabled: true, message: "{{var1}}"}
+              },
+              {
                 assign: {
                   name: "var1",
                   output: true,
@@ -228,10 +224,16 @@
                 setStorage: {key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "ADDRESS2\n"}
+                comment: {disabled: true, msg: "ADDRESS2\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
@@ -245,10 +247,16 @@
                 setStorage: {key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "TOWN 1\n"}
+                comment: {disabled: true, msg: "TOWN 1\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
@@ -259,30 +267,43 @@
                 }
               },
               {
-                setStorage: {key: "template", value: "{{var1}}"}
+                setStorage: {disabled: true, key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "TOWN 1\n"}
+                comment: {disabled: true, msg: "TOWN 1\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
                   name: "var1",
                   output: true,
                   outputType: "text",
+                  disabled: true,
                   value: "{{var1.replace(scFieldList.data.query[3].field, sc.data.query[$index].town1)}}"
                 }
               },
               {
-                setStorage: {key: "template", value: "{{var1}}"}
+                setStorage: {disabled: true, key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "TOWN 2\n"}
+                comment: {disabled: true, msg: "TOWN 2\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
@@ -293,47 +314,67 @@
                 }
               },
               {
-                setStorage: {key: "template", value: "{{var1}}"}
+                setStorage: {disabled: true, key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "EMAIL\n"}
+                comment: {disabled: true, msg: "EMAIL\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
                   name: "var1",
                   output: true,
                   outputType: "text",
+                  disabled: true,
                   value: "{{var1.replace(scFieldList.data.query[5].field, sc.data.query[$index].postcode)}}"
                 }
               },
               {
-                setStorage: {key: "template", value: "{{var1}}"}
+                setStorage: {disabled: true, key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "EMAIL\n"}
+                comment: {disabled: true, msg: "EMAIL\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
                   name: "var1",
                   output: true,
                   outputType: "text",
+                  disabled: true,
                   value: "{{var1.replace(scFieldList.data.query[6].field, sc.data.query[$index].email)}}"
                 }
               },
               {
-                setStorage: {key: "template", value: "{{var1}}"}
+                setStorage: {disabled: true, key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "FIRST NAME\n"}
+                comment: {disabled: true, msg: "FIRST NAME\n"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
@@ -347,10 +388,19 @@
                 setStorage: {key: "template", value: "{{var1}}"}
               },
               {
-                comment: {msg: "MEM NO\n"}
+                alert: {disabled: true, message: "{{var1}}"}
               },
               {
-                getStorage: {name: "var1", output: true, outputType: "text", key: "template"}
+                comment: {disabled: true, msg: "MEM NO\n"}
+              },
+              {
+                getStorage: {
+                  name: "var1",
+                  output: true,
+                  outputType: "text",
+                  disabled: true,
+                  key: "template"
+                }
               },
               {
                 assign: {
@@ -361,7 +411,19 @@
                 }
               },
               {
-                setStorage: {key: "template", value: "{{var1.pad(4, 0, 'left')}}"}
+                setStorage: {key: "template", value: "{{var1}}"}
+              },
+              {
+                getStorage: {name: "var1", outputType: "text", disabled: true, key: "template"}
+              },
+              {
+                assign: {name: "var3", outputType: "text", value: "{{var1}}"}
+              },
+              {
+                setStorage: {key: "template", value: "{{var3}}"}
+              },
+              {
+                bootbox.alert: {message: "{{var3}}"}
               },
               {
                 serverConnect: {
@@ -372,7 +434,16 @@
                     {
                       name: "data",
                       type: "object",
-                      sub: []
+                      sub: [
+                        {
+                          name: "insert",
+                          type: "text",
+                          sub: [
+                            {name: "identity", type: "text"},
+                            {name: "affected", type: "number"}
+                          ]
+                        }
+                      ]
                     },
                     {
                       name: "state",
@@ -414,14 +485,9 @@
                     {name: "status", type: "number"}
                   ],
                   url: "/api/Admin/reminders/createEmail",
-                  site: "membershipV2"
+                  site: "membershipV2",
+                  params: {bodytext: "{{var3}}"}
                 }
-              },
-              {
-                alert: {message: "{{var1}}"}
-              },
-              {
-                bootbox.alert: {disabled: true, message: "{{scFieldList.data.query[$index].field}}"}
               }
             ]
           }

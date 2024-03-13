@@ -36,12 +36,32 @@
       {
         "type": "number",
         "name": "memcat"
+      },
+      {
+        "type": "text",
+        "name": "bodytext"
+      },
+      {
+        "type": "number",
+        "name": "tempid"
       }
     ],
     "$_SESSION": [
       {
         "type": "number",
         "name": "payType"
+      },
+      {
+        "type": "text",
+        "name": "sessBodyText"
+      },
+      {
+        "type": "number",
+        "name": "emailId"
+      },
+      {
+        "type": "number",
+        "name": "memDetsVar"
       }
     ]
   },

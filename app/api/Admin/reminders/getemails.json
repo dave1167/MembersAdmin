@@ -1,0 +1,59 @@
+{
+  "name": "query",
+  "module": "dbconnector",
+  "action": "single",
+  "options": {
+    "connection": "db",
+    "sql": {
+      "type": "select",
+      "columns": [
+        {
+          "table": "tbl_emails",
+          "column": "message"
+        }
+      ],
+      "params": [],
+      "table": {
+        "name": "tbl_emails"
+      },
+      "primary": "emailId",
+      "joins": [],
+      "wheres": {
+        "condition": "AND",
+        "rules": [
+          {
+            "id": "tbl_emails.emailId",
+            "field": "tbl_emails.emailId",
+            "type": "double",
+            "operator": "equal",
+            "value": 1,
+            "data": {
+              "table": "tbl_emails",
+              "column": "emailId",
+              "type": "number",
+              "columnObj": {
+                "type": "increments",
+                "primary": true,
+                "unique": false,
+                "nullable": false,
+                "name": "emailId"
+              }
+            },
+            "operation": "="
+          }
+        ],
+        "conditional": null,
+        "valid": true
+      },
+      "query": "select `message` from `tbl_emails` where `tbl_emails`.`emailId` = ?"
+    }
+  },
+  "output": true,
+  "meta": [
+    {
+      "type": "text",
+      "name": "message"
+    }
+  ],
+  "outputType": "object"
+}

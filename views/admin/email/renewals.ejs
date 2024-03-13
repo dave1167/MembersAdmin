@@ -1,6 +1,14 @@
-<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="reminder" appConnect="local" components="{dmxFormatter:{},dmxBootstrap5TableGenerator:{},dmxDatastore:{}}" -->
+<!-- Wappler include head-page="layouts/admin" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="reminder" appConnect="local" components="{dmxFormatter:{},dmxBootstrap5TableGenerator:{},dmxDatastore:{},dmxStateManagement:{}}" -->
+<dmx-value id="var2"></dmx-value>
 <script is="dmx-flow" id="flow1" type="text/dmx-flow" src="/app/flows/searchReplace/AppFlowSrchRep.json"></script>
+<dmx-session-manager id="session1"></dmx-session-manager>
 <dmx-datastore id="datastore1" session="true"></dmx-datastore>
+<dmx-serverconnect id="scGetEmails" url="/api/Admin/reminders/getemails"></dmx-serverconnect>
+<dmx-serverconnect id="scCopyRenTemp" url="/api/Admin/reminders/copyRenewalTemplate" noload="true"></dmx-serverconnect>
+<dmx-serverconnect id="scGetMem_1" url="/api/Admin/reminders/renewals_1" dmx-param:monthfilterstart="inpStartDate.value" dmx-param:monthfilterend="inpEndDate.value"></dmx-serverconnect>
+<dmx-serverconnect id="scGetSingleMem" url="/api/Admin/getSingleMem" noload="true"></dmx-serverconnect>
+<dmx-serverconnect id="scSearchReplace" url="/api/Admin/reminders/updateEmail" dmx-param:memdetsid="2"></dmx-serverconnect>
+<dmx-serverconnect id="scCreateEmailV2" url="/api/Admin/reminders/createmailV2" dmx-param:tempid="text1.value" dmx-param:memdetsid="scCreateEmailV2.data.qryMemDets.memDetsId" noload="true"></dmx-serverconnect>
 <dmx-serverconnect id="scCreateEmail" url="/api/Admin/reminders/createEmail" noload="true"></dmx-serverconnect>
 <dmx-serverconnect id="scGetFilterMems" url="/api/Admin/reminders/getFilterMems" noload="true"></dmx-serverconnect>
 <dmx-serverconnect id="scRenewal" url="/api/Admin/reminders/renewals" dmx-param:monthfilterstart="inpStartDate.value" dmx-param:monthfilterend="inpEndDate.value"></dmx-serverconnect>
@@ -22,7 +30,7 @@
                     <label for="selectTemp" class="form-label">Select Template</label>
                     <select id="selectTemp" class="form-select" dmx-on:updated="" dmx-bind:options="scTemplates.data.query" optiontext="tempTitle" name="selectTemplate" optionvalue="templateId">
                     </select>
-                    <input id="text1" name="text1" type="text" class="form-control" dmx-bind:value="selectTemp.selectedValue">
+                    <input id="tempId" name="templateId" type="hidden" class="form-control" dmx-bind:value="selectTemp.selectedValue">
                 </div>
             </div>
             <div class="col">
@@ -50,10 +58,10 @@
         </div>
         <div class="row">
             <div class="col">
-                <input id="inpStartDate" name="inpStartDate" type="text" class="form-control" dmx-bind:value="mthStart">
+                <input id="inpStartDate" name="inpStartDate" type="hidden" class="form-control" dmx-bind:value="mthStart">
 
             </div>
-            <div class="col"><input id="inpEndDate" name="inpEndDate" class="form-control" dmx-bind:value="mthFinish"></div>
+            <div class="col"><input id="inpEndDate" name="inpEndDate" class="form-control" dmx-bind:value="mthFinish" type="hidden"></div>
         </div>
         <div class="row">
             <div class="col">
@@ -89,9 +97,11 @@
         <div class="row">
             <div class="col"></div>
             <div class="col">
-                <button id="btn1" class="btn text-center btn-primary" style="--bs-btn-hover-border-color: rgba(56, 156, 38, 0);" dmx-on:click="flow1.run({startMth: content.inpStartDate.value, finMth: content.inpEndDate.value, tempId: content.text1.value})">Create Emails</button>
+                <button id="btn1" class="btn text-center btn-primary" style="--bs-btn-hover-border-color: rgba(56, 156, 38, 0);" dmx-on:click="run([{comment:{msg:'runs through the filtered members and creates an individual email message using mailmerge'}},{repeat:{name:'repeat1',output:true,outputType:'array',repeat:`content.scGetMem_1.data.query`,outputFields:[],exec:{steps:[{alert:{disabled:true,message:`content.scGetMem_1.data.query[$index].firstName+\' name\'`}},{run:{outputType:'text',action:`scCopyRenTemp.load({tempid: content.tempId.value, memdetsid: content.scGetMem_1.data.query[$index].memDetsId})`}},{alert:{disabled:true,message:`content.scGetMem_1.data.query[$index].firstName+\' ok\'`}},{wait:{delay:500}}]}}}])">Create Emails</button>
             </div>
             <div class="col"></div>
+        </div>
+        <div class="row">
         </div>
 
 </main>
