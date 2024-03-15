@@ -45,21 +45,21 @@
       "sqliteDbFile": "/lib/membershipDbV2.sqlite3"
     },
     {
-      "name": "WebDev",
-      "remoteURL": "https://folpmembership.com",
+      "name": "WebDevelopment",
+      "remoteURL": "https://folpmembership.com/",
       "databaseConnectionType": "sqlite",
       "useRedis": true,
       "redisPersist": true,
       "sqliteDbFile": "/lib/membershipDbV2.sqlite3",
-      "access": "ftp",
-      "nopassive": true,
+      "access": "ftpes",
       "ftpServer": "ftp.folpmembership.com",
       "ftpPort": 21,
-      "ftpUser": "webdev1167@folpmembership.com",
+      "ftpRemoteFolder": "/app",
+      "ftpUser": "webDev1167@folpmembership.com",
       "ftpPassword": "47e7b3e6fe91dcd2738f"
     }
   ],
-  "activeTarget": "WebDev",
+  "activeTarget": "WebDevelopment",
   "projectType": "web",
   "userUploadsFolder": "/public/New%20folder",
   "extensions": []
