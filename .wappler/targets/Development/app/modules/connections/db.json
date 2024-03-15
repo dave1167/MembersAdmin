@@ -6,10 +6,6 @@
     "client": "sqlite3",
     "connection": {
       "filename": "/lib/membershipDbV2.sqlite3"
-    },
-    "meta": {}
-  },
-  "actionFilePath": "file:///C:/Wappler%20Projects/membershipV2/app/modules/connections/db.json",
-  "serverType": "node",
-  "fileName": "db.json"
+    }
+  }
 }

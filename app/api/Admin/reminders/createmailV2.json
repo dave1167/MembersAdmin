@@ -1,5 +1,9 @@
 {
   "meta": {
+    "options": {
+      "linkedFile": "/views/admin/email/template_list.ejs",
+      "linkedForm": "form1"
+    },
     "$_GET": [
       {
         "type": "number",
@@ -8,6 +12,10 @@
       {
         "type": "number",
         "name": "memdetsrepeat"
+      },
+      {
+        "type": "text",
+        "name": "recipient"
       }
     ],
     "$_POST": [
@@ -38,6 +46,36 @@
       {
         "type": "text",
         "name": "message"
+      },
+      {
+        "type": "text",
+        "fieldName": "title",
+        "name": "title"
+      },
+      {
+        "type": "text",
+        "fieldName": "tempId",
+        "name": "tempId"
+      },
+      {
+        "type": "text",
+        "fieldName": "inptempSel",
+        "name": "inptempSel"
+      },
+      {
+        "type": "text",
+        "fieldName": "emailSubjectLine",
+        "name": "emailSubjectLine"
+      },
+      {
+        "type": "text",
+        "fieldName": "tempDesc",
+        "name": "tempDesc"
+      },
+      {
+        "type": "text",
+        "fieldName": "editor1",
+        "name": "editor1"
       }
     ]
   },
@@ -361,7 +399,7 @@
                 "table": "tbl_emails",
                 "column": "subject",
                 "type": "text",
-                "value": "{{$_POST.subject}}"
+                "value": "{{$_POST.emailSubjectLine}}"
               },
               {
                 "table": "tbl_emails",
@@ -407,7 +445,7 @@
               {
                 "name": ":P1",
                 "type": "expression",
-                "value": "{{$_POST.subject}}",
+                "value": "{{$_POST.emailSubjectLine}}",
                 "test": ""
               },
               {
