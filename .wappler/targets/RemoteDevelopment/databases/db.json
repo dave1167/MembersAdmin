@@ -1,0 +1,60 @@
+{
+  "direct": true,
+  "type": "sqlite3",
+  "connection": {
+    "filename": "/lib/membershipDbV2.sqlite3"
+  },
+  "schema": {
+    "tables": {
+      "tbl_member_detail_stbl_mem_pers": {
+        "db": {},
+        "parent": "tbl_member_details"
+      },
+      "tbl_member_detail_stbl_mem_address": {
+        "db": {},
+        "parent": "tbl_member_details"
+      },
+      "tbl_payment_type": {
+        "db": {}
+      },
+      "tbl_member_details": {
+        "db": {},
+        "sub": {
+          "tbl_member_detail_stbl_mem_pers": "tbl_member_detail_id",
+          "tbl_member_detail_stbl_mem_address": "tbl_member_detail_id",
+          "tbl_member_detail_stbl_payments": "tbl_member_detail_id"
+        }
+      },
+      "tbl_membershipType": {
+        "db": {}
+      },
+      "tbl_member_detail_stbl_payments": {
+        "db": {},
+        "parent": "tbl_member_details"
+      },
+      "tbl_user_sbTblUserRole_sbTbleRoles": {
+        "db": {},
+        "parent": "tbl_user_sbTblUserRole"
+      },
+      "tbl_user_role": {
+        "db": {}
+      },
+      "tbl_role": {
+        "db": {}
+      },
+      "tbl_users": {
+        "db": {}
+      },
+      "tbl_templates": {
+        "db": {}
+      },
+      "tbl_template_fields": {
+        "db": {}
+      },
+      "tbl_emails": {
+        "db": {}
+      }
+    },
+    "views": {}
+  }
+}
