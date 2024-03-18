@@ -1,6 +1,4 @@
 {
-    "debug": true,
-    "secret": "JSHVBzg22R4l8du",
     "redis": "redis://redis",
     "session": {
         "store": {

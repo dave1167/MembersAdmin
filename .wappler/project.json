@@ -33,7 +33,7 @@
       "webServerLang": "node",
       "targetType": "docker",
       "webServer": "node",
-      "NodeVersion": "16",
+      "NodeVersion": "14",
       "NodeOS": "bullseye",
       "NodeImageType": "slim",
       "webLoggingMaxFiles": "5",
@@ -45,35 +45,18 @@
       "sqliteDbFile": "/lib/membershipDbV2.sqlite3"
     },
     {
-      "name": "WebDevelopment",
-      "remoteURL": "https://folpmembership.com/",
+      "name": "RemoteDev",
+      "remoteURL": "http://localhost:8100",
       "databaseConnectionType": "sqlite",
-      "useRedis": true,
-      "redisPersist": true,
-      "sqliteDbFile": "/lib/membershipDbV2.sqlite3",
-      "access": "ftpes",
-      "ftpServer": "ftp.folpmembership.com",
-      "ftpPort": 21,
-      "ftpRemoteFolder": "/app",
-      "ftpUser": "webDev1167@folpmembership.com",
-      "ftpPassword": "47e7b3e6fe91dcd2738f"
-    },
-    {
-      "name": "RemoteDevelopment",
-      "remoteURL": "https://folpmembership.com",
-      "databaseConnectionType": "sqlite",
-      "useRedis": true,
-      "redisPersist": true,
       "sqliteDbFile": "/lib/membershipDbV2.sqlite3",
       "access": "ftp",
       "ftpServer": "ftp.folpmembership.com",
       "ftpPort": 21,
-      "ftpRemoteFolder": "/app",
-      "ftpUser": "webDev1167@folpmembership.com",
+      "ftpUser": "dave1167@folpmembership.com",
       "ftpPassword": "47e7b3e6fe91dcd2738f"
     }
   ],
-  "activeTarget": "RemoteDevelopment",
+  "activeTarget": "RemoteDev",
   "projectType": "web",
   "userUploadsFolder": "/public/New%20folder",
   "extensions": []

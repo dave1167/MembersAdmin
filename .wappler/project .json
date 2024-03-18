@@ -1,0 +1,80 @@
+{
+  "projectName": "membershipV2",
+  "styleFile": "/css/style.css",
+  "assetsFolder": "/assets",
+  "designFramework": "bootstrap5",
+  "frameworks": [
+    {
+      "name": "fontawesome_5",
+      "type": "cdn"
+    },
+    {
+      "name": "bootstrap5",
+      "type": "local"
+    },
+    {
+      "name": "appConnect",
+      "type": "local"
+    }
+  ],
+  "hostingType": "docker",
+  "projectServerModel": "node",
+  "runtime": "capacitor",
+  "webRootFolder": "/public",
+  "useRouting": true,
+  "addBase": true,
+  "routingHandler": "node",
+  "projectLinksType": "site",
+  "targets": [
+    {
+      "name": "Development",
+      "remoteURL": "http://localhost:8100",
+      "webServerPort": 8100,
+      "webServerLang": "node",
+      "targetType": "docker",
+      "webServer": "node",
+      "NodeVersion": "16",
+      "NodeOS": "bullseye",
+      "NodeImageType": "slim",
+      "webLoggingMaxFiles": "5",
+      "webLoggingMaxFileSize": "10m",
+      "dockerTimezone": "Etc/UTC",
+      "databaseConnectionType": "sqlite",
+      "useRedis": true,
+      "redisPersist": true,
+      "sqliteDbFile": "/lib/membershipDbV2.sqlite3"
+    },
+    {
+      "name": "WebDevelopment",
+      "remoteURL": "https://folpmembership.com/",
+      "databaseConnectionType": "sqlite",
+      "useRedis": true,
+      "redisPersist": true,
+      "sqliteDbFile": "/lib/membershipDbV2.sqlite3",
+      "access": "ftpes",
+      "ftpServer": "ftp.folpmembership.com",
+      "ftpPort": 21,
+      "ftpRemoteFolder": "/app",
+      "ftpUser": "webDev1167@folpmembership.com",
+      "ftpPassword": "47e7b3e6fe91dcd2738f"
+    },
+    {
+      "name": "RemoteDevelopment",
+      "remoteURL": "https://folpmembership.com",
+      "databaseConnectionType": "sqlite",
+      "useRedis": true,
+      "redisPersist": true,
+      "sqliteDbFile": "/lib/membershipDbV2.sqlite3",
+      "access": "ftp",
+      "ftpServer": "ftp.folpmembership.com",
+      "ftpPort": 21,
+      "ftpRemoteFolder": "/app",
+      "ftpUser": "webDev1167@folpmembership.com",
+      "ftpPassword": "47e7b3e6fe91dcd2738f"
+    }
+  ],
+  "activeTarget": "RemoteDevelopment",
+  "projectType": "web",
+  "userUploadsFolder": "/public/New%20folder",
+  "extensions": []
+}
