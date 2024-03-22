@@ -1,9 +1,0 @@
-{
-    "redis": "redis://redis",
-    "session": {
-        "store": {
-            "$type": "redis",
-            "ttl": 86400
-        }
-    }
-}
